@@ -1,0 +1,19 @@
+@startuml accept-deal
+
+|User:in|
+start
+    :**Deal wurde akzeptiert** 
+    (via Benachrichtigung);
+    |App|
+    :Autom. Öffnen der App;
+    :Anzeigen des Dashboards;
+    :Frage: **Are you ready to start the deal?**;
+    |User:in|
+    :User klickt auf **Yes, I'm ready!**;
+    |App|
+    :Deal wird gestartet;
+    :Zeit rennt;
+    |User:in|
+end
+
+@enduml

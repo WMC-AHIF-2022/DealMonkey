@@ -1,0 +1,37 @@
+@startuml accept-deal
+
+|User:in|
+start
+    :Eingabe der Userdaten;
+
+    :**Auf DealMonkey-Logo drücken**
+    (um die Logindaten zu bestätigen);
+
+    |App|
+    :User wird in der 
+    Datenbank gesucht;
+
+    if (**Ist User:in gefunden bzw. schon registriert?**) then (ja)
+        while (**Passwort gültig?**) is (nein)
+            :Passwort erneut eingeben;
+        endwhile (ja)
+        :User wird in seinen 
+        bestehenden Account eingeloggt;
+    else (nein)
+        :User wird darüber informiert, dass seine Eingaben fehlerhaft sind;
+        :User wird darauf aufgefordert seine Eingaben richtigzustellen 
+        oder sich neu zu registrieren;
+    if (User registriert sich neu) then (ja) 
+        :Userdaten werden in
+        die Datenbank eingefügt;
+        :User wird in seinen 
+        neuen Account eingeloggt;
+    else (nein)
+        :User gibt die korrekten Daten ein;
+    endif
+    endif
+    
+    :Anzeigen des Dashboards;
+end
+
+@enduml

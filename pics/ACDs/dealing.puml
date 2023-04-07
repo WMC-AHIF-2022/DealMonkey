@@ -1,0 +1,22 @@
+@startuml dealing
+
+|User:in|
+start
+    |System|
+    :   System erstellt einen Deal 
+    (basierend auf Habits/To-Dos);
+    :User bekommt eine Benachrichtigung;
+
+    |User:in|
+    if (**Akzeptiert User Deal?**) then (yes)
+        :            User kommt zum 
+        Unter-Use-Case **Accept-Deal**
+                     (siehe 2.4.3);
+    else (no)
+        :            User kommt zum 
+        Unter-Use-Case **Decline-Deal**
+                     (siehe 2.4.4);
+    endif
+end
+
+@enduml

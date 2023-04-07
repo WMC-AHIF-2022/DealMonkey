@@ -1,0 +1,118 @@
+@startuml class-diagram_DealMonkey
+
+class User {
+    - userId: number
+    - points: number
+    - name: string
+    - userBirthDate: Date
+    - password: string
+    - registrationDate: Date
+
+    + getUserId: number
+    + getPoints: number
+    + getName: string
+    + getUserBirthDate: Date
+    + getPassword: string
+    + getregistrationDate: Date
+}
+
+class Friends {
+    - userHome: User
+    - userGuest: User
+
+    + getUserHome: User
+    + getUserGuest: User
+}
+
+class OnlineTimes {
+    - onlineTimeId: number
+    - userId: number
+    - startTime: Time
+    - endTime: Time
+    - onlineDate: Date
+
+    + getOnlineTimeId: number
+    + getUserId: number
+    + getStartTime: Time
+    + getEndTime: Time
+    + getOnlineDate: Date
+}
+
+class ProgressStatistics {
+    - userId: number
+    - currentLevel: number
+    - timeId: number
+
+    + getUserId: number
+    + getCurrentLevel: number
+    + getTimeId: number
+
+    + drawGraph(): void
+    + showProgress(timeSpan: Time): void
+}
+
+class Deal {
+    - dealId: number
+    - dealName: string
+    - experationsDate: Date
+
+    + getDealId: number
+    + getDealName: string
+    + getExperationsDate: Date
+
+    + sendNotification(): void
+}
+
+class TaskDeal {
+
+}
+
+class SystemDeal {
+    
+}
+
+class StealDeal {
+
+}
+
+class Todo {
+    - isFinished: boolean
+    - dueDate: Date
+    - todoPriority: number
+
+    + getIsFinished: boolean
+    + getDueDate: Date
+    + getTodoPriority: number
+}
+
+class Habit {
+    - checkData: number | string
+
+    + getCheckDate: number | string
+}
+
+class Task {
+    - taskId: number
+    - taskName: string
+
+    + getTaskId: number
+    + getTaskName: string
+}
+
+class TaskRepository {
+    - tasks: PriorityQueue<Task>
+
+    + addTask(Task): void
+    + deleteTask(Task): void
+}
+
+Habit --^ Task
+Todo --^ Task
+TaskDeal --^ Deal
+SystemDeal --^ Deal
+StealDeal --^ Deal
+TaskRepository -- Task : uses >
+User -- Friends : uses <
+ProgressStatistics -- OnlineTimes : uses >
+
+@enduml

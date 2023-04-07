@@ -1,0 +1,30 @@
+@startuml to-do-list
+'https://plantuml.com/activity-diagram-beta'
+
+start
+    :**User** möchte eine **To-Do** zu seiner/ihrer Liste **hinzufügen**;
+    :**User** drückt auf **+**;
+    :Eine **leere Eingabezeile** wird angezeigt;
+    #SkyBlue:    User schreibt die Aufgabe, 
+    die er/sie erledigen möchte, rein;
+    #SkyBlue:User gibt **Uhrzeit/Datum** an, bis wann 
+                 die Aufgabe erledigt sein soll;
+
+    #PaleGreen:To-Do wird zur Liste hinzugefügt;
+    #PaleGreen:Neue To-Do wird **an den Server geschickt und gespeichert**;
+    :To-Do wird ab nun in der Liste angezeigt 
+                        (für User ersichtlich);
+    :Status der To-Do kann ab jetzt geändert werden (zu "Done");
+
+    if (Aufgabe (To-Do) ist erledigt) then (yes)
+        #PaleGreen:To-Do-Status wird vom User auf **"Done"** gesetzt 
+                          ("Hackerl" in Box rechts);
+        #PaleGreen:To-Do wird im Server als erledigt gekennzeichnet;
+        #PaleGreen:To-Do wird unter eigener Section **"Erledigt"** **ausgegraut** 
+                         **mit** **"Hackerl"** angezeigt;
+    else (no)
+        #Pink:To-Do wird weiterhin in der Liste als **"To-Do"** angezeigt;
+    endif
+end
+
+@enduml

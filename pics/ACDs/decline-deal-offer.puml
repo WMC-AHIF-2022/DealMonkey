@@ -1,0 +1,12 @@
+@startuml decline-deal-offer
+
+|User:in|
+start
+    :**Deal wurde abgelehnt - "Decline"** 
+    (via Benachrichtigung);
+    :Benachrichtigung wird durch Ablehnung verworfen;
+    |App|
+    :Verwirft Deal autom.;
+end
+
+@enduml
