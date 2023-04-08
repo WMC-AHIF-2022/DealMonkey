@@ -276,7 +276,14 @@ Zur Abschätzung der aufkommenden Datenmengen und damit verbunden der notwendige
 
 ## 5. Systemarchitektur
 
+### Deployment-Diagramm
 - Auflistung der Softwarekomponenten in einem Verteilungsdiagramm (typisch: Client - Server - Datenbank).
 - Beispiel:
+
+
+
+### Datenmodell
+
+- Wahlweise ER-Diagramm oder objekt-orientiertes Klassendiagramm
 
 <img src="./pics/DealMonkey-ClassDiagram/ClassDiagram_DealMonkey.png">
