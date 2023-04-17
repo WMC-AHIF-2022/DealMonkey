@@ -1,37 +1,42 @@
 @startuml class-diagram_DealMonkey
 
 class User {
+    - friends: List<User>
+    - tasks: List<Tasks>
     - userId: number
     - points: number
     - name: string
-    - userBirthDate: Date
+    - birthDate: Date
     - password: string
     - registrationDate: Date
-
+    - level: number
     + getUserId: number
     + getPoints: number
     + getName: string
-    + getUserBirthDate: Date
+    + getBirthDate: Date
     + getPassword: string
     + getregistrationDate: Date
+    + getLevel: number
+
+    + toString(): string
+    + addFriend(): User
+    + removeFriend(): User
+    + getFriend(id: number): User
+    + getAllFriends(): User[]
+    + addPoints(points:number): void
+    + removePoints(points: number): void
+    + updateLevel(): void
+    + resetPasswort(password: string): void
 }
 
-class Friends {
-    - userHome: User
-    - userGuest: User
-
-    + getUserHome: User
-    + getUserGuest: User
-}
-
-class OnlineTimes {
-    - onlineTimeId: number
+class AppTimes {
+    - timeId: number
     - userId: number
     - startTime: Time
     - endTime: Time
     - onlineDate: Date
 
-    + getOnlineTimeId: number
+    + getTimeId: number
     + getUserId: number
     + getStartTime: Time
     + getEndTime: Time
@@ -39,16 +44,9 @@ class OnlineTimes {
 }
 
 class ProgressStatistics {
-    - userId: number
-    - currentLevel: number
-    - timeId: number
-
-    + getUserId: number
-    + getCurrentLevel: number
-    + getTimeId: number
-
-    + drawGraph(): void
-    + showProgress(timeSpan: Time): void
+    + drawProgressGraph(timeSpan: Time): void
+    + showLevel(): void
+    + showTaskProgress(Task task): void
 }
 
 class Deal {
@@ -103,7 +101,8 @@ class TaskRepository {
     - tasks: PriorityQueue<Task>
 
     + addTask(Task): void
-    + deleteTask(Task): void
+    + updateTask(Task): void
+    + removeTask(Task): void
 }
 
 Habit --^ Task
@@ -112,7 +111,7 @@ TaskDeal --^ Deal
 SystemDeal --^ Deal
 StealDeal --^ Deal
 TaskRepository -- Task : uses >
-User -- Friends : uses <
-ProgressStatistics -- OnlineTimes : uses >
+User -- Friend : uses <
+ProgressStatistics -- AppTimes : uses >
 
 @enduml
