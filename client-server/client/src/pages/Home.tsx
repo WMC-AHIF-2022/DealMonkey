@@ -1,9 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { ReactComponent as Logo } from "./logo.svg";
-import { getData } from "./utils/data-utils";
-import FormInput from "./components/form-input";
+import { ReactComponent as Logo } from "../logo.svg";
+import { getData } from "../utils/data-utils";
+import FormInput from "../components/form-input";
 
-import "./styles/App.css";
+import "../styles/App.css";
 
 // TypeScript declarations
 type User = {
@@ -18,7 +18,7 @@ const defaultFormFields = {
   password: "",
 };
 
-const App = () => {
+const Home = () => {
   // react hooks
   const [user, setUser] = useState<User | null>();
   const [formFields, setFormFields] = useState(defaultFormFields);
@@ -93,4 +93,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
