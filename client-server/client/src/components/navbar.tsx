@@ -8,10 +8,10 @@ export default function Navbar() {
       </a>
       <ul>
         <li className="active">
-          <a href="/Login">Login</a>
+          <a href="/login">Login</a>
         </li>
         <li>
-          <a href="/Dashboard">Dashboard</a>
+          <a href="/about">About</a>
         </li>
       </ul>
     </nav>
