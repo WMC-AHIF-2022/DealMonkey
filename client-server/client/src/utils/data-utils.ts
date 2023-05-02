@@ -1,15 +1,10 @@
-export const getData = async <T>(
-  url: string,
-  email: string,
-  password: string
-): Promise<T> => {
-  const res = await fetch(url, {
-    method: "Post",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
+import { fetchRestEndpoint } from "./client-server";
 
-  return await res.json();
+export const getData = async (username: string, password: string) => {
+  const data = JSON.parse(
+    `{"username": "${username}", "password": "${password}"}`
+  );
+  await fetchRestEndpoint("http://localhost:8000/users/login", "POST", data);
+  sessionStorage.setItem("user", username);
+  window.location.href = "/";
 };
