@@ -1,13 +1,13 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { getData } from "../utils/data-utils";
-import FormInput from "../components/form-input";
+import { getData } from "../../utils/data-utils";
+import FormInput from "../../components/form-input";
 
 const defaultFormFields = {
   username: "",
   password: "",
 };
 
-const Login = () => {
+const Register = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { username, password } = formFields;
 
@@ -40,7 +40,7 @@ const Login = () => {
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleSubmit}>
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+          <h3 className="Auth-form-title">Sign Up</h3>
           <div className="form-group mt-3">
             <FormInput
               label="username"
@@ -80,4 +80,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
