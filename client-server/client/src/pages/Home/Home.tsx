@@ -1,14 +1,9 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import saly from "./img/Saly-16.png";
-import abstractShape from "./img/abstract-shape 1.png";
-import logo from "./img/logo.png";
 import "./home.css";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   let navigate = useNavigate();
-  const routeChange = () => {
-    let path = `login`;
+  const routeChange = (path: string) => {
     navigate(path);
   };
 
@@ -20,7 +15,7 @@ const Home = () => {
           <p className="subTitle">Develop good habits and improve your life</p>
           <button
             className="mt-10 bg-orange-400 rounded-md"
-            onClick={routeChange}
+            onClick={() => routeChange("signup")}
           >
             Try it for free
           </button>
