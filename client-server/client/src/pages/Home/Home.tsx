@@ -8,8 +8,11 @@ const Home = () => {
   };
 
   return (
-    <div className="Home font">
+    /*<div className="Home font">
       <div className="h-max grid grid-cols-2 gap-4 content-center justify-center">
+        <div className="ml-5">*/
+    <div className="bg-white py-24 md:py-32 Home font">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 content-center justify-center">
         <div className="ml-5">
           <h1 className="mainTitle">Welcome to DealMonkey</h1>
           <p className="subTitle">Develop good habits and improve your life</p>
