@@ -42,3 +42,8 @@
   background-color: white;
   color: black;
 }
+
+.logoutBtn {
+  width: 4em;
+  font-size: 1em;
+}
