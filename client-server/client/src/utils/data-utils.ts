@@ -8,3 +8,20 @@ export const getData = async (username: string, password: string) => {
   sessionStorage.setItem("user", username);
   window.location.href = "/";
 };
+
+export const register = async (
+  username: string,
+  password: string,
+  birthdate: string
+) => {
+  const data = JSON.parse(
+    `{"username": "${username}", "password": "${password}", "birthdate": "${birthdate}"}`
+  );
+  await fetchRestEndpoint(
+    "http://localhost:8000/users/registration",
+    "POST",
+    data
+  );
+  sessionStorage.setItem("user", username);
+  window.location.href = "/";
+};

@@ -15,7 +15,7 @@ const Home = () => {
           <p className="subTitle">Develop good habits and improve your life</p>
           <button
             className="mt-10 bg-orange-400 rounded-md"
-            onClick={() => routeChange("signup")}
+            onClick={() => routeChange("register")}
           >
             Try it for free
           </button>

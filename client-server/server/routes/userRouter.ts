@@ -43,7 +43,7 @@ userRouter.post("/registration", async (request, response) => {
     username: username,
     password: password,
     email: email,
-    birthdate: new Date().toISOString(),
+    birthdate: birthdate,
     points: 100,
     level: 1,
     registrationDate: new Date().toISOString(),

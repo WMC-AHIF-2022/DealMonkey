@@ -39,5 +39,7 @@ label {
 
 .button {
   color: black;
-  background-color: aqua;
+  background-color: burlywood;
+  border-radius: 1em;
+  margin-top: 1em;
 }

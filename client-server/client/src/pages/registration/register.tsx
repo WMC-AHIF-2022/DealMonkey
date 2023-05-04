@@ -1,15 +1,16 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { getData } from "../../utils/data-utils";
+import { getData, register } from "../../utils/data-utils";
 import FormInput from "../../components/form-input";
 
 const defaultFormFields = {
   username: "",
   password: "",
+  birthdate: "",
 };
 
 const Register = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { username, password } = formFields;
+  const { username, password, birthdate } = formFields;
 
   const resetFormFields = () => {
     return setFormFields(defaultFormFields);
@@ -25,10 +26,10 @@ const Register = () => {
 
     try {
       // make the API call
-      await getData(username, password);
+      await register(username, password, birthdate);
       resetFormFields();
     } catch (error) {
-      alert("User Login Failed");
+      alert("Registration failed. Please try again later.");
     }
   };
 
@@ -37,13 +38,16 @@ const Register = () => {
   };
 
   return (
-    <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={handleSubmit}>
+    <div className="Auth-form-container content-center">
+      <form
+        className="Auth-form flex flex-col justify-center"
+        onSubmit={handleSubmit}
+      >
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign Up</h3>
-          <div className="form-group mt-3">
+          <h3 className="Auth-form-title">Register</h3>
+          <div className=" grid grid-cols-1 form-group mt-3 ">
             <FormInput
-              label="username"
+              label="Username"
               type="username"
               required
               name="username"
@@ -61,19 +65,24 @@ const Register = () => {
               onChange={handleChange}
             />
           </div>
+          <div className="form-group mt-3">
+            <FormInput
+              label="Birthdate"
+              type="date"
+              required
+              name="birthdate"
+              value={birthdate}
+              onChange={handleChange}
+            />
+          </div>
           <div className="button-group">
             <button className="button" type="submit">
-              Sign In
+              Register
             </button>
-            <span>
-              <button type="button" onClick={reload}>
-                Clear
-              </button>
-            </span>
+            {/*<button type="button" className="button" onClick={reload}>
+              Clear
+  </button> */}
           </div>
-          <p className="forgot-password text-right mt-2">
-            Forgot <a href="#">password?</a>
-          </p>
         </div>
       </form>
     </div>
