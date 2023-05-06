@@ -1,17 +1,33 @@
 import "./about.css";
+import { useNavigate } from "react-router-dom";
+
 
 const About = () => {
   const people = [
     {
-      name: "Julia Meyr",
-      role: "Co-Founder / CEO",
-      imageUrl:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-      bio: "Ultricies massa malesuada viverra cras lobortis. Tempor orci hac ligula dapibus mauris sit ut eu. Eget turpis urna maecenas cras. Nisl dictum.",
-      twitterUrl: "#",
-      linkedinUrl: "#",
+      name: "Christian Ekhator",
+      role: "Project Leader / CEO",
+      imageUrl: "./img/",
+      bio: "bla bla",
+      snap: "#",
+      insta: "#",
     },
-    // More people...
+    {
+      name: "Julia Meyr",
+      role: "Backend Developer",
+      imageUrl: "./img/",
+      bio: "bla bla",
+      snap: "jmeyr2",
+      insta: "#",
+    },
+    {
+      name: "Amina Gabeljic",
+      role: "Frontend Developer",
+      imageUrl: "./img/",
+      bio: "bla bla",
+      snap: "#",
+      insta: "#",
+    }
   ];
 
   return (
@@ -19,7 +35,7 @@ const About = () => {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-5">
         <div className="max-w-2xl xl:col-span-2">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            About the team
+            About us
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             We’re a dynamic group of individuals who are passionate about what
@@ -53,10 +69,10 @@ const About = () => {
                 <ul role="list" className="mt-6 flex gap-x-6">
                   <li>
                     <a
-                      href={person.twitterUrl}
+                      href={person.snap}
                       className="text-gray-400 hover:text-gray-500"
                     >
-                      <span className="sr-only">Twitter</span>
+                      <span className="sr-only">Snapchat</span>
                       <svg
                         className="h-5 w-5"
                         aria-hidden="true"
@@ -69,10 +85,10 @@ const About = () => {
                   </li>
                   <li>
                     <a
-                      href={person.linkedinUrl}
+                      href={person.insta}
                       className="text-gray-400 hover:text-gray-500"
                     >
-                      <span className="sr-only">LinkedIn</span>
+                      <span className="sr-only">Insta</span>
                       <svg
                         className="h-5 w-5"
                         aria-hidden="true"
