@@ -2,6 +2,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { getData } from "../../utils/data-utils";
 import FormInput from "../../components/form-input";
 import "./login.css";
+import Layout from "../../layout/layout";
 
 const defaultFormFields = {
   username: "",
@@ -38,48 +39,48 @@ const Login = () => {
   };
 
   return (
-    <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={handleSubmit}>
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
-          <div className="form-group mt-3">
-            <FormInput
-              label="username"
-              placeholder="username"
-              type="username"
-              required
-              name="username"
-              value={username}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <FormInput
-              label="Password"
-              type="password"
-              placeholder="password"
-              required
-              name="password"
-              value={password}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="button-group">
-            <button className="button" type="submit">
-              Sign In
-            </button>
-            <span>
-              <button type="button" onClick={reload}>
-                Clear
+    <Layout>
+      <div className="Auth-form-container">
+        <form className="Auth-form" onSubmit={handleSubmit}>
+          <div className="Auth-form-content">
+            <h3 className="Auth-form-title">Sign In</h3>
+            <div className="flex justify-center flex-col">
+              <div className="form-group mt-3">
+                <FormInput
+                  label="username"
+                  placeholder="Username"
+                  type="username"
+                  required
+                  name="username"
+                  value={username}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <FormInput
+                  label="Password"
+                  type="password"
+                  placeholder="Password"
+                  required
+                  name="password"
+                  value={password}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="button-group">
+              <button className="mt-5 rounded-lg bg-orange-400" type="submit">
+                Sign In
               </button>
-            </span>
+            </div>
+
+            <p className="forgot-password text-right mt-6">
+              Forgot <a href="#">password?</a>
+            </p>
           </div>
-          <p className="forgot-password text-right mt-2">
-            Forgot <a href="#">password?</a>
-          </p>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </Layout>
   );
 };
 

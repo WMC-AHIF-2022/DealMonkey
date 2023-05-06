@@ -2,11 +2,11 @@ import Habit from "../../components/habit";
 import AddTask from "../../components/addTask";
 import Form from "../../components/form";
 import { useState } from "react";
-import LayoutOne from "../../layout/layoutOne";
+import Layout from "../../layout/layout";
 
 const HabitPage = () => {
   return (
-    <LayoutOne>
+    <Layout>
       <div className="">
         <Habit
           title="My Habit"
@@ -16,7 +16,7 @@ const HabitPage = () => {
         />
         <Form />
       </div>
-    </LayoutOne>
+    </Layout>
   );
 };
 

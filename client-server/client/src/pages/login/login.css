@@ -6,8 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  margin-top: 10rem;
 }
 
 .Auth-form {
@@ -18,9 +17,12 @@
   border-radius: 8px;
   background-color: white;
 }
+
 .Auth-form-content {
-  padding-left: 12%;
-  padding-right: 12%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .Auth-form-title {
@@ -42,4 +44,5 @@ label {
   background-color: burlywood;
   border-radius: 1em;
   margin-top: 1em;
+  margin-bottom: 2em;
 }
