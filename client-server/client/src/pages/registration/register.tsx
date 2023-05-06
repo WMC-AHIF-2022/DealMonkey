@@ -4,6 +4,7 @@ import FormInput from "../../components/form-input";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import Layout from "../../layout/layout";
+import LogoBlack from "../../logo-black.png";
 
 const defaultFormFields = {
   username: "",
@@ -48,6 +49,7 @@ const Register = () => {
           onSubmit={handleSubmit}
         >
           <div className="Auth-form-content">
+            <img className="logo" src={LogoBlack} />
             <h3 className="Auth-form-title">Register</h3>
             <div className=" grid grid-cols-1 form-group mt-3 ">
               <FormInput

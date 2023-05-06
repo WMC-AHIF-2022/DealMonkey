@@ -3,6 +3,7 @@ import { getData } from "../../utils/data-utils";
 import FormInput from "../../components/form-input";
 import "./login.css";
 import Layout from "../../layout/layout";
+import LogoBlack from "../../logo-black.png";
 
 const defaultFormFields = {
   username: "",
@@ -43,6 +44,7 @@ const Login = () => {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
+            <img className="logo" src={LogoBlack} />
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="flex justify-center flex-col">
               <div className="form-group mt-3">

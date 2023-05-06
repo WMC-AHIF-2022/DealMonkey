@@ -6,7 +6,7 @@ export const getData = async (username: string, password: string) => {
   );
   await fetchRestEndpoint("http://localhost:8000/users/login", "POST", data);
   sessionStorage.setItem("user", username);
-  window.location.href = "/myhabits";
+  window.location.href = "/dashboard";
 };
 
 export const register = async (

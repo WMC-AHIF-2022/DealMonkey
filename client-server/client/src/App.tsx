@@ -12,6 +12,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/login";
 import Register from "./pages/registration/register";
 import HabitPage from "./pages/habitPage/habitPage";
+import Dashboard from "./pages/dashboard/dashboard";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/register" element={<Register />} />
             <Route path="/myhabits" element={<HabitPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </div>
       </Router>

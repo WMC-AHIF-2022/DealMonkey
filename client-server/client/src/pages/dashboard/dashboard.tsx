@@ -1,36 +1,61 @@
-import React from "react"
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import Layout from "../../layout/layout";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
+import "./dashboard.css";
 
 const Dashboard = () => {
-    let navigate = useNavigate();
-    const routeChange = (path: string) => {
-      navigate(path);
-    };
+  const [progress, setProgress] = React.useState(50);
+
+  let navigate = useNavigate();
+  const routeChange = (path: string) => {
+    navigate(path);
+  };
 
   return (
-    <div className="Home font">
-      <div className="h-max grid grid-cols-2 grid-rows-2 gap-4 content-center justify-center">
-        <div className="ml-5">
-          <div className="grid-cols-1">
-            <button className="mt-10 bg-orange-400 rounded-md" onClick={() => routeChange("tasks")}>
-                Tasks
-            </button>
-            <button className="mt-10 bg-orange-400 rounded-md" onClick={() => routeChange("progress")}>
-                Progress
-            </button>
-          </div>
-          <div>
-            <button className="mt-10 bg-orange-400 rounded-md" onClick={() => routeChange("settings")}>
-                Settings
-            </button>
-         
-            <button className="mt-10 bg-orange-400 rounded-md" onClick={() => routeChange("habits")}>
-                Habits
-            </button>
-          </div>
+    <Layout>
+      <div className="mt-6">
+        <h3>Level 01</h3>
+        <Box sx={{ width: "100%", color: "#FF0000" }}>
+          <LinearProgress variant="buffer" value={progress} />
+        </Box>
+      </div>
+      <div className="h-max grid grid-cols-2 grid-rows-2 gap-2 content-center justify-center">
+        <div>
+          <button
+            className="mt-10 bg-green-400 rounded-md mainBtn"
+            onClick={() => routeChange("tasks")}
+          >
+            Tasks
+          </button>
+        </div>
+        <div>
+          <button
+            className="mt-10 bg-orange-400 rounded-md mainBtn"
+            onClick={() => routeChange("progress")}
+          >
+            Progress
+          </button>
+        </div>
+        <div>
+          <button
+            className="mt-10 bg-violet-400 rounded-md mainBtn"
+            onClick={() => routeChange("settings")}
+          >
+            Settings
+          </button>
+        </div>
+        <div>
+          <button
+            className="mt-10 bg-red-400 rounded-md mainBtn"
+            onClick={() => routeChange("../myhabits")}
+          >
+            Habits
+          </button>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
