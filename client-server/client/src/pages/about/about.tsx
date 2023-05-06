@@ -4,15 +4,29 @@ import Layout from "../../layout/layout";
 const About = () => {
   const people = [
     {
-      name: "Julia Meyr",
-      role: "Co-Founder / CEO",
-      imageUrl:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-      bio: "Ultricies massa malesuada viverra cras lobortis. Tempor orci hac ligula dapibus mauris sit ut eu. Eget turpis urna maecenas cras. Nisl dictum.",
-      twitterUrl: "#",
-      linkedinUrl: "#",
+      name: "Christian Ekhator",
+      role: "Project Leader / CEO",
+      imageUrl: "./img/",
+      bio: "bla bla",
+      snap: "#",
+      insta: "#",
     },
-    // More people...
+    {
+      name: "Julia Meyr",
+      role: "Backend Developer",
+      imageUrl: "./img/",
+      bio: "bla bla",
+      snap: "jmeyr2",
+      insta: "#",
+    },
+    {
+      name: "Amina Gabeljic",
+      role: "Frontend Developer",
+      imageUrl: "./img/",
+      bio: "bla bla",
+      snap: "#",
+      insta: "#",
+    },
   ];
 
   return (
@@ -54,7 +68,7 @@ const About = () => {
                   <ul role="list" className="mt-6 flex gap-x-6">
                     <li>
                       <a
-                        href={person.twitterUrl}
+                        href="#"
                         className="text-orange-400 hover:text-orange-600"
                       >
                         <span className="sr-only">Twitter</span>
@@ -70,7 +84,7 @@ const About = () => {
                     </li>
                     <li>
                       <a
-                        href={person.linkedinUrl}
+                        href="#"
                         className="text-orange-400 hover:text-orange-600"
                       >
                         <span className="sr-only">LinkedIn</span>
