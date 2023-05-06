@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { getData } from "../../utils/data-utils";
 import FormInput from "../../components/form-input";
+import "./login.css";
 
 const defaultFormFields = {
   username: "",
@@ -44,6 +45,7 @@ const Login = () => {
           <div className="form-group mt-3">
             <FormInput
               label="username"
+              placeholder="username"
               type="username"
               required
               name="username"
@@ -55,6 +57,7 @@ const Login = () => {
             <FormInput
               label="Password"
               type="password"
+              placeholder="password"
               required
               name="password"
               value={password}

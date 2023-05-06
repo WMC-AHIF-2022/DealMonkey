@@ -26,6 +26,14 @@ export class DB {
                 points INTEGER,
                 level INTEGER,
                 registrationDate TEXT
-            )`);
+            ) `);
+    await connection.run(`
+            create table if not exists habit (
+                id INTEGER NOT NULL PRIMARY KEY,
+                title TEXT UNIQUE NOT NULL,
+                date TEXT NOT NULL,
+                category TEXT,
+                color TEXT NOT NULL
+            ) strict;`);
   }
 }

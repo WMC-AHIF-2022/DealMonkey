@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { getData, register } from "../../utils/data-utils";
 import FormInput from "../../components/form-input";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
 
 const defaultFormFields = {
   username: "",
@@ -50,6 +52,7 @@ const Register = () => {
               label="Username"
               type="username"
               required
+              placeholder="Username"
               name="username"
               value={username}
               onChange={handleChange}
@@ -59,6 +62,7 @@ const Register = () => {
             <FormInput
               label="Password"
               type="password"
+              placeholder="Password"
               required
               name="password"
               value={password}
@@ -76,7 +80,11 @@ const Register = () => {
             />
           </div>
           <div className="button-group">
-            <button className="button" type="submit">
+            <button
+              className="button"
+              type="submit"
+              onClick={() => handleSubmit}
+            >
               Register
             </button>
             {/*<button type="button" className="button" onClick={reload}>

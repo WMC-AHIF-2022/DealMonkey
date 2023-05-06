@@ -1,10 +1,11 @@
 import { log } from "console";
 import "../styles/navbar.css";
 import { useEffect, useState } from "react";
+import { logout } from "../utils/data-utils";
 
 export default function Navbar() {
   const [user, setUser] = useState("Login");
-  const [logout, setLogout] = useState("Logout");
+  const [logoutText, setLogout] = useState("Logout");
 
   useEffect(() => {
     if (sessionStorage.getItem("user") !== undefined) {
@@ -18,10 +19,7 @@ export default function Navbar() {
   });
 
   const onLogout = (): void => {
-    sessionStorage.removeItem("user");
-    setUser("Login");
-    setLogout("Logout");
-    window.location.reload();
+    logout();
   };
 
   return (
@@ -39,7 +37,7 @@ export default function Navbar() {
         </li>
         <li>
           <button className="bg-orange-400 logoutBtn" onClick={onLogout}>
-            {logout}
+            {logoutText}
           </button>
         </li>
       </ul>

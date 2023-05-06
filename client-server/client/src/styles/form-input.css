@@ -1,6 +1,6 @@
 .form-input {
-  border: 1px solid black;
-  border-radius: 1em;
+  border: 1px solid #adb5bd;
+  border-radius: 0.5em;
   padding-left: 1em;
-  height: 2em;
+  height: 3em;
 }

@@ -1,0 +1,14 @@
+###################################################
+GET http://localhost:8000/api/habits HTTP/1.1
+
+###################################################
+
+POST http://localhost:8000/api/habits HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "new Habit",
+  "date": "2015",
+  "category": "Private",
+  "color": "#fds3e3"
+}

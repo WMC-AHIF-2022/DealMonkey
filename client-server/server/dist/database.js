@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DB = exports.dbFileName = void 0;
 const sqlite3_1 = require("sqlite3");
 const sqlite_1 = require("sqlite");
-exports.dbFileName = 'database.db';
+exports.dbFileName = "database.db";
 class DB {
     static createDBConnection() {
         return __awaiter(this, void 0, void 0, function* () {
             const dbConnection = yield (0, sqlite_1.open)({
                 filename: `./${exports.dbFileName}`,
-                driver: sqlite3_1.Database
+                driver: sqlite3_1.Database,
             });
             yield DB.ensureTablesCreated(dbConnection);
             return dbConnection;
@@ -33,10 +33,18 @@ class DB {
                 password TEXT NOT NULL,
                 email TEXT,                
                 birthdate TEXT,
-                points INTEGER DEFAULT 100,
-                level INTEGER DEFAULT 1,
+                points INTEGER,
+                level INTEGER,
                 registrationDate TEXT
-            )`);
+            ) `);
+            yield connection.run(`
+            create table if not exists habit (
+                id INTEGER NOT NULL PRIMARY KEY,
+                title TEXT UNIQUE NOT NULL,
+                date TEXT NOT NULL,
+                category TEXT,
+                color TEXT NOT NULL
+            ) strict;`);
         });
     }
 }

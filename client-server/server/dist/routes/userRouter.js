@@ -38,6 +38,7 @@ exports.userRouter.post("/registration", (request, response) => __awaiter(void 0
     const birthdate = request.body.birthdate;
     //improve validation
     if (password.trim().length === 0) {
+        console.log("Trim error");
         response.sendStatus(http_status_codes_1.StatusCodes.BAD_REQUEST);
         return;
     }
@@ -49,14 +50,14 @@ exports.userRouter.post("/registration", (request, response) => __awaiter(void 0
         birthdate: birthdate,
         points: 100,
         level: 1,
-        registrationDate: new Date().toISOString()
+        registrationDate: new Date().toISOString(),
     };
     try {
         yield (0, user_repository_1.addUser)(user);
         response.sendStatus(http_status_codes_1.StatusCodes.CREATED);
     }
     catch (exception) {
-        response.sendStatus(http_status_codes_1.StatusCodes.BAD_REQUEST);
+        response.sendStatus(http_status_codes_1.StatusCodes.GONE);
     }
 }));
 exports.userRouter.post("/login", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
@@ -70,7 +71,5 @@ exports.userRouter.post("/login", (request, response) => __awaiter(void 0, void 
     }
 }));
 //TODO
-exports.userRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-}));
-exports.userRouter.delete("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-}));
+exports.userRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () { }));
+exports.userRouter.delete("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () { }));

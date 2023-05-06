@@ -23,13 +23,19 @@ id: -1,
 */
 function addUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("add user");
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare('INSERT INTO user (USERNAME, PASSWORD, EMAIL, BIRTHDATE) VALUES (?1, ?2, ?3, ?4)');
-        yield stmt.bind({ 1: user.username, 2: user.password, 3: user.email, 4: user.birthdate });
+        const stmt = yield db.prepare("INSERT INTO user (USERNAME, PASSWORD, EMAIL) VALUES (?1, ?2, ?3)");
+        yield stmt.bind({
+            1: user.username,
+            2: user.password,
+            3: user.email,
+        });
         const operationResult = yield stmt.run();
         yield stmt.finalize();
         yield db.close();
-        if (typeof operationResult.changes !== "number" || operationResult.changes !== 1) {
+        if (typeof operationResult.changes !== "number" ||
+            operationResult.changes !== 1) {
             throw new Error("Username is already known");
         }
         else {
@@ -41,7 +47,7 @@ exports.addUser = addUser;
 function getAllUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const users = yield db.all('SELECT * FROM user');
+        const users = yield db.all("SELECT * FROM user");
         yield db.close();
         return users;
     });
