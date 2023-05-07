@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import LogoBlack from "../../img/logo-black.png";
 import LogoWhite from "../../img/logo-white.png";
+import { logout } from "../../utils/data-utils";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -13,6 +14,10 @@ function classNames(...classes: any) {
 
 export default function Navbar() {
   const [progress, setProgress] = React.useState(50);
+
+  const signOut = () => {
+    logout();
+  };
 
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -128,13 +133,13 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
-                            href="#"
+                            onClick={signOut}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
-                            Sign out
+                            Sign Out
                           </a>
                         )}
                       </Menu.Item>
