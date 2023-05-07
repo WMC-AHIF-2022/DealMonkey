@@ -2,8 +2,8 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { getData } from "../../utils/data-utils";
 import FormInput from "../../components/form-input";
 import "./login.css";
-import Layout from "../../layout/layout";
-import LogoBlack from "../../logo-black.png";
+import Layout from "../../layout/loggedOut/layout";
+import LogoBlack from "../../img/logo-black.png";
 
 const defaultFormFields = {
   username: "",

@@ -2,9 +2,9 @@ import Habit from "../../components/habit";
 import AddTask from "../../components/addTask";
 import Form from "../../components/form";
 import { useState } from "react";
-import Layout from "../../layout/layout";
+import Layout from "../../layout/loggedIn/layout";
 
-const HabitPage = () => {
+const Habits = () => {
   return (
     <Layout>
       <div className="">
@@ -20,4 +20,4 @@ const HabitPage = () => {
   );
 };
 
-export default HabitPage;
+export default Habits;

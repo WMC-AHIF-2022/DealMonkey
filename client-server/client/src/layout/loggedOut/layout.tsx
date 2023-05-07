@@ -1,9 +1,9 @@
 import { ChildProcess } from "child_process";
 import React from "react";
-import Footer from "../components/footer";
-import Navbar from "../components/navbar";
+import Footer from "./footer";
+import Navbar from "./navbar";
 
-const Layout = ({ children }: any) => {
+const LoggedOutLayout = ({ children }: any) => {
   return (
     <div>
       <Navbar />
@@ -15,4 +15,4 @@ const Layout = ({ children }: any) => {
   );
 };
 
-export default Layout;
+export default LoggedOutLayout;

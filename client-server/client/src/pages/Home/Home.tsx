@@ -1,7 +1,7 @@
 import "./home.css";
 import { useNavigate } from "react-router-dom";
 import Saly from "../../components/img/Saly-19.png";
-import Layout from "../../layout/layout";
+import Layout from "../../layout/loggedOut/layout";
 
 const Home = () => {
   let navigate = useNavigate();

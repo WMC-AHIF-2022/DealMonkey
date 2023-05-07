@@ -1,5 +1,5 @@
 import "./about.css";
-import Layout from "../../layout/layout";
+import Layout from "../../layout/loggedOut/layout";
 
 const About = () => {
   const people = [
