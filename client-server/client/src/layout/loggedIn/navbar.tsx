@@ -1,62 +1,19 @@
-/*import { log } from "console";
-import "../styles/navbar.css";
-import { useEffect, useState } from "react";
-import { logout } from "../utils/data-utils";
-
-export default function Navbar() {
-  const [user, setUser] = useState("Login");
-  const [logoutText, setLogout] = useState("Logout");
-
-  useEffect(() => {
-    if (sessionStorage.getItem("user") !== undefined) {
-      let user: string | null = sessionStorage.getItem("user");
-      if (user !== null && user.length > 0) {
-        setUser(user);
-      } else {
-        setLogout("");
-      }
-    }
-  });
-
-  const onLogout = (): void => {
-    logout();
-  };
-
-  return (
-    <nav className="nav">
-      <a href="/" className="site-title">
-        {" "}
-        DealMonkey
-      </a>
-      <ul>
-        <li className="active">
-          <a href="/login">{user}</a>
-        </li>
-        <li>
-          <a href="/about">About</a>
-        </li>
-        <li>
-          <button className="bg-orange-400 logoutBtn" onClick={onLogout}>
-            {logoutText}
-          </button>
-        </li>
-      </ul>
-    </nav>
-  );
-}
-*/
-
 import { Fragment } from "react";
+import React from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import LogoBlack from "./img/logo-black.png";
-import LogoWhite from "./img/logo-white.png";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
+import LogoBlack from "../../img/logo-black.png";
+import LogoWhite from "../../img/logo-white.png";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  const [progress, setProgress] = React.useState(50);
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }: any) => (
@@ -90,22 +47,22 @@ export default function Navbar() {
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   <a
-                    href="/"
+                    href="/dashboard"
                     className="inline-flex items-center border-b-2 border-orange-400 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
-                    Home
+                    Dashboard
                   </a>
                   <a
-                    href="/about"
+                    href="/myhabits"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
-                    About
+                    Habits
                   </a>
                   <a
-                    href="/login"
+                    href="/tasks"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
-                    Login
+                    Tasks
                   </a>
                 </div>
               </div>
@@ -122,11 +79,11 @@ export default function Navbar() {
                 <Menu as="div" className="relative ">
                   <div>
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
-                      <span className=" inline-flex items-center px-1 text-sm font-medium text-gray-900 pr-5">
-                        Julia Meyr
+                      <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5">
+                        Username
                       </span>
                       <img
-                        className="h-9 w-9 rounded-full"
+                        className="h-9 w-9 mt-1 rounded-full"
                         src="https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg"
                         alt="Icon"
                       />
@@ -141,11 +98,11 @@ export default function Navbar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
-                            href="#"
+                            href="/profile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -158,7 +115,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
-                            href="#"
+                            href="/settings"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"

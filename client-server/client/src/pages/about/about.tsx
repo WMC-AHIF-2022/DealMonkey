@@ -1,5 +1,5 @@
 import "./about.css";
-import Layout from "../../layout/layout";
+import Layout from "../../layout/loggedOut/layout";
 
 const About = () => {
   const people = [
@@ -9,8 +9,8 @@ const About = () => {
       imageUrl:
         "https://i.pinimg.com/750x/17/80/55/178055004c19d75fcb8408951a1a41b6.jpg",
       bio: "bla bla",
-      snap: "#",
-      insta: "#",
+      snap: "c_ekhator1301",
+      insta: "https://www.instagram.com/chris_ekhator/",
     },
     {
       name: "Julia Meyr",
@@ -19,7 +19,7 @@ const About = () => {
         "https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg",
       bio: "bla bla",
       snap: "jmeyr2",
-      insta: "#",
+      insta: "https://www.instagram.com/juliaa.meyr/",
     },
     {
       name: "Amina Gabeljic",
@@ -27,8 +27,8 @@ const About = () => {
       imageUrl:
         "https://i.pinimg.com/750x/27/c0/96/27c0963e26f645094d7f3d2b44bbb680.jpg",
       bio: "bla bla",
-      snap: "#",
-      insta: "#",
+      snap: "amina.gabeljic",
+      insta: "https://www.instagram.com/amina.gabeljic/",
     },
   ];
 
@@ -38,10 +38,10 @@ const About = () => {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-5">
           <div className="max-w-2xl xl:col-span-2">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              About the team
+              About us
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              We are the team of people who are passionate about money
+              We are a team of people who are passionate about money.
             </p>
           </div>
           <ul
@@ -71,7 +71,7 @@ const About = () => {
                   <ul role="list" className="mt-6 flex gap-x-6">
                     <li>
                       <a
-                        href="#"
+                        href={person.snap}
                         className="text-orange-400 hover:text-orange-600"
                       >
                         <span className="sr-only">Snapchat</span>
@@ -87,7 +87,7 @@ const About = () => {
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href={person.insta}
                         className="text-orange-400 hover:text-orange-600"
                       >
                         <span className="sr-only">Instagram</span>

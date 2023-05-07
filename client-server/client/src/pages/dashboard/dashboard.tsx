@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../layout/layout";
+import Layout from "../../layout/loggedIn/layout";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import "./dashboard.css";
