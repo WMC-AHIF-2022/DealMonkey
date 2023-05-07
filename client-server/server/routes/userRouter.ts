@@ -6,6 +6,8 @@ import {
   getAllUsers,
   isAuthorized,
   getUserById,
+  deleteUser,
+  deleteAllUsers,
 } from "../data/repositories/user-repository";
 
 export const userRouter = express.Router();
@@ -31,7 +33,7 @@ userRouter.post("/registration", async (request, response) => {
   const email: string = request.body.email;
   const birthdate: string = request.body.birthdate;
 
-  //improve validation
+  //TODO improve validation
   if (password.trim().length === 0) {
     console.log("Trim error");
     response.sendStatus(StatusCodes.BAD_REQUEST);
@@ -68,7 +70,16 @@ userRouter.post("/login", async (request, response) => {
   }
 });
 
-//TODO
-userRouter.delete("/:id", async (request, response) => {});
+userRouter.delete("/:id", async (request, response) => {
+  const id = Number(request.params.id);
+  if(await deleteUser(id)) {
+    response.sendStatus(StatusCodes.OK);
+  } else {
+    response.sendStatus(StatusCodes.BAD_REQUEST);
+  }
+});
 
-userRouter.delete("/", async (request, response) => {});
+userRouter.delete("/", async (request, response) => {
+  await deleteAllUsers();
+  response.sendStatus(StatusCodes.OK);
+});

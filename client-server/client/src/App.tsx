@@ -1,4 +1,3 @@
-import Navbar from "./layout/loggedOut/layout";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -8,7 +7,7 @@ import "./styles/App.css";
 
 //Pages
 import About from "./pages/about/about";
-import Home from "./pages/Home/Home";
+import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import Register from "./pages/registration/register";
 import Habits from "./pages/habits/habits";

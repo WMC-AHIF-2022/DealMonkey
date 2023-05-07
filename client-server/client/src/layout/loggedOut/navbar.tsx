@@ -3,12 +3,17 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import LogoBlack from "../../img/logo-black.png";
 import LogoWhite from "../../img/logo-white.png";
+import { logout } from "../../utils/data-utils";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  const signOut = () => {
+    logout();
+  };
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }: any) => (
