@@ -14,7 +14,7 @@ const About = () => {
     },
     {
       name: "Julia Meyr",
-      role: "Backend Developer",
+      role: "Backend Developer / SheEO",
       imageUrl:
         "https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg",
       bio: "bla bla",
@@ -23,7 +23,7 @@ const About = () => {
     },
     {
       name: "Amina Gabeljic",
-      role: "Frontend Developer",
+      role: "Frontend Developer / SheEO",
       imageUrl:
         "https://i.pinimg.com/750x/27/c0/96/27c0963e26f645094d7f3d2b44bbb680.jpg",
       bio: "bla bla",

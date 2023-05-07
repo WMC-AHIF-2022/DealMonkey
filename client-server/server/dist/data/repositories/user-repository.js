@@ -9,18 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isAuthorized = exports.getUserById = exports.getAllUsers = exports.addUser = void 0;
+exports.deleteAllUsers = exports.deleteUser = exports.isAuthorized = exports.getUserById = exports.getAllUsers = exports.addUser = void 0;
 const database_1 = require("../../database");
-/*
-id: -1,
-        username: username,
-        password: password,
-        email: email,
-        birthdate: birthdate,
-        points: 100,
-        level: 1,
-        registrationDate: new Date().toISOString()
-*/
 function addUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("add user");
@@ -77,3 +67,23 @@ function isAuthorized(username, password) {
     });
 }
 exports.isAuthorized = isAuthorized;
+function deleteUser(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare(`DELETE FROM user WHERE id = ?1`);
+        yield stmt.bind({ 1: id });
+        const result = yield stmt.get();
+        yield stmt.finalize();
+        yield db.close();
+        return result !== undefined;
+    });
+}
+exports.deleteUser = deleteUser;
+function deleteAllUsers() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        yield db.all('truncate table user');
+        yield db.close();
+    });
+}
+exports.deleteAllUsers = deleteAllUsers;

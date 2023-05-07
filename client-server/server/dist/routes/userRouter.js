@@ -36,7 +36,7 @@ exports.userRouter.post("/registration", (request, response) => __awaiter(void 0
     const password = request.body.password;
     const email = request.body.email;
     const birthdate = request.body.birthdate;
-    //improve validation
+    //TODO improve validation
     if (password.trim().length === 0) {
         console.log("Trim error");
         response.sendStatus(http_status_codes_1.StatusCodes.BAD_REQUEST);
@@ -70,6 +70,16 @@ exports.userRouter.post("/login", (request, response) => __awaiter(void 0, void 
         response.sendStatus(http_status_codes_1.StatusCodes.UNAUTHORIZED);
     }
 }));
-//TODO
-exports.userRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () { }));
-exports.userRouter.delete("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () { }));
+exports.userRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(request.params.id);
+    if (yield (0, user_repository_1.deleteUser)(id)) {
+        response.sendStatus(http_status_codes_1.StatusCodes.OK);
+    }
+    else {
+        response.sendStatus(http_status_codes_1.StatusCodes.BAD_REQUEST);
+    }
+}));
+exports.userRouter.delete("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, user_repository_1.deleteAllUsers)();
+    response.sendStatus(http_status_codes_1.StatusCodes.OK);
+}));
