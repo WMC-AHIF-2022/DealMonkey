@@ -22,7 +22,7 @@ const Home = () => {
             Try it for free
           </button>
         </div>
-        <div>
+        <div className="sm: mt-20 lg:mt-0">
           <img id="logo" src={Saly} alt="logo"></img>
         </div>
       </div>
