@@ -21,7 +21,7 @@ const navigation = {
 
     {
       name: "GitHub",
-      href: "#",
+      href: "https://github.com/WMC-AHIF-2022/DealMonkey",
       icon: (props: any) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
@@ -34,7 +34,7 @@ const navigation = {
     },
     {
       name: "YouTube",
-      href: "#",
+      href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       icon: (props: any) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
@@ -72,7 +72,7 @@ export default function Footer() {
             <a
               key={item.name}
               href={item.href}
-              className="text-gray-400 hover:text-gray-500"
+              className="text-orange-400 hover:text-orange-600"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />
@@ -80,7 +80,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-          &copy; 2023 DealMonkey, Inc. All rights reserved. @HTBLA Leonding
+          &copy; 2023 DealMonkey, Inc. All rights reserved.
         </p>
       </div>
     </footer>

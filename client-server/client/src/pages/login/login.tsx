@@ -45,7 +45,7 @@ const Login = () => {
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
             <img className="logo" src={LogoBlack} />
-            <h3 className="Auth-form-title">Sign In</h3>
+            <h3 className="Auth-form-title">Log In</h3>
             <div className="flex justify-center flex-col">
               <div className="form-group mt-3">
                 <FormInput
@@ -72,7 +72,7 @@ const Login = () => {
             </div>
             <div className="button-group">
               <button className="mt-5 rounded-lg bg-orange-400" type="submit">
-                Sign In
+                Log In
               </button>
             </div>
 

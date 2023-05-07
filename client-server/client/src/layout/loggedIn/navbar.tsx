@@ -42,22 +42,22 @@ export default function Navbar() {
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   <a
-                    href="/"
+                    href="/dashboard"
                     className="inline-flex items-center border-b-2 border-orange-400 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
-                    Home
+                    Dashboard
                   </a>
                   <a
-                    href="/about"
+                    href="/myhabits"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
-                    About
+                    Habits
                   </a>
                   <a
-                    href="/login"
+                    href="/tasks"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
-                    Login
+                    Tasks
                   </a>
                 </div>
               </div>
@@ -75,7 +75,7 @@ export default function Navbar() {
                   <div>
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
                       <span className=" inline-flex items-center px-1 text-sm font-medium text-gray-900 pr-5">
-                        Julia Meyr
+                        Username
                       </span>
                       <img
                         className="h-9 w-9 rounded-full"
@@ -97,7 +97,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
-                            href="#"
+                            href="/profile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -110,7 +110,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
-                            href="#"
+                            href="/settings"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"

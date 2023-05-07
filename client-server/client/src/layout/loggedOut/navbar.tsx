@@ -74,12 +74,12 @@ export default function Navbar() {
                 <Menu as="div" className="relative ">
                   <div>
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
-                      <span className=" inline-flex items-center px-1 text-sm font-medium text-gray-900 pr-5">
-                        Julia Meyr
+                      <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5">
+                        Your Profile
                       </span>
                       <img
-                        className="h-9 w-9 rounded-full"
-                        src="https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg"
+                        className="h-9 w-9 mt-1 rounded-full"
+                        src="https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg"
                         alt="Icon"
                       />
                     </Menu.Button>
