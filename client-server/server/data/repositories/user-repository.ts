@@ -1,17 +1,6 @@
 import { User } from "../interfaces/user";
 import { DB } from "../../database";
 
-/*
-id: -1,
-        username: username,
-        password: password,
-        email: email,
-        birthdate: birthdate,
-        points: 100,
-        level: 1,
-        registrationDate: new Date().toISOString()
-*/
-
 export async function addUser(user: User) {
   console.log("add user");
   const db = await DB.createDBConnection();
@@ -66,4 +55,20 @@ export async function isAuthorized(
   await db.close();
 
   return typeof result !== "undefined" && result.password === password;
+}
+
+export async function deleteUser(id:number): Promise<boolean> {
+  const db = await DB.createDBConnection();
+  const stmt = await db.prepare(`DELETE FROM user WHERE id = ?1`);
+  await stmt.bind({ 1: id });
+  const result: User | undefined = await stmt.get<User>();
+  await stmt.finalize();
+  await db.close();
+  return result !== undefined;
+}
+
+export async function deleteAllUsers(): Promise<void> {
+  const db = await DB.createDBConnection();
+  await db.all('truncate table user');
+  await db.close();
 }
