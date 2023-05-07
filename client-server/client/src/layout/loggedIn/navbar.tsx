@@ -1,6 +1,9 @@
 import { Fragment } from "react";
+import React from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 import LogoBlack from "../../img/logo-black.png";
 import LogoWhite from "../../img/logo-white.png";
 
@@ -9,6 +12,8 @@ function classNames(...classes: any) {
 }
 
 export default function Navbar() {
+  const [progress, setProgress] = React.useState(50);
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }: any) => (
@@ -74,11 +79,11 @@ export default function Navbar() {
                 <Menu as="div" className="relative ">
                   <div>
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
-                      <span className=" inline-flex items-center px-1 text-sm font-medium text-gray-900 pr-5">
+                      <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5">
                         Username
                       </span>
                       <img
-                        className="h-9 w-9 rounded-full"
+                        className="h-9 w-9 mt-1 rounded-full"
                         src="https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg"
                         alt="Icon"
                       />
@@ -93,7 +98,7 @@ export default function Navbar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
