@@ -8,7 +8,7 @@ const About = () => {
       role: "Project Leader / CEO",
       imageUrl:
         "https://i.pinimg.com/750x/17/80/55/178055004c19d75fcb8408951a1a41b6.jpg",
-      bio: "bla bla",
+      bio: "bla bla blup",
       snap: "c_ekhator1301",
       insta: "https://www.instagram.com/chris_ekhator/",
     },
@@ -42,6 +42,13 @@ const About = () => {
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               We are a team of people who are passionate about money.
+              A Architects
+              B Builders
+              O Out of this world
+              U Unique
+              T Technical geniuses
+              U Unconditional
+              S Strategic
             </p>
           </div>
           <ul

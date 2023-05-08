@@ -13,6 +13,7 @@ import Register from "./pages/registration/register";
 import Habits from "./pages/habits/habits";
 import Dashboard from "./pages/dashboard/dashboard";
 import Profile from "./pages/profile/profile";
+import Settings from "./pages/settings/settings";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/myhabits" element={<Habits />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </div>
       </Router>

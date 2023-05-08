@@ -51,10 +51,10 @@ const UserProfile = () => {
               <div className="panel">
                 <div className="user-heading round">
                   <a href="#">
-                    <img src="https://i.pinimg.com/564x/75/90/4d/75904d968f8ee57bb0e1fd28f3424a53.jpg" alt="Profile-Picture"/>
+                    <img src="https://i.pinimg.com/750x/bf/e9/3a/bfe93a722d06d7f29990f266109f67ea.jpg" alt="Profile-Picture"/>
                   </a>
-                  <h1>Hog Rider</h1>
-                  <p>hogrider@gmail.com</p>
+                  <h1>Grüne Viech</h1>
+                  <p>grueneviech@gmail.com</p>
 
                   <div className="profileButtons">
                     <ToggleButtonGroup
