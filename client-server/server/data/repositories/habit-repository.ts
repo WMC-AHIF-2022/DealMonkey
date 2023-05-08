@@ -32,3 +32,9 @@ export async function addHabit(habit: Habit) {
     habit.id = operationResult.lastID!;
   }
 }
+
+export async function deleteTable() {
+  const db = await DB.createDBConnection();
+  await db.all("DELETE FROM habit");
+  await db.close();
+}

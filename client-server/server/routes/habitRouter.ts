@@ -1,7 +1,7 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
 import { Habit } from "../data/interfaces/habit";
-import { addHabit, getAllHabits } from "../data/repositories/habit-repository";
+import { addHabit, getAllHabits, deleteTable} from "../data/repositories/habit-repository";
 
 export const habitRouter = express.Router();
 
@@ -32,4 +32,9 @@ habitRouter.post("/", async (request, response) => {
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);
   }
+});
+
+habitRouter.delete("/", async (request, response) => {
+  await deleteTable();
+  response.sendStatus(StatusCodes.OK);
 });
