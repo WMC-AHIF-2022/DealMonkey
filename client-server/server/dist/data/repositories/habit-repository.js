@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addHabit = exports.getAllHabits = void 0;
+exports.deleteTable = exports.addHabit = exports.getAllHabits = void 0;
 const database_1 = require("../../database");
 function getAllHabits() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -43,3 +43,11 @@ function addHabit(habit) {
     });
 }
 exports.addHabit = addHabit;
+function deleteTable() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        yield db.all("DELETE FROM habit");
+        yield db.close();
+    });
+}
+exports.deleteTable = deleteTable;

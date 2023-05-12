@@ -5,6 +5,8 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import SettingsCard from "../../components/settingsCard";
 import IconType from "../../components/settingsCard";
 import { UserIcon, SunIcon, UserGroupIcon, LanguageIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import { Console } from "console";
 
 const Settings = () => {
   //BUTTONS
@@ -14,7 +16,16 @@ const Settings = () => {
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string,
   ) => {
-    setAlignment(newAlignment);
+    console.log(newAlignment);
+    if(newAlignment === "profile")
+    routeChange("/profile");
+    else if (newAlignment === "settings")
+    routeChange("/settings");
+  };
+
+  let navigate = useNavigate();
+  const routeChange = (path: string) => {
+    navigate(path);
   };
 
   //COLOR THEME
@@ -49,8 +60,8 @@ const Settings = () => {
                       onChange={handleChange}
                       aria-label="Platform"
                     >
-                      <ToggleButton value="web">Stats</ToggleButton>
-                      <ToggleButton value="android">Settings</ToggleButton>
+                      <ToggleButton value="profile">Stats</ToggleButton>
+                      <ToggleButton value="settings">Settings</ToggleButton>
                     </ToggleButtonGroup>
                   </div>
                   <div className="settingCards">

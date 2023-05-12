@@ -42,3 +42,7 @@ exports.habitRouter.post("/", (request, response) => __awaiter(void 0, void 0, v
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
     }
 }));
+exports.habitRouter.delete("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, habit_repository_1.deleteTable)();
+    response.sendStatus(http_status_codes_1.StatusCodes.OK);
+}));

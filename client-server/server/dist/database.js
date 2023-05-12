@@ -41,9 +41,10 @@ class DB {
             create table if not exists habit (
                 id INTEGER NOT NULL PRIMARY KEY,
                 title TEXT UNIQUE NOT NULL,
-                date TEXT NOT NULL,
+                frequency TEXT NOT NULL,
+                reminder TEXT,
                 category TEXT,
-                color TEXT NOT NULL
+                color TEXT NOT NULL,
             ) strict;`);
         });
     }
