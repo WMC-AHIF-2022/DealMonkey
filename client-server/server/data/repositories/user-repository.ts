@@ -1,4 +1,4 @@
-import { User } from "../interfaces/user";
+import { User, loginAuthResult } from "../interfaces/user";
 import { DB } from "../../database";
 
 export async function addUser(user: User) {
@@ -46,7 +46,7 @@ export async function getUserById(id: number): Promise<User | undefined> {
 export async function isAuthorized(
   username: string,
   password: string
-): Promise<boolean> {
+): Promise<User | undefined> {
   const db = await DB.createDBConnection();
   const stmt = await db.prepare(`SELECT * FROM user WHERE username = ?1`);
   await stmt.bind({ 1: username });
@@ -54,10 +54,10 @@ export async function isAuthorized(
   await stmt.finalize();
   await db.close();
 
-  return typeof result !== "undefined" && result.password === password;
+  return result;
 }
 
-export async function deleteUser(id:number): Promise<boolean> {
+export async function deleteUser(id: number): Promise<boolean> {
   const db = await DB.createDBConnection();
   const stmt = await db.prepare(`DELETE FROM user WHERE id = ?1`);
   await stmt.bind({ 1: id });
@@ -69,6 +69,6 @@ export async function deleteUser(id:number): Promise<boolean> {
 
 export async function deleteAllUsers(): Promise<void> {
   const db = await DB.createDBConnection();
-  await db.all('truncate table user');
+  await db.all("truncate table user");
   await db.close();
 }

@@ -16,6 +16,8 @@ exports.userRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = require("http-status-codes");
 const user_repository_1 = require("../data/repositories/user-repository");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 exports.userRouter = express_1.default.Router();
 exports.userRouter.get("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield (0, user_repository_1.getAllUsers)();
@@ -63,8 +65,10 @@ exports.userRouter.post("/registration", (request, response) => __awaiter(void 0
 exports.userRouter.post("/login", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const username = request.body.username;
     const password = request.body.password;
-    if (yield (0, user_repository_1.isAuthorized)(username, password)) {
-        response.sendStatus(http_status_codes_1.StatusCodes.OK);
+    const result = yield (0, user_repository_1.isAuthorized)(username, password);
+    if (result !== undefined) {
+        const jwtToken = jwt.sign({ id: result.id, username: username }, process.env.PRIVATE_KEY);
+        response.json(jwtToken);
     }
     else {
         response.sendStatus(http_status_codes_1.StatusCodes.UNAUTHORIZED);

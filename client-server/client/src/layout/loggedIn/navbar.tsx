@@ -7,6 +7,8 @@ import LinearProgress from "@mui/material/LinearProgress";
 import LogoBlack from "../../img/logo-black.png";
 import LogoWhite from "../../img/logo-white.png";
 import { logout } from "../../utils/data-utils";
+import { useNavigate } from "react-router-dom";
+import useSignOut from "react-auth-kit/dist/hooks/useSignOut";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -14,9 +16,12 @@ function classNames(...classes: any) {
 
 export default function Navbar() {
   const [progress, setProgress] = React.useState(50);
+  const signOut = useSignOut();
+  const navigate = useNavigate();
 
-  const signOut = () => {
-    logout();
+  const logout = () => {
+    signOut();
+    navigate("/login");
   };
 
   return (
@@ -133,7 +138,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
-                            onClick={signOut}
+                            onClick={logout}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"

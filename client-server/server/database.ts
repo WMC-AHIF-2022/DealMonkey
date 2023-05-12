@@ -35,6 +35,23 @@ export class DB {
                 reminder TEXT,
                 category TEXT,
                 color TEXT NOT NULL,
+                userId INTEGER NOT NULL,
+                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+            ) strict;`);
+    await connection.run(`
+            create table if not exists setting(
+               id INTEGER NOT NULL PRIMARY KEY,
+               theme TEXT UNIQUE NOT NULL,
+               userId INTEGER NOT NULL,
+               FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+            ) strict;`);
+    await connection.run(`
+            create table if not exists deal(
+               id INTEGER NOT NULL PRIMARY KEY,
+               name TEXT NOT NULL,
+               habitId INTEGER NOT NULL,
+               type TEXT NOT NULL,
+               FOREIGN KEY (habitId) REFERENCES habit (id) ON DELETE CASCADE
             ) strict;`);
   }
 }

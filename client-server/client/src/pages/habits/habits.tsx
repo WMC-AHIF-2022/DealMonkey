@@ -5,6 +5,8 @@ import { useState } from "react";
 import Layout from "../../layout/loggedIn/layout";
 
 const Habits = () => {
+  const [habits, setHabits] = useState([{}]);
+
   return (
     <Layout>
       <div className="">

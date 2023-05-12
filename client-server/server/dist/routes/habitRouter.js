@@ -23,16 +23,20 @@ exports.habitRouter.get("/", (request, response) => __awaiter(void 0, void 0, vo
 }));
 exports.habitRouter.post("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const title = request.body.title;
-    const date = request.body.date;
+    const frequency = request.body.frequency;
+    const reminder = request.body.reminder;
     const category = request.body.category;
     const color = request.body.color;
+    const userId = parseInt(request.body.userId);
     //Todo: Validation
     const habit = {
         id: -1,
         title,
-        date,
+        frequency,
+        reminder,
         category,
         color,
+        userId,
     };
     try {
         (0, habit_repository_1.addHabit)(habit);
@@ -41,4 +45,8 @@ exports.habitRouter.post("/", (request, response) => __awaiter(void 0, void 0, v
     catch (error) {
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
     }
+}));
+exports.habitRouter.delete("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, habit_repository_1.deleteTable)();
+    response.sendStatus(http_status_codes_1.StatusCodes.OK);
 }));

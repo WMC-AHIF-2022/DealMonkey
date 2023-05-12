@@ -4,6 +4,10 @@ import FormInput from "../../components/form-input";
 import "./login.css";
 import Layout from "../../layout/loggedOut/layout";
 import LogoBlack from "../../img/logo-black.png";
+import { redirect, useNavigate } from "react-router-dom";
+import { useSignIn } from "react-auth-kit";
+import { fetchRestEndpoint } from "../../utils/client-server";
+import { Request, Response } from "express";
 
 const defaultFormFields = {
   username: "",
@@ -13,6 +17,8 @@ const defaultFormFields = {
 const Login = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { username, password } = formFields;
+  const navigate = useNavigate();
+  const signIn = useSignIn();
 
   const resetFormFields = () => {
     return setFormFields(defaultFormFields);
@@ -28,8 +34,27 @@ const Login = () => {
 
     try {
       // make the API call
-      await getData(username, password);
+      const data = JSON.parse(
+        `{"username": "${username}", "password": "${password}"}`
+      );
+
+      const response = await fetchRestEndpoint(
+        "http://localhost:8000/users/login",
+        "POST",
+        data
+      );
+
+      const token: string = JSON.stringify(await response.json());
+
+      signIn({
+        token: token,
+        expiresIn: 3600,
+        tokenType: "Bearer",
+        authState: { username: username },
+      });
+
       resetFormFields();
+      navigate("../dashboard");
     } catch (error) {
       alert("User Login Failed");
     }
