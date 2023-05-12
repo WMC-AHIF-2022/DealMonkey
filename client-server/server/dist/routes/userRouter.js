@@ -68,7 +68,7 @@ exports.userRouter.post("/login", (request, response) => __awaiter(void 0, void 
     const result = yield (0, user_repository_1.isAuthorized)(username, password);
     if (result !== undefined) {
         const jwtToken = jwt.sign({ id: result.id, username: username }, process.env.PRIVATE_KEY);
-        response.json(jwtToken);
+        response.json({ jwtToken: jwtToken, id: result.id });
     }
     else {
         response.sendStatus(http_status_codes_1.StatusCodes.UNAUTHORIZED);

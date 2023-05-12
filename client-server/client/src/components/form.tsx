@@ -9,11 +9,13 @@ import SlidingPaneCom from "./slidingPane";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import { addHabit } from "../utils/data-utils";
+import { addHabit, getAllHabits } from "../utils/data-utils";
 import dayjs, { Dayjs } from "dayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
 
-const Form = () => {
+const Form = ({ setHabits }: any) => {
+  const auth = useAuthUser();
   const [color, setColor] = useState("#fff");
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
@@ -44,11 +46,19 @@ const Form = () => {
     try {
       // make the API call
       let timeString: string = dayjs(time).format("HH:mm");
-      await addHabit(title, frequency,timeString, category, color);
+      await addHabit(title, frequency, timeString, category, color, auth()?.id);
+
       //Todo: clear form fields
     } catch (error: any) {
       alert("Add Habit Failed");
       console.log(error);
+    }
+
+    try {
+      const response = await getAllHabits();
+      setHabits(response);
+    } catch (error) {
+      alert(error);
     }
   };
 

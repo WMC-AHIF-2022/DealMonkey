@@ -44,13 +44,13 @@ const Login = () => {
         data
       );
 
-      const token: string = JSON.stringify(await response.json());
+      const result = await response.json();
 
       signIn({
-        token: token,
+        token: result.jwtToken,
         expiresIn: 3600,
         tokenType: "Bearer",
-        authState: { username: username },
+        authState: { username: username, id: result.id },
       });
 
       resetFormFields();

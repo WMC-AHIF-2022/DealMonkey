@@ -73,7 +73,7 @@ userRouter.post("/login", async (request, response) => {
       { id: result.id, username: username },
       process.env.PRIVATE_KEY
     );
-    response.json(jwtToken);
+    response.json({ jwtToken: jwtToken, id: result.id });
   } else {
     response.sendStatus(StatusCodes.UNAUTHORIZED);
   }

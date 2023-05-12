@@ -29,7 +29,7 @@ export class DB {
             ) `);
     await connection.run(`
             create table if not exists habit (
-                id INTEGER NOT NULL PRIMARY KEY,
+                id INTEGER PRIMARY KEY,
                 title TEXT UNIQUE NOT NULL,
                 frequency TEXT NOT NULL,
                 reminder TEXT,
@@ -40,14 +40,14 @@ export class DB {
             ) strict;`);
     await connection.run(`
             create table if not exists setting(
-               id INTEGER NOT NULL PRIMARY KEY,
+               id INTEGER PRIMARY KEY,
                theme TEXT UNIQUE NOT NULL,
                userId INTEGER NOT NULL,
                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
             ) strict;`);
     await connection.run(`
             create table if not exists deal(
-               id INTEGER NOT NULL PRIMARY KEY,
+               id INTEGER PRIMARY KEY,
                name TEXT NOT NULL,
                habitId INTEGER NOT NULL,
                type TEXT NOT NULL,
