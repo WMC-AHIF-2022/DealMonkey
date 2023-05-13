@@ -4,6 +4,7 @@ import './userProfile.css';
 import { Box, LinearProgress, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import Card from '../../components/card';
 import Layout from '../../layout/loggedIn/layout';
+import { useNavigate } from "react-router-dom";
 
 export interface User {
   id: number,
@@ -36,11 +37,17 @@ const UserProfile = () => {
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string,
   ) => {
-    setAlignment(newAlignment);
+    if(newAlignment === "Settings")
+      routeChange("/settings");
   };
 
   //PROGRESS BAR
   const [progress, setProgress] = React.useState(50);
+
+  let navigate = useNavigate();
+  const routeChange = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <Layout>
@@ -63,10 +70,10 @@ const UserProfile = () => {
                       onChange={handleChange}
                       aria-label="Platform"
                     >
-                      <ToggleButton value="web">Stats</ToggleButton>
-                      <ToggleButton value="android">Settings</ToggleButton>
+                      <ToggleButton value="Stats">Stats</ToggleButton>
+                      <ToggleButton value="Settings">Settings</ToggleButton>
                     </ToggleButtonGroup>
-                  </div>
+-                  </div>
 
                   <div className="mt-8">
                     <h3 className="text-left mb-3">Level 01</h3>
