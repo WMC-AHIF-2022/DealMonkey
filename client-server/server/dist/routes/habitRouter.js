@@ -38,7 +38,6 @@ exports.habitRouter.post("/", (request, response) => __awaiter(void 0, void 0, v
         color,
         userId,
     };
-    console.log(habit);
     try {
         (0, habit_repository_1.addHabit)(habit);
         response.status(http_status_codes_1.StatusCodes.CREATED).json(habit);

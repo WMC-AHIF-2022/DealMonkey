@@ -45,3 +45,11 @@ function addHabit(habit) {
     });
 }
 exports.addHabit = addHabit;
+function deleteTable() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        //await db.all("DROP FROM habit");
+        yield db.close();
+    });
+}
+exports.deleteTable = deleteTable;
