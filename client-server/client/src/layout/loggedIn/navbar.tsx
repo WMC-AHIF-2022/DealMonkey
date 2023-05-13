@@ -102,7 +102,7 @@ export default function Navbar() {
                         </span>
                         <img
                           className="h-9 w-9 mt-1 rounded-full"
-                          src="https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg"
+                          src="https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg"
                           alt="Icon"
                         />
                       </Menu.Button>

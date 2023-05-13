@@ -13,13 +13,17 @@
     font-family: "Roboto Mono", monospace;
 }
 
+.username {
+    margin-top: 10px;;
+}
+
 .profileTable {
     justify-self: center;
 }
 
 .profileButtons {
     justify-self: center;
-    margin-top: 20px;
+    margin-top: 10px;
     color:rgba(255, 255, 255, 0.3);
 }
 

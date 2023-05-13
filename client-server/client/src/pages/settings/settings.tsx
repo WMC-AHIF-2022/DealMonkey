@@ -6,7 +6,7 @@ import SettingsCard from "../../components/settingsCard";
 import IconType from "../../components/settingsCard";
 import { UserIcon, SunIcon, UserGroupIcon, LanguageIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { Console } from "console";
+import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
 
 const Settings = () => {
   //BUTTONS
@@ -27,6 +27,8 @@ const Settings = () => {
   const routeChange = (path: string) => {
     navigate(path);
   };
+
+  const auth = useAuthUser();
 
   //COLOR THEME
   /*
@@ -49,10 +51,11 @@ const Settings = () => {
               <div className="panel">
                 <div className="user-heading round">
                   <a href="#">
-                    <img src="https://i.pinimg.com/750x/bf/e9/3a/bfe93a722d06d7f29990f266109f67ea.jpg" alt="Profile-Picture" />
+                    <img src="https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg" alt="Profile-Picture" />
                   </a>
-                  <h1>Grüne Viech</h1>
-                  <p>grueneviech@gmail.com</p>
+                  <div className="username">
+                    <h1>{auth()?.username}</h1>
+                  </div>                  
                   <div className="profileButtons">
                     <ToggleButtonGroup
                       value={alignment}

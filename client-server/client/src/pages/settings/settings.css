@@ -9,6 +9,10 @@
     text-align: left;
 }
 
+.username {
+    margin-top: 10px;
+}
+
 .settingCards {
     margin-top: 3em;
 }
