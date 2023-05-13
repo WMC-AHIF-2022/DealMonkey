@@ -9,15 +9,22 @@ import LogoWhite from "../../img/logo-white.png";
 import { logout } from "../../utils/data-utils";
 import { useNavigate } from "react-router-dom";
 import useSignOut from "react-auth-kit/dist/hooks/useSignOut";
+import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  const auth = useAuthUser();
   const [progress, setProgress] = React.useState(50);
   const signOut = useSignOut();
   const navigate = useNavigate();
+
+  const navigation = [
+    { Item1: "Dashboard", Item2: "Habits", Item3: "Tasks" },
+    { Item1: "Home", Item2: "About", Item3: "Login" },
+  ];
 
   const logout = () => {
     signOut();
@@ -60,19 +67,19 @@ export default function Navbar() {
                     href="/dashboard"
                     className="inline-flex items-center border-b-2 border-orange-400 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
-                    Dashboard
+                    {auth() != null ? navigation[0].Item1 : navigation[1].Item1}
                   </a>
                   <a
                     href="/myhabits"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
-                    Habits
+                    {auth() != null ? navigation[0].Item2 : navigation[1].Item2}
                   </a>
                   <a
                     href="/tasks"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
-                    Tasks
+                    {auth() != null ? navigation[0].Item3 : navigation[1].Item3}
                   </a>
                 </div>
               </div>
@@ -86,71 +93,75 @@ export default function Navbar() {
                 </button>*/}
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ">
-                  <div>
-                    <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
-                      <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5">
-                        Username
-                      </span>
-                      <img
-                        className="h-9 w-9 mt-1 rounded-full"
-                        src="https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg"
-                        alt="Icon"
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-200"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }: any) => (
-                          <a
-                            href="/profile"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }: any) => (
-                          <a
-                            href="/settings"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }: any) => (
-                          <a
-                            onClick={logout}
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign Out
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                {auth() != null ? (
+                  <Menu as="div" className="relative ">
+                    <div>
+                      <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
+                        <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5">
+                          {auth()?.username}
+                        </span>
+                        <img
+                          className="h-9 w-9 mt-1 rounded-full"
+                          src="https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg"
+                          alt="Icon"
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-200"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }: any) => (
+                            <a
+                              href="/profile"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Your Profile
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }: any) => (
+                            <a
+                              href="/settings"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Settings
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }: any) => (
+                            <a
+                              onClick={logout}
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign Out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                ) : (
+                  "Login"
+                )}
               </div>
             </div>
           </div>

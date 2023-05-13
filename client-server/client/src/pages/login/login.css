@@ -50,3 +50,7 @@ label {
 .logo {
   width: 4em;
 }
+
+.forgot-password:hover {
+  cursor: pointer;
+}

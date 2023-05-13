@@ -40,10 +40,15 @@ export const addHabit = async (
   color: string,
   userId: string
 ) => {
-  const data = JSON.parse(
-    `{"title": "${title}", "frequency": "${frequency}", "reminder": "${reminder}", "category": "${category}", "color": "${color}", "userId": "${userId}"}`
-  );
-  await fetchRestEndpoint("http://localhost:8000/api/habits", "POST", data);
+  try {
+    const data = JSON.parse(
+      `{"title": "${title}", "frequency": "${frequency}", "reminder": "${reminder}", "category": "${category}", "color": "${color}", "userId": "${userId}"}`
+    );
+
+    await fetchRestEndpoint("http://localhost:8000/api/habits", "POST", data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const logout = () => {
@@ -51,9 +56,9 @@ export const logout = () => {
   window.location.href = "/";
 };
 
-export const getAllHabits = async () => {
+export const getAllHabits = async (id: number) => {
   const response = await fetchRestEndpoint(
-    "http://localhost:8000/api/habits",
+    "http://localhost:8000/api/habits/" + id,
     "GET"
   );
 

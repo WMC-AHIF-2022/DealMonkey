@@ -23,9 +23,12 @@
     "react-auth-kit": "^2.12.2",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-push-notification": "^1.5.3",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-sliding-pane": "^7.3.0",
+    "react-toastify": "^9.1.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
