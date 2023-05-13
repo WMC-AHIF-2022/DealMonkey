@@ -23,12 +23,14 @@ exports.getAllHabits = getAllHabits;
 function addHabit(habit) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("INSERT INTO habit (TITLE, DATE, CATEGORY, COLOR) VALUES (?1, ?2, ?3, ?4)");
+        const stmt = yield db.prepare("INSERT INTO habit (TITLE, FREQUENCY, REMINDER, CATEGORY, COLOR, USERID) VALUES (?1, ?2, ?3, ?4, ?5, ?6)");
         yield stmt.bind({
             1: habit.title,
-            2: habit.date,
-            3: habit.category,
-            4: habit.color,
+            2: habit.frequency,
+            3: habit.reminder,
+            4: habit.category,
+            5: habit.color,
+            6: habit.userId,
         });
         const operationResult = yield stmt.run();
         yield stmt.finalize();
@@ -43,11 +45,3 @@ function addHabit(habit) {
     });
 }
 exports.addHabit = addHabit;
-function deleteTable() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const db = yield database_1.DB.createDBConnection();
-        yield db.all("DELETE FROM habit");
-        yield db.close();
-    });
-}
-exports.deleteTable = deleteTable;

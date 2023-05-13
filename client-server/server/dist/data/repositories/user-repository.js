@@ -63,7 +63,7 @@ function isAuthorized(username, password) {
         const result = yield stmt.get();
         yield stmt.finalize();
         yield db.close();
-        return typeof result !== "undefined" && result.password === password;
+        return result;
     });
 }
 exports.isAuthorized = isAuthorized;
@@ -82,7 +82,7 @@ exports.deleteUser = deleteUser;
 function deleteAllUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        yield db.all('truncate table user');
+        yield db.all("truncate table user");
         yield db.close();
     });
 }

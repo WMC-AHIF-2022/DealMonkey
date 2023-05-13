@@ -4,9 +4,15 @@ export const getData = async (username: string, password: string) => {
   const data = JSON.parse(
     `{"username": "${username}", "password": "${password}"}`
   );
-  await fetchRestEndpoint("http://localhost:8000/users/login", "POST", data);
+  const response = await fetchRestEndpoint(
+    "http://localhost:8000/users/login",
+    "POST",
+    data
+  );
   sessionStorage.setItem("user", username);
-  window.location.href = "/dashboard";
+  sessionStorage.setItem("user-id", response?.id);
+
+  return response;
 };
 
 export const register = async (
@@ -28,13 +34,14 @@ export const register = async (
 
 export const addHabit = async (
   title: string,
-  date: string,
+  frequency: string,
+  reminder: string,
   category: string,
-  color: string
+  color: string,
+  userId: string
 ) => {
-  console.log("adding habit", title, date, category, color);
   const data = JSON.parse(
-    `{"title": "${title}", "date": "${date}", "category": "${category}", "color": "${color}" }`
+    `{"title": "${title}", "frequency": "${frequency}", "reminder": "${reminder}", "category": "${category}", "color": "${color}", "userId": "${userId}"}`
   );
   await fetchRestEndpoint("http://localhost:8000/api/habits", "POST", data);
 };
@@ -42,4 +49,13 @@ export const addHabit = async (
 export const logout = () => {
   sessionStorage.removeItem("user");
   window.location.href = "/";
+};
+
+export const getAllHabits = async () => {
+  const response = await fetchRestEndpoint(
+    "http://localhost:8000/api/habits",
+    "GET"
+  );
+
+  return await response.json();
 };

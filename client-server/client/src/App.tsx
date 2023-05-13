@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import RequireAuth from "react-auth-kit/dist/PrivateRoute";
 
 //Styles
 import "./styles/App.css";
@@ -25,10 +26,42 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/myhabits" element={<Habits />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
+
+            <Route
+              path="/myhabits"
+              element={
+                <RequireAuth loginPath="/login">
+                  <Habits />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/profile"
+              element={
+                <RequireAuth loginPath="/login">
+                  <Profile />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth loginPath="/login">
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/settings"
+              element={
+                <RequireAuth loginPath="/login">
+                  <Settings />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </div>
       </Router>

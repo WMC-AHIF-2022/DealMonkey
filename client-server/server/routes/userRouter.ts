@@ -9,6 +9,9 @@ import {
   deleteUser,
   deleteAllUsers,
 } from "../data/repositories/user-repository";
+require("dotenv").config();
+
+const jwt = require("jsonwebtoken");
 
 export const userRouter = express.Router();
 
@@ -63,8 +66,14 @@ userRouter.post("/login", async (request, response) => {
   const username: string = request.body.username;
   const password: string = request.body.password;
 
-  if (await isAuthorized(username, password)) {
-    response.sendStatus(StatusCodes.OK);
+  const result = await isAuthorized(username, password);
+
+  if (result !== undefined) {
+    const jwtToken: JsonWebKey = jwt.sign(
+      { id: result.id, username: username },
+      process.env.PRIVATE_KEY
+    );
+    response.json({ jwtToken: jwtToken, id: result.id });
   } else {
     response.sendStatus(StatusCodes.UNAUTHORIZED);
   }
@@ -72,7 +81,7 @@ userRouter.post("/login", async (request, response) => {
 
 userRouter.delete("/:id", async (request, response) => {
   const id = Number(request.params.id);
-  if(await deleteUser(id)) {
+  if (await deleteUser(id)) {
     response.sendStatus(StatusCodes.OK);
   } else {
     response.sendStatus(StatusCodes.BAD_REQUEST);
