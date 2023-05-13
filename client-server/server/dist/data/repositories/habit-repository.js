@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTable = exports.addHabit = exports.getAllHabits = void 0;
+exports.updateHabit = exports.deleteHabit = exports.deleteTable = exports.addHabit = exports.getAllHabits = void 0;
 const database_1 = require("../../database");
-function getAllHabits() {
+function getAllHabits(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const habits = yield db.all("SELECT * FROM habit");
+        const habits = yield db.all("SELECT * FROM habit WHERE userId = " + userId);
         yield db.close();
         return habits;
     });
@@ -53,3 +53,32 @@ function deleteTable() {
     });
 }
 exports.deleteTable = deleteTable;
+function deleteHabit(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare("delete from habit where id = ?1");
+        yield stmt.bind({ 1: id });
+        const operationResult = yield stmt.run();
+        yield stmt.finalize();
+        yield db.close();
+    });
+}
+exports.deleteHabit = deleteHabit;
+function updateHabit(habit) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare("update habit set title = ?1, frequency = ?2, category = ?3, reminder = ?4, color = ?5 where id = ?6");
+        yield stmt.bind({
+            1: habit.title,
+            2: habit.frequency,
+            3: habit.category,
+            4: habit.reminder,
+            5: habit.color,
+            6: habit.id,
+        });
+        const operationResult = yield stmt.run();
+        stmt.finalize();
+        db.close();
+    });
+}
+exports.updateHabit = updateHabit;

@@ -7,8 +7,7 @@ import LogoBlack from "../../img/logo-black.png";
 import { redirect, useNavigate } from "react-router-dom";
 import { useSignIn } from "react-auth-kit";
 import { fetchRestEndpoint } from "../../utils/client-server";
-import { Request, Response } from "express";
-
+import toast, { Toaster } from "react-hot-toast";
 const defaultFormFields = {
   username: "",
   password: "",
@@ -55,8 +54,8 @@ const Login = () => {
 
       resetFormFields();
       navigate("../dashboard");
-    } catch (error) {
-      alert("User Login Failed");
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
@@ -66,6 +65,7 @@ const Login = () => {
 
   return (
     <Layout>
+      <Toaster />
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
@@ -101,8 +101,11 @@ const Login = () => {
               </button>
             </div>
 
-            <p className="forgot-password text-right mt-6">
-              Forgot <a href="#">password?</a>
+            <p
+              className="forgot-password text-right mt-6"
+              onClick={() => navigate("../register")}
+            >
+              Don't have an account? Sign up
             </p>
           </div>
         </form>

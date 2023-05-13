@@ -5,6 +5,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import Layout from "../../layout/loggedOut/layout";
 import LogoBlack from "../../img/logo-black.png";
+import toast, { Toaster } from "react-hot-toast";
 
 const defaultFormFields = {
   username: "",
@@ -32,8 +33,8 @@ const Register = () => {
       // make the API call
       await register(username, password, birthdate);
       resetFormFields();
-    } catch (error) {
-      alert("Registration failed. Please try again later.");
+    } catch (error: any) {
+      toast.error("Registration failed!");
     }
   };
 
@@ -43,6 +44,7 @@ const Register = () => {
 
   return (
     <Layout>
+      <Toaster />
       <div className="Auth-form-container content-center">
         <form
           className="Auth-form flex flex-col justify-center"
