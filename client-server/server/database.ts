@@ -30,7 +30,7 @@ export class DB {
     await connection.run(`
             create table if not exists habit (
                 id INTEGER PRIMARY KEY,
-                title TEXT UNIQUE NOT NULL,
+                title TEXT NOT NULL,
                 frequency TEXT NOT NULL,
                 reminder TEXT,
                 category TEXT,
