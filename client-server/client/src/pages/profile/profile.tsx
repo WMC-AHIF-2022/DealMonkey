@@ -1,25 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, useEffect } from "react";
 
-import './userProfile.css';
-import { Box, LinearProgress, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import Card from '../../components/card';
-import Layout from '../../layout/loggedIn/layout';
+import "./userProfile.css";
+import {
+  Box,
+  LinearProgress,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
+import Card from "../../components/card";
+import Layout from "../../layout/loggedIn/layout";
 import { useNavigate } from "react-router-dom";
 import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
+import { Popup } from "../../components/popup";
+import FormInput from "../../components/form-input";
+import { fetchRestEndpoint } from "../../utils/client-server";
+import toast, { Toaster } from "react-hot-toast";
 
 export interface User {
-  id: number,
-  username: string,
-  password: string,
-  email: string,
-  birthdate: string,
-  points: number,
-  level: number,
-  registrationDate: string
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+  birthdate: string;
+  points: number;
+  level: number;
+  registrationDate: string;
+}
+
+export interface Setting {
+  id: number;
+  theme: string;
+  userProfile: string;
+  userId: number;
 }
 
 const UserProfile = () => {
-
   // const [user, setMyObject] = useState<User | null>(null);
 
   // const p = sessionStorage.getItem('userProfile') as string;
@@ -32,36 +48,104 @@ const UserProfile = () => {
   // pointsBar.style.width = '20%';
 
   //BUTTONS
-  const [alignment, setAlignment] = React.useState('web');
+  const [alignment, setAlignment] = React.useState("web");
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string,
+    newAlignment: string
   ) => {
-    if(newAlignment === "Settings")
-      routeChange("/settings");
+    if (newAlignment === "Settings") routeChange("/settings");
   };
 
   const auth = useAuthUser();
 
   //PROGRESS BAR
   const [progress, setProgress] = React.useState(50);
+  const [open, setOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState(
+    "https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg"
+  );
 
   let navigate = useNavigate();
   const routeChange = (path: string) => {
     navigate(path);
   };
 
+  const changeUserProfile = () => {};
+
+  const handleProfileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    setUserProfile(event.target.value as string);
+  };
+
+  const getProfile = async () => {
+    try {
+      const response = await fetchRestEndpoint(
+        "http://localhost:8000/api/settings/" + auth()?.id,
+        "GET"
+      );
+
+      const data: Setting = await response.json();
+      setUserProfile(data.userProfile);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  const updateProfile = async () => {
+    try {
+      await fetchRestEndpoint(
+        "http://localhost:8000/api/settings/" + auth()?.id,
+        "PUT",
+        { profile: userProfile }
+      );
+
+      setOpen(false);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <Layout>
+      <Toaster />
       <div className="profileArea1">
+        {open ? (
+          <Popup closePopup={() => setOpen(false)}>
+            <FormInput
+              className="mt-5"
+              label="username"
+              placeholder="Username"
+              type="username"
+              required
+              name="username"
+              value={userProfile}
+              onChange={handleProfileChange}
+            />
+
+            <button
+              onClick={updateProfile}
+              className="mt-5 rounded-lg bg-orange-400"
+              type="submit"
+            >
+              Save
+            </button>
+          </Popup>
+        ) : null}
         <div className="profileTable1">
           <div className="row">
             <div className="profile-nav col-md-3">
               <div className="panel">
                 <div className="user-heading round">
                   <a href="#">
-                    <img src="https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg" alt="Profile-Picture"/>
+                    <img
+                      onClick={() => setOpen(true)}
+                      src={userProfile}
+                      alt="Profile-Picture"
+                    />
                   </a>
                   <div className="username">
                     <h1>{auth()?.username}</h1>
@@ -76,12 +160,17 @@ const UserProfile = () => {
                       <ToggleButton value="Stats">Stats</ToggleButton>
                       <ToggleButton value="Settings">Settings</ToggleButton>
                     </ToggleButtonGroup>
--                  </div>
+                    -{" "}
+                  </div>
 
                   <div className="mt-8">
                     <h3 className="text-left mb-3">Level 01</h3>
                     <Box sx={{ width: "100%", color: "#FF0000" }}>
-                      <LinearProgress className="mb-12" variant="buffer" value={progress} />
+                      <LinearProgress
+                        className="mb-12"
+                        variant="buffer"
+                        value={progress}
+                      />
                     </Box>
                   </div>
                   <Card />

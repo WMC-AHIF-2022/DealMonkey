@@ -43,6 +43,7 @@ export class DB {
                id INTEGER PRIMARY KEY,
                theme TEXT UNIQUE NOT NULL,
                userId INTEGER NOT NULL,
+               userProfile TEXT NOT NULL,
                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
             ) strict;`);
     await connection.run(`
