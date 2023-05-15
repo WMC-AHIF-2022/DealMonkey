@@ -24,3 +24,14 @@ button {
     font-family: "Fira Code", monopspace;
   }
 }
+
+.sticky-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+}
