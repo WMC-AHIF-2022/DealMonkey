@@ -17,6 +17,7 @@ import Dashboard from "./pages/dashboard/dashboard";
 import Profile from "./pages/profile/profile";
 import Settings from "./pages/settings/settings";
 import HabitPage from "./pages/habits/habitPage";
+import TaskPage from "./pages/tasks/tasks";
 
 const App = () => {
   return (
@@ -50,6 +51,15 @@ const App = () => {
 
             <Route
               path="/dashboard"
+              element={
+                <RequireAuth loginPath="/login">
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/tasks"
               element={
                 <RequireAuth loginPath="/login">
                   <Dashboard />

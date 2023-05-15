@@ -101,7 +101,7 @@ export default function Navbar() {
                           {auth()?.username}
                         </span>
                         <img
-                          className="h-9 w-9 mt-1 rounded-full"
+                          className="h-9 w-9 mt-1 rounded-full ml-7"
                           src="https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg"
                           alt="Icon"
                         />
