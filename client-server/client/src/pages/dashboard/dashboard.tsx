@@ -21,7 +21,7 @@ interface HabitItem {
 const Dashboard = () => {
   const auth = useAuthUser();
   const [habits, setHabits] = useState<HabitItem[]>([]);
-  const [progress, setProgress] = useState(50);
+  const [progress, setProgress] = useState(30);
 
   let navigate = useNavigate();
   const routeChange = (path: string) => {
@@ -49,14 +49,14 @@ const Dashboard = () => {
     <Layout>
       <div className="mt-6">
         <h3>Level 01</h3>
-        <Box sx={{ width: "100%", color: "#FF0000" }}>
+        <Box sx={{ width: "100%", color: "#ff0000" }}>
           <LinearProgress variant="buffer" value={progress} />
         </Box>
       </div>
       <div className="h-max grid grid-cols-2 grid-rows-2 gap-2 content-center justify-center">
         <div>
           <button
-            className="mt-10 bg-green-400 rounded-md mainBtn"
+            className="mt-10 bg-orange-500 rounded-md mainBtn"
             id="btn-id-1"
             onClick={() => routeChange("tasks")}
           >
@@ -73,7 +73,7 @@ const Dashboard = () => {
         </div>
         <div>
           <button
-            className="mt-10 bg-violet-400 rounded-md mainBtn"
+            className="mt-10 bg-orange-200 rounded-md mainBtn"
             id="btn-id-3"
             onClick={() => routeChange("settings")}
           >
@@ -82,7 +82,7 @@ const Dashboard = () => {
         </div>
         <div>
           <button
-            className="mt-10 bg-red-400 rounded-md mainBtn"
+            className="mt-10 bg-orange-300 rounded-md mainBtn"
             id="btn-id-2"
             onClick={() => routeChange("../myhabits")}
           >
