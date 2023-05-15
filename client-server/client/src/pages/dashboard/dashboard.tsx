@@ -47,26 +47,6 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      {/*}
-      <div> 
-        {habits.map((habit) => {
-          return new Date(habit.reminder).toLocaleDateString("en-us", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          }) ===
-            new Date().toLocaleDateString("en-us", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            }) ? (
-            <Habit title={habit.title} />
-          ) : (
-            ""
-          );
-        })}
-      </div>
-      */}
       <div className="mt-6">
         <h3>Level 01</h3>
         <Box sx={{ width: "100%", color: "#FF0000" }}>
@@ -77,6 +57,7 @@ const Dashboard = () => {
         <div>
           <button
             className="mt-10 bg-green-400 rounded-md mainBtn"
+            id="btn-id-1"
             onClick={() => routeChange("tasks")}
           >
             Tasks
@@ -93,6 +74,7 @@ const Dashboard = () => {
         <div>
           <button
             className="mt-10 bg-violet-400 rounded-md mainBtn"
+            id="btn-id-3"
             onClick={() => routeChange("settings")}
           >
             Settings
@@ -101,6 +83,7 @@ const Dashboard = () => {
         <div>
           <button
             className="mt-10 bg-red-400 rounded-md mainBtn"
+            id="btn-id-2"
             onClick={() => routeChange("../myhabits")}
           >
             Habits
