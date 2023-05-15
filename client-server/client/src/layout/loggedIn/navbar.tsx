@@ -97,7 +97,7 @@ export default function Navbar() {
                   <Menu as="div" className="relative ">
                     <div>
                       <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
-                        <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5">
+                        <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5 pt-2.5">
                           {auth()?.username}
                         </span>
                         <img
