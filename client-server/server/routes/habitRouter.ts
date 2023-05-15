@@ -50,7 +50,7 @@ habitRouter.delete("/:id", async (request, response) => {
 
   try {
     deleteHabit(id);
-    response.status(StatusCodes.GONE).json({ message: "ok" });
+    response.status(StatusCodes.ACCEPTED).json({ message: "Habit deleted" });
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);
   }
@@ -76,7 +76,6 @@ habitRouter.put("/", async (request, response) => {
   };
 
   try {
-    console.log(habit);
     updateHabit(habit);
     response.status(StatusCodes.ACCEPTED).json(habit);
   } catch (error) {

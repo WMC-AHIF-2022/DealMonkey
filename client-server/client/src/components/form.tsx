@@ -10,11 +10,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { addHabit, getAllHabits } from "../utils/data-utils";
-import dayjs, { Dayjs } from "dayjs";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+
 import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
+
+import { TimePicker } from "antd";
+import dayjs from "dayjs";
 
 const Form = ({
   title,
@@ -58,30 +59,24 @@ const Form = ({
     try {
       // make the API call
       let timeString: string = dayjs(reminder).toISOString();
+
       await addHabit(title, frequency, timeString, category, color, auth()?.id);
-
-      toast.success("Habit added", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1500,
-      });
-
+      toast.success("Habit created");
       //Todo: clear form fields
     } catch (error: any) {
-      alert("Add Habit Failed");
-      console.log(error);
+      toast.error(error.message);
     }
 
     try {
       const response = await getAllHabits(auth()?.id);
       setHabits(response);
-    } catch (error) {
-      alert(error);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
   return (
     <div>
-      <ToastContainer />
       {/*Title*/}
       <FormInput
         placeholder="Title"
@@ -132,11 +127,13 @@ const Form = ({
       </FormControl>
 
       <div className="mt-5">
-        <TimePicker
+        {/*         <TimePicker
           label="Reminder"
           value={reminder}
           onChange={(value) => setReminder(value)}
-        />
+        />*/}
+
+        <TimePicker value={reminder} onChange={(value) => setReminder(value)} />
       </div>
 
       {/*Color Picker*/}
