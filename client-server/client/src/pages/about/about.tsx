@@ -8,7 +8,7 @@ const About = () => {
       role: "Project Leader / CEO",
       imageUrl:
         "https://i.pinimg.com/750x/17/80/55/178055004c19d75fcb8408951a1a41b6.jpg",
-      bio: "bla bla blup",
+      bio: "ich bin heftig",
       snap: "c_ekhator1301",
       insta: "https://www.instagram.com/chris_ekhator/",
     },
@@ -17,7 +17,7 @@ const About = () => {
       role: "Backend Developer / SheEO",
       imageUrl:
         "https://i.pinimg.com/736x/1e/0b/1c/1e0b1c19aa6112dbda022e5a553da3a7.jpg",
-      bio: "bla bla",
+      bio: "bla bla blup",
       snap: "jmeyr2",
       insta: "https://www.instagram.com/juliaa.meyr/",
     },

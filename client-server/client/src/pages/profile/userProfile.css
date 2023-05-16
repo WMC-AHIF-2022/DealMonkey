@@ -13,13 +13,17 @@
     font-family: "Roboto Mono", monospace;
 }
 
+.username {
+    margin-top: 10px;;
+}
+
 .profileTable {
     justify-self: center;
 }
 
 .profileButtons {
     justify-self: center;
-    margin-top: 20px;
+    margin-top: 10px;
     color:rgba(255, 255, 255, 0.3);
 }
 
@@ -59,7 +63,7 @@
 }
 
 .profile-nav .user-heading {
-    background: linear-gradient(45deg, #4ADE80, #FB923C, #A78BFA, #F87171);
+    background: linear-gradient(45deg, #e88504, #ec9006, #ee9f27, #f1b04c, #f5c77e);
     color: #040101;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;

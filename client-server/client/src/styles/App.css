@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 button {
-  background-color: #967aa1;
+  background-color: #ee6c4d;
+  margin-top: 1em;
+  margin-right: 1em;
   width: 10em;
   height: 3em;
   border: none;
   color: white;
+  border-radius: 10px;
 }
 
 @layer components {
@@ -20,4 +23,15 @@ button {
   html {
     font-family: "Fira Code", monopspace;
   }
+}
+
+.sticky-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.wrapper {
+  position: relative;
+  min-height: 100vh;
 }

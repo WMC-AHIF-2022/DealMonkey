@@ -17,26 +17,66 @@ const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = require("http-status-codes");
 const habit_repository_1 = require("../data/repositories/habit-repository");
 exports.habitRouter = express_1.default.Router();
-exports.habitRouter.get("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-    const habits = yield (0, habit_repository_1.getAllHabits)();
+exports.habitRouter.get("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = parseInt(request.params.id);
+    const habits = yield (0, habit_repository_1.getAllHabits)(userId);
     response.status(http_status_codes_1.StatusCodes.OK).json(habits);
 }));
 exports.habitRouter.post("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const title = request.body.title;
-    const date = request.body.date;
+    const frequency = request.body.frequency;
+    const reminder = request.body.reminder;
     const category = request.body.category;
     const color = request.body.color;
+    const userId = parseInt(request.body.userId);
     //Todo: Validation
     const habit = {
         id: -1,
         title,
-        date,
+        frequency,
+        reminder,
         category,
         color,
+        userId,
     };
     try {
         (0, habit_repository_1.addHabit)(habit);
         response.status(http_status_codes_1.StatusCodes.CREATED).json(habit);
+    }
+    catch (error) {
+        response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
+    }
+}));
+exports.habitRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(request.params.id);
+    try {
+        (0, habit_repository_1.deleteHabit)(id);
+        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json({ message: "Habit deleted" });
+    }
+    catch (error) {
+        response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
+    }
+}));
+exports.habitRouter.put("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(request.body.id);
+    const title = request.body.title;
+    const frequency = request.body.frequency;
+    const reminder = request.body.reminder;
+    const category = request.body.category;
+    const color = request.body.color;
+    const userId = parseInt(request.body.userId);
+    const habit = {
+        id,
+        title,
+        frequency,
+        reminder,
+        category,
+        color,
+        userId,
+    };
+    try {
+        (0, habit_repository_1.updateHabit)(habit);
+        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(habit);
     }
     catch (error) {
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);

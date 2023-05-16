@@ -9,14 +9,33 @@ import SlidingPaneCom from "./slidingPane";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import { addHabit } from "../utils/data-utils";
-import dayjs, { Dayjs } from "dayjs";
+import { addHabit, getAllHabits } from "../utils/data-utils";
 
-const Form = () => {
-  const [color, setColor] = useState("#fff");
-  const [category, setCategory] = useState("");
-  const [title, setTitle] = useState("");
-  const [date, setDate] = React.useState<Dayjs | null>(dayjs("2022-04-17"));
+import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
+import toast, { Toaster } from "react-hot-toast";
+
+import { TimePicker } from "antd";
+import dayjs from "dayjs";
+
+const Form = ({
+  title,
+  frequency,
+  reminder,
+  category,
+  color,
+  setTitle,
+  setFrequency,
+  setReminder,
+  setCategory,
+  setColor,
+  setHabits,
+  saveBtn,
+  updateBtn,
+  deleteBtn,
+  onDelete,
+  onUpdate,
+}: any) => {
+  const auth = useAuthUser();
 
   const handleColorChange = (color: any) => {
     setColor(color.hex);
@@ -30,70 +49,136 @@ const Form = () => {
     setTitle(event.target.value as string);
   };
 
+  const handleFrequencyChange = (event: SelectChangeEvent) => {
+    setFrequency(event.target.value as string);
+  };
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
     try {
       // make the API call
-      let dateString: string = dayjs(date).format("YYYY-MM-DD");
-      await addHabit(title, dateString, category, color);
+      let timeString: string = dayjs(reminder).toISOString();
+
+      await addHabit(title, frequency, timeString, category, color, auth()?.id);
+      toast.success("Habit created");
       //Todo: clear form fields
     } catch (error: any) {
-      alert("Add Habit Failed");
-      console.log(error);
+      toast.error(error.message);
+    }
+
+    try {
+      const response = await getAllHabits(auth()?.id);
+      setHabits(response);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
   return (
     <div>
-      <SlidingPaneCom>
-        {/*Title*/}
-        <FormInput
-          placeholder="Title"
-          label="Title"
-          value={title}
-          onChange={(value) => handleTitleChange(value)}
-        />
+      {/*Title*/}
+      <FormInput
+        placeholder="Title"
+        label="Title"
+        value={title}
+        required
+        onChange={(value) => handleTitleChange(value)}
+      />
 
-        {/*Date Picker*/}
-        <div className="mt-5">
-          <DatePicker
-            label="Date"
-            value={date}
-            onChange={(value) => setDate(value)}
-          />
-        </div>
-
-        {/*Category Picker*/}
-        <FormControl className="mt-5" fullWidth>
-          <InputLabel className="mt-5" id="demo-simple-select-label">
-            Category
-          </InputLabel>
-          <Select
-            className="mt-5"
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={category}
-            label="Category"
-            onChange={handleCategoryChange}
-          >
-            <MenuItem value={"School"}>School</MenuItem>
-            <MenuItem value={"Private"}>Private</MenuItem>
-            <MenuItem value={"Work"}>Work</MenuItem>
-          </Select>
-        </FormControl>
-
-        {/*Color Picker*/}
-        <TwitterPicker
+      {/*Category Picker*/}
+      <FormControl className="mt-5" fullWidth>
+        <InputLabel className="mt-5" id="demo-simple-select-label">
+          Category
+        </InputLabel>
+        <Select
           className="mt-5"
-          color={color}
-          onChangeComplete={handleColorChange}
-        />
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={category}
+          label="Category"
+          required
+          onChange={handleCategoryChange}
+        >
+          <MenuItem value={"School"}>School</MenuItem>
+          <MenuItem value={"Private"}>Private</MenuItem>
+          <MenuItem value={"Work"}>Work</MenuItem>
+        </Select>
+      </FormControl>
 
-        <button onClick={handleSubmit} className="mt-5">
-          Save
-        </button>
-      </SlidingPaneCom>
+      {/*Category Picker*/}
+      <FormControl className="mt-5" fullWidth>
+        <InputLabel className="mt-5" id="demo-simple-select-label">
+          Frequency
+        </InputLabel>
+        <Select
+          className="mt-5"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={frequency}
+          label="Frequency"
+          required
+          onChange={handleFrequencyChange}
+        >
+          <MenuItem value={"Day"}>Every Day</MenuItem>
+          <MenuItem value={"Week"}>Once a Week</MenuItem>
+          <MenuItem value={"Month"}>Once a Month</MenuItem>
+        </Select>
+      </FormControl>
+
+      <div className="mt-5">
+        {/*         <TimePicker
+          label="Reminder"
+          value={reminder}
+          onChange={(value) => setReminder(value)}
+        />*/}
+
+        <TimePicker value={reminder} onChange={(value) => setReminder(value)} />
+      </div>
+
+      {/*Color Picker*/}
+      <TwitterPicker
+        className="mt-5"
+        color={color}
+        onChangeComplete={handleColorChange}
+      />
+
+      <button
+        style={{ display: saveBtn == false ? "none" : "" }}
+        onClick={handleSubmit}
+        className="mt-5"
+      >
+        Save
+      </button>
+
+      <button
+        style={{ display: updateBtn == false ? "none" : "" }}
+        onClick={() => {
+          const habit = {
+            id: parseInt(localStorage.getItem("currHabitId")!),
+            title: title,
+            frequency: frequency,
+            reminder: reminder,
+            category: category,
+            color: color,
+            userId: auth()?.id,
+          };
+          onUpdate(habit);
+        }}
+        className="mt-5"
+      >
+        Update
+      </button>
+
+      <button
+        style={{ display: deleteBtn == false ? "none" : "" }}
+        onClick={() => {
+          onDelete(parseInt(localStorage.getItem("currHabitId")!));
+        }}
+        className="mt-5"
+      >
+        Delete
+      </button>
     </div>
   );
 };

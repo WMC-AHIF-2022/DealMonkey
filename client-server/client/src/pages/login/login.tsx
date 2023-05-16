@@ -4,6 +4,10 @@ import FormInput from "../../components/form-input";
 import "./login.css";
 import Layout from "../../layout/loggedOut/layout";
 import LogoBlack from "../../img/logo-black.png";
+import { redirect, useNavigate } from "react-router-dom";
+import { useSignIn } from "react-auth-kit";
+import { fetchRestEndpoint } from "../../utils/client-server";
+import toast, { Toaster } from "react-hot-toast";
 
 const defaultFormFields = {
   username: "",
@@ -13,6 +17,8 @@ const defaultFormFields = {
 const Login = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { username, password } = formFields;
+  const navigate = useNavigate();
+  const signIn = useSignIn();
 
   const resetFormFields = () => {
     return setFormFields(defaultFormFields);
@@ -28,10 +34,29 @@ const Login = () => {
 
     try {
       // make the API call
-      await getData(username, password);
+      const data = JSON.parse(
+        `{"username": "${username}", "password": "${password}"}`
+      );
+
+      const response = await fetchRestEndpoint(
+        "http://localhost:8000/users/login",
+        "POST",
+        data
+      );
+
+      const result = await response.json();
+
+      signIn({
+        token: result.jwtToken,
+        expiresIn: 3600,
+        tokenType: "Bearer",
+        authState: { username: username, id: result.id },
+      });
+
       resetFormFields();
-    } catch (error) {
-      alert("User Login Failed");
+      navigate("../dashboard");
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
@@ -41,6 +66,7 @@ const Login = () => {
 
   return (
     <Layout>
+      <Toaster />
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
@@ -76,8 +102,11 @@ const Login = () => {
               </button>
             </div>
 
-            <p className="forgot-password text-right mt-6">
-              Forgot <a href="#">password?</a>
+            <p
+              className="forgot-password text-right mt-6"
+              onClick={() => navigate("../register")}
+            >
+              Don't have an account? Sign up
             </p>
           </div>
         </form>

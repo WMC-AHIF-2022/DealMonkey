@@ -2,16 +2,11 @@ import React, { Component, useState } from "react";
 import { render } from "react-dom";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
+import Form from "./form";
 
-const SlidingPaneCom = (props: any) => {
-  const [open, setOpen] = useState(false);
-
+const SlidingPaneCom = ({ open, setOpen, ...props }: any) => {
   return (
     <div>
-      <div style={{ marginTop: "32px" }}>
-        <button onClick={() => setOpen(true)}>Add Habit</button>
-      </div>
-
       <SlidingPane
         isOpen={open}
         from="right"

@@ -1,7 +1,9 @@
 export interface Habit {
   id: number;
   title: string;
-  date: string;
+  frequency: string;
+  reminder: string;
   category: string;
   color: string;
+  userId: number;
 }
