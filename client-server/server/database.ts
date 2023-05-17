@@ -54,13 +54,13 @@ export class DB {
             ) strict;`);
     await connection.run(`
             create table if not exists todo (
-                id INTEGER NOT NULL,
+                id INTEGER,
                 priority TEXT NOT NULL,
                 FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
             ) strict;`);
     await connection.run(`
             create table if not exists habit (
-              id INTEGER NOT NULL,
+              id INTEGER,
               frequency TEXT NOT NULL,
               reminder TEXT,
               FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE

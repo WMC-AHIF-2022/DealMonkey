@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "title": "Walk Dog",
+  "title": "Walk Dog 2",
   "category": "Schoool",
   "color": "#e9edc9",
   "userId": 1,
