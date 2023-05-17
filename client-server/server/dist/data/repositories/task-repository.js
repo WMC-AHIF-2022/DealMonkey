@@ -76,7 +76,7 @@ function updateTask(task) {
         const operationResult = yield stmt.run();
         stmt.finalize();
         db.close();
-        return task;
+        return task.id;
     });
 }
 exports.updateTask = updateTask;

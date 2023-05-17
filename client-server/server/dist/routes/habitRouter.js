@@ -30,18 +30,16 @@ exports.habitRouter.post("/", (request, response) => __awaiter(void 0, void 0, v
     const color = request.body.color;
     const userId = parseInt(request.body.userId);
     //Todo: Validation
-    const habit = {
+    const newTask = {
         id: -1,
-        title,
-        frequency,
-        reminder,
-        category,
-        color,
-        userId,
+        title: title,
+        category: category,
+        color: color,
+        userId: userId,
     };
     try {
-        (0, habit_repository_1.addHabit)(habit);
-        response.status(http_status_codes_1.StatusCodes.CREATED).json(habit);
+        const newHabit = (0, habit_repository_1.addHabit)(newTask, frequency, reminder);
+        response.status(http_status_codes_1.StatusCodes.CREATED).json(newHabit);
     }
     catch (error) {
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
@@ -65,18 +63,16 @@ exports.habitRouter.put("/", (request, response) => __awaiter(void 0, void 0, vo
     const category = request.body.category;
     const color = request.body.color;
     const userId = parseInt(request.body.userId);
-    const habit = {
-        id,
-        title,
-        frequency,
-        reminder,
-        category,
-        color,
-        userId,
+    const task = {
+        id: id,
+        title: title,
+        category: category,
+        color: color,
+        userId: userId,
     };
     try {
-        (0, habit_repository_1.updateHabit)(habit);
-        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(habit);
+        const updatedHabit = (0, habit_repository_1.updateHabit)(task, frequency, reminder);
+        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(updatedHabit);
     }
     catch (error) {
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);

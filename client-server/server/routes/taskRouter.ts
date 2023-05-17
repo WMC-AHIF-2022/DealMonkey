@@ -21,10 +21,10 @@ taskRouter.post("/", async (request, response) => {
   
     const newTask: Task = {
       id: -1,
-      title,
-      category,
-      color,
-      userId,
+      title: title,
+      category: category,
+      color: color,
+      userId: userId,
     };
   
     try {
@@ -66,8 +66,8 @@ taskRouter.put("/", async (request, response) => {
     };
   
     try {
-      const updatedTask: Task = await updateTask(task);
-      response.status(StatusCodes.ACCEPTED).json(updatedTask);
+      await updateTask(task);
+      response.status(StatusCodes.ACCEPTED).json(task);
     } catch (error) {
       response.status(StatusCodes.BAD_REQUEST).json(error);
     }

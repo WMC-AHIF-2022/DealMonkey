@@ -1,33 +1,7 @@
 ###################################################
 GET http://localhost:8000/api/tasks/1 HTTP/1.1
 
-###################################################
-POST http://localhost:8000/api/tasks HTTP/1.1
-Content-Type: application/json
-
-{
-  "title": "Walk Dog",
-  "category": "School",
-  "color": "#e9edc9",
-  "userId": 1
-}
-
 ################################
-DELETE http://localhost:8000/api/tasks/5 HTTP/1.1
+DELETE http://localhost:8000/api/tasks/1 HTTP/1.1
 
 ####################################
-
-PUT http://localhost:8000/api/tasks HTTP/1.1
-Content-Type: application/json
-
-{
-  "id": 1,
-  "title": "Walk Dog",
-  "frequency": "once a month",
-  "reminder": "11:45",
-  "category": "school",
-  "color": "#e9edc9",
-  "userId": 3
-}
-
-################################

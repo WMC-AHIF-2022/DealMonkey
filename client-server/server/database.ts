@@ -56,7 +56,6 @@ export class DB {
             create table if not exists todo (
                 id INTEGER NOT NULL,
                 priority TEXT NOT NULL,
-                
                 FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
             ) strict;`);
     await connection.run(`

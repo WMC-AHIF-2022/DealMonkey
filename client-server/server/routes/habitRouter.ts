@@ -1,10 +1,10 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
 import { Habit } from "../data/interfaces/habit";
+import { Task } from "../data/interfaces/task";
 import {
   addHabit,
   getAllHabits,
-  deleteTable,
   deleteHabit,
   updateHabit,
 } from "../data/repositories/habit-repository";
@@ -27,19 +27,17 @@ habitRouter.post("/", async (request, response) => {
 
   //Todo: Validation
 
-  const habit: Habit = {
+  const newTask: Task = {
     id: -1,
-    title,
-    frequency,
-    reminder,
-    category,
-    color,
-    userId,
+    title: title,
+    category: category,
+    color: color,
+    userId: userId,
   };
 
   try {
-    addHabit(habit);
-    response.status(StatusCodes.CREATED).json(habit);
+    const newHabit = addHabit(newTask, frequency, reminder);
+    response.status(StatusCodes.CREATED).json(newHabit);
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);
   }
@@ -65,19 +63,17 @@ habitRouter.put("/", async (request, response) => {
   const color: string = request.body.color;
   const userId: number = parseInt(request.body.userId);
 
-  const habit: Habit = {
-    id,
-    title,
-    frequency,
-    reminder,
-    category,
-    color,
-    userId,
+  const task: Task = {
+    id: id,
+    title: title,
+    category: category,
+    color: color,
+    userId: userId,
   };
 
   try {
-    updateHabit(habit);
-    response.status(StatusCodes.ACCEPTED).json(habit);
+    const updatedHabit = updateHabit(task, frequency, reminder);
+    response.status(StatusCodes.ACCEPTED).json(updatedHabit);
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);
   }

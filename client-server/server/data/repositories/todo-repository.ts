@@ -1,7 +1,7 @@
 import { Todo } from "../interfaces/todo";
 import { Task } from "../interfaces/task";
 import { DB } from "../../database";
-import { addTask } from "./task-repository";
+import { addTask, updateTask } from "./task-repository";
 
 export async function getAllTodos(userId: number): Promise<Todo[]> {
   const db = await DB.createDBConnection();
@@ -13,9 +13,11 @@ export async function getAllTodos(userId: number): Promise<Todo[]> {
   return todos!;
 }
 
-export async function addTodo(task: Task, priority: string) {
+export async function addTodo(task: Task, priority: string):Promise<Todo> {
+  //adding task (parent) to get id
   const id = await addTask(task);
-  console.log(id);
+
+  //adding todo:
   const db = await DB.createDBConnection();
 
   const stmt = await db.prepare("INSERT INTO todo VALUES (?1, ?2)");
@@ -31,34 +33,30 @@ export async function addTodo(task: Task, priority: string) {
   if (typeof operationResult.changes !== "number" || operationResult.changes !== 1) {
     throw new Error("Could not add todo");
   } 
+
+  //returning new todo
+  const jsonString = JSON.stringify({id: id, priority: priority});
+  return <Todo>JSON.parse(jsonString);
 }
 
-export async function deleteTodo(id: number) {
+export async function updateTodo(task:Task, priority: string):Promise<Todo> {
+  //updating task (parent)
+  const id = await updateTask(task);
+
+  //updating todo:
   const db = await DB.createDBConnection();
 
-  const stmt = await db.prepare("delete from todo where id = ?1");
-  await stmt.bind({ 1: id });
-  await stmt.run();
-
-  await stmt.finalize();
-  await db.close();
-}
-
-export async function updateTodo(todo: Todo):Promise<Todo> {
-  const db = await DB.createDBConnection();
-
-  const stmt = await db.prepare("update todo set title = ?1, category = ?2, color = ?3, priority = ?4 where id = ?5");
+  const stmt = await db.prepare("update todo set priority = ?2 where id = ?1");
   await stmt.bind({
-    1: todo.title,
-    2: todo.category,
-    3: todo.color,
-    4: todo.priority,
-    5: todo.id
+    1: id,
+    2: priority
   });
 
   await stmt.run();
   stmt.finalize();
   db.close();
 
-  return todo;
+  //returning new todo
+  const jsonString = JSON.stringify({id: id, priority: priority});
+  return <Todo>JSON.parse(jsonString);
 }

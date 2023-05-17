@@ -35,12 +35,11 @@ export async function addTask(task: Task):Promise<number> {
   return task.id;
 }
 
-
 export async function deleteTableTask() {
-  const db = await DB.createDBConnection();
-  await db.all("DROP FROM task");
-  await db.close();
-}
+    const db = await DB.createDBConnection();
+    await db.all("DROP FROM task");
+    await db.close();
+  }
 
 export async function deleteTask(id: number) {
   const db = await DB.createDBConnection();
@@ -53,7 +52,7 @@ export async function deleteTask(id: number) {
   await db.close();
 }
 
-export async function updateTask(task: Task):Promise<Task> {
+export async function updateTask(task: Task):Promise<number> {
   const db = await DB.createDBConnection();
 
   const stmt = await db.prepare("update task set title = ?1, category = ?2, color = ?3 where id = ?4");
@@ -68,5 +67,5 @@ export async function updateTask(task: Task):Promise<Task> {
   stmt.finalize();
   db.close();
 
-  return task;
+  return task.id;
 }

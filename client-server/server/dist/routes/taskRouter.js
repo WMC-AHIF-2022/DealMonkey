@@ -30,10 +30,10 @@ exports.taskRouter.post("/", (request, response) => __awaiter(void 0, void 0, vo
     //Todo: Validation
     const newTask = {
         id: -1,
-        title,
-        category,
-        color,
-        userId,
+        title: title,
+        category: category,
+        color: color,
+        userId: userId,
     };
     try {
         console.log(newTask);
@@ -70,8 +70,8 @@ exports.taskRouter.put("/", (request, response) => __awaiter(void 0, void 0, voi
         userId: userId,
     };
     try {
-        const updatedTask = yield (0, task_repository_1.updateTask)(task);
-        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(updatedTask);
+        yield (0, task_repository_1.updateTask)(task);
+        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(task);
     }
     catch (error) {
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);

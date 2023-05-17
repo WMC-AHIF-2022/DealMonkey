@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTodo = exports.deleteTodo = exports.addTodo = exports.getAllTodos = void 0;
+exports.updateTodo = exports.addTodo = exports.getAllTodos = void 0;
 const database_1 = require("../../database");
 const task_repository_1 = require("./task-repository");
 function getAllTodos(userId) {
@@ -24,8 +24,9 @@ function getAllTodos(userId) {
 exports.getAllTodos = getAllTodos;
 function addTodo(task, priority) {
     return __awaiter(this, void 0, void 0, function* () {
+        //adding task (parent) to get id
         const id = yield (0, task_repository_1.addTask)(task);
-        console.log(id);
+        //adding todo:
         const db = yield database_1.DB.createDBConnection();
         const stmt = yield db.prepare("INSERT INTO todo VALUES (?1, ?2)");
         yield stmt.bind({
@@ -38,35 +39,29 @@ function addTodo(task, priority) {
         if (typeof operationResult.changes !== "number" || operationResult.changes !== 1) {
             throw new Error("Could not add todo");
         }
+        //returning new todo
+        const jsonString = JSON.stringify({ id: id, priority: priority });
+        return JSON.parse(jsonString);
     });
 }
 exports.addTodo = addTodo;
-function deleteTodo(id) {
+function updateTodo(task, priority) {
     return __awaiter(this, void 0, void 0, function* () {
+        //updating task (parent)
+        const id = yield (0, task_repository_1.updateTask)(task);
+        //updating todo:
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("delete from todo where id = ?1");
-        yield stmt.bind({ 1: id });
-        yield stmt.run();
-        yield stmt.finalize();
-        yield db.close();
-    });
-}
-exports.deleteTodo = deleteTodo;
-function updateTodo(todo) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("update todo set title = ?1, category = ?2, color = ?3, priority = ?4 where id = ?5");
+        const stmt = yield db.prepare("update todo set priority = ?2 where id = ?1");
         yield stmt.bind({
-            1: todo.title,
-            2: todo.category,
-            3: todo.color,
-            4: todo.priority,
-            5: todo.id
+            1: id,
+            2: priority
         });
         yield stmt.run();
         stmt.finalize();
         db.close();
-        return todo;
+        //returning new todo
+        const jsonString = JSON.stringify({ id: id, priority: priority });
+        return JSON.parse(jsonString);
     });
 }
 exports.updateTodo = updateTodo;

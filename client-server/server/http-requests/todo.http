@@ -13,9 +13,6 @@ Content-Type: application/json
   "priority": "heftig"
 }
 
-################################
-DELETE http://localhost:8000/api/todos/4 HTTP/1.1
-
 ####################################
 
 PUT http://localhost:8000/api/todos HTTP/1.1
@@ -24,11 +21,10 @@ Content-Type: application/json
 {
   "id": 1,
   "title": "Walk Dog",
-  "frequency": "once a month",
-  "reminder": "11:45",
-  "category": "school",
+  "category": "Schoool",
   "color": "#e9edc9",
-  "userId": 3
+  "userId": 1,
+  "priority": "ned so heftig"
 }
 
 ################################

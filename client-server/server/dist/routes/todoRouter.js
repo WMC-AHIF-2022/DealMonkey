@@ -23,7 +23,6 @@ exports.todoRouter.get("/:userId", (request, response) => __awaiter(void 0, void
     response.status(http_status_codes_1.StatusCodes.OK).json(todos);
 }));
 exports.todoRouter.post("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number.parseInt(request.body.id);
     const title = request.body.title;
     const category = request.body.category;
     const color = request.body.color;
@@ -31,25 +30,15 @@ exports.todoRouter.post("/", (request, response) => __awaiter(void 0, void 0, vo
     const priority = request.body.priority;
     //Todo: Validation
     const newTask = {
-        id: id,
+        id: -1,
         title: title,
         category: category,
         color: color,
         userId: userId,
     };
     try {
-        yield (0, todo_repository_1.addTodo)(newTask, priority);
-        response.status(http_status_codes_1.StatusCodes.CREATED).json(newTask);
-    }
-    catch (error) {
-        response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
-    }
-}));
-exports.todoRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number.parseInt(request.params.id);
-    try {
-        yield (0, todo_repository_1.deleteTodo)(id);
-        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json({ message: "Todo deleted" });
+        const addedTodo = yield (0, todo_repository_1.addTodo)(newTask, priority);
+        response.status(http_status_codes_1.StatusCodes.CREATED).json(addedTodo);
     }
     catch (error) {
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
@@ -62,16 +51,15 @@ exports.todoRouter.put("/", (request, response) => __awaiter(void 0, void 0, voi
     const color = request.body.color;
     const userId = Number.parseInt(request.body.userId);
     const priority = request.body.priority;
-    const todo = {
+    const task = {
         id: id,
         title: title,
         category: category,
         color: color,
         userId: userId,
-        priority: priority,
     };
     try {
-        const updatedTodo = yield (0, todo_repository_1.updateTodo)(todo);
+        const updatedTodo = yield (0, todo_repository_1.updateTodo)(task, priority);
         response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(updatedTodo);
     }
     catch (error) {
