@@ -41,15 +41,6 @@ export async function addHabit(task:Task, frequency:string, reminder:string) {
   return <Habit>JSON.parse(jsonString);
 }
 
-export async function deleteHabit(id: number) {
-  const db = await DB.createDBConnection();
-  const stmt = await db.prepare("delete from habit where id = ?1");
-  await stmt.bind({ 1: id });
-  const operationResult = await stmt.run();
-  await stmt.finalize();
-  await db.close();
-}
-
 export async function updateHabit(task: Task, frequency:string, reminder:string) {
   //updating task (parent)
   const id = await updateTask(task);

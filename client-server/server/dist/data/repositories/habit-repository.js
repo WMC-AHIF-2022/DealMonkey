@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateHabit = exports.deleteHabit = exports.addHabit = exports.getAllHabits = void 0;
+exports.updateHabit = exports.addHabit = exports.getAllHabits = void 0;
 const database_1 = require("../../database");
 const task_repository_1 = require("./task-repository");
 function getAllHabits(userId) {
@@ -47,17 +47,6 @@ function addHabit(task, frequency, reminder) {
     });
 }
 exports.addHabit = addHabit;
-function deleteHabit(id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("delete from habit where id = ?1");
-        yield stmt.bind({ 1: id });
-        const operationResult = yield stmt.run();
-        yield stmt.finalize();
-        yield db.close();
-    });
-}
-exports.deleteHabit = deleteHabit;
 function updateHabit(task, frequency, reminder) {
     return __awaiter(this, void 0, void 0, function* () {
         //updating task (parent)

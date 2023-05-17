@@ -45,16 +45,6 @@ exports.habitRouter.post("/", (request, response) => __awaiter(void 0, void 0, v
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
     }
 }));
-exports.habitRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = parseInt(request.params.id);
-    try {
-        (0, habit_repository_1.deleteHabit)(id);
-        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json({ message: "Habit deleted" });
-    }
-    catch (error) {
-        response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
-    }
-}));
 exports.habitRouter.put("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(request.body.id);
     const title = request.body.title;

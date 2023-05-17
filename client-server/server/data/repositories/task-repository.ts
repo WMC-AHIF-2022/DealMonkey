@@ -35,12 +35,6 @@ export async function addTask(task: Task):Promise<number> {
   return task.id;
 }
 
-export async function deleteTableTask() {
-    const db = await DB.createDBConnection();
-    await db.all("DROP FROM task");
-    await db.close();
-  }
-
 export async function deleteTask(id: number) {
   const db = await DB.createDBConnection();
 

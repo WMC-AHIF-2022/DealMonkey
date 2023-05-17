@@ -5,7 +5,6 @@ import { Task } from "../data/interfaces/task";
 import {
   addHabit,
   getAllHabits,
-  deleteHabit,
   updateHabit,
 } from "../data/repositories/habit-repository";
 
@@ -38,17 +37,6 @@ habitRouter.post("/", async (request, response) => {
   try {
     const newHabit = addHabit(newTask, frequency, reminder);
     response.status(StatusCodes.CREATED).json(newHabit);
-  } catch (error) {
-    response.status(StatusCodes.BAD_REQUEST).json(error);
-  }
-});
-
-habitRouter.delete("/:id", async (request, response) => {
-  const id = parseInt(request.params.id);
-
-  try {
-    deleteHabit(id);
-    response.status(StatusCodes.ACCEPTED).json({ message: "Habit deleted" });
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);
   }

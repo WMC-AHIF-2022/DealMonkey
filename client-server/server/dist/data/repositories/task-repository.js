@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTask = exports.deleteTask = exports.deleteTableTask = exports.addTask = exports.getAllTasks = void 0;
+exports.updateTask = exports.deleteTask = exports.addTask = exports.getAllTasks = void 0;
 const database_1 = require("../../database");
 function getAllTasks(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -44,14 +44,6 @@ function addTask(task) {
     });
 }
 exports.addTask = addTask;
-function deleteTableTask() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const db = yield database_1.DB.createDBConnection();
-        yield db.all("DROP FROM task");
-        yield db.close();
-    });
-}
-exports.deleteTableTask = deleteTableTask;
 function deleteTask(id) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
