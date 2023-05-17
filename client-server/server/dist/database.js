@@ -38,17 +38,6 @@ class DB {
                 registrationDate TEXT
             ) `);
             yield connection.run(`
-            create table if not exists habit (
-                id INTEGER PRIMARY KEY,
-                title TEXT NOT NULL,
-                frequency TEXT NOT NULL,
-                reminder TEXT,
-                category TEXT,
-                color TEXT NOT NULL,
-                userId INTEGER NOT NULL,
-                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
-            ) strict;`);
-            yield connection.run(`
             create table if not exists setting(
                id INTEGER PRIMARY KEY,
                theme TEXT UNIQUE NOT NULL,
@@ -57,13 +46,36 @@ class DB {
                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
             ) strict;`);
             yield connection.run(`
-            create table if not exists deal(
+            create table if not exists task (
+              id INTEGER PRIMARY KEY,
+              title TEXT NOT NULL,
+              category TEXT,
+              color TEXT NOT NULL,
+              userId INTEGER NOT NULL,
+                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+            ) strict;`);
+            yield connection.run(`
+            create table if not exists deal (
                id INTEGER PRIMARY KEY,
                name TEXT NOT NULL,
-               habitId INTEGER NOT NULL,
+               taskId INTEGER NOT NULL,
                type TEXT NOT NULL,
-               FOREIGN KEY (habitId) REFERENCES habit (id) ON DELETE CASCADE
+               FOREIGN KEY (taskId) REFERENCES task (id) ON DELETE CASCADE
             ) strict;`);
+            yield connection.run(`
+            create table if not exists todo (
+                id INTEGER NOT NULL,
+                priority TEXT NOT NULL,
+                
+                FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
+            ) strict;`);
+            yield connection.run(`
+            create table if not exists habit (
+              id INTEGER NOT NULL,
+              frequency TEXT NOT NULL,
+              reminder TEXT,
+              FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
+          ) strict;`);
         });
     }
 }
