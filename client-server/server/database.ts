@@ -28,17 +28,6 @@ export class DB {
                 registrationDate TEXT
             ) `);
     await connection.run(`
-            create table if not exists habit (
-                id INTEGER PRIMARY KEY,
-                title TEXT NOT NULL,
-                frequency TEXT NOT NULL,
-                reminder TEXT,
-                category TEXT,
-                color TEXT NOT NULL,
-                userId INTEGER NOT NULL,
-                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
-            ) strict;`);
-    await connection.run(`
             create table if not exists setting(
                id INTEGER PRIMARY KEY,
                theme TEXT UNIQUE NOT NULL,
@@ -50,9 +39,30 @@ export class DB {
             create table if not exists deal(
                id INTEGER PRIMARY KEY,
                name TEXT NOT NULL,
-               habitId INTEGER NOT NULL,
+               taskId INTEGER NOT NULL,
                type TEXT NOT NULL,
-               FOREIGN KEY (habitId) REFERENCES habit (id) ON DELETE CASCADE
+               FOREIGN KEY (taskId) REFERENCES task (id) ON DELETE CASCADE
+            ) strict;`);
+            
+    await connection.run(`
+            create table if not exists todo (
+                id INTEGER PRIMARY KEY,
+                title TEXT NOT NULL,
+                category TEXT,
+                color TEXT NOT NULL,
+                userId INTEGER NOT NULL,
+                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+            ) strict;`);
+    await connection.run(`
+            create table if not exists habit (
+                id INTEGER PRIMARY KEY,
+                title TEXT NOT NULL,
+                frequency TEXT NOT NULL,
+                reminder TEXT,
+                category TEXT,
+                color TEXT NOT NULL,
+                userId INTEGER NOT NULL,
+                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
             ) strict;`);
   }
 }
