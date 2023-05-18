@@ -26,7 +26,6 @@ function addHabit(task, frequency, reminder) {
     return __awaiter(this, void 0, void 0, function* () {
         //adding task (parent) to get id
         const id = yield (0, task_repository_1.addTask)(task);
-        console.log(id);
         //adding habit:
         const db = yield database_1.DB.createDBConnection();
         const stmt = yield db.prepare("INSERT INTO habit VALUES (?1, ?2, ?3)");
