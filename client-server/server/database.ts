@@ -16,6 +16,7 @@ export class DB {
   private static async ensureTablesCreated(
     connection: Database
   ): Promise<void> {
+    await connection.run(`PRAGMA foreign_keys = ON`);
     await connection.run(`
             CREATE TABLE IF NOT EXISTS user (
                 id INTEGER PRIMARY KEY,
@@ -33,8 +34,8 @@ export class DB {
                theme TEXT UNIQUE NOT NULL,
                userId INTEGER NOT NULL,
                userProfile TEXT NOT NULL,
-               FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
-            ) strict;`);
+               FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+            )`);
     await connection.run(`
             create table if not exists task (
               id INTEGER PRIMARY KEY,
@@ -42,28 +43,28 @@ export class DB {
               category TEXT,
               color TEXT NOT NULL,
               userId INTEGER NOT NULL,
-                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
-            ) strict;`);
+              FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+            )`);
     await connection.run(`
             create table if not exists deal (
                id INTEGER PRIMARY KEY,
                name TEXT NOT NULL,
                taskId INTEGER NOT NULL,
                type TEXT NOT NULL,
-               FOREIGN KEY (taskId) REFERENCES task (id) ON DELETE CASCADE
-            ) strict;`);
+               FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE
+            )`);
     await connection.run(`
             create table if not exists todo (
                 id INTEGER,
                 priority TEXT NOT NULL,
-                FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
-            ) strict;`);
+                FOREIGN KEY (id) REFERENCES task(id) ON DELETE CASCADE
+            )`);
     await connection.run(`
             create table if not exists habit (
               id INTEGER,
               frequency TEXT NOT NULL,
               reminder TEXT,
-              FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
-          ) strict;`);
+              FOREIGN KEY (id) REFERENCES task(id) ON DELETE CASCADE
+          )`);
   }
 }

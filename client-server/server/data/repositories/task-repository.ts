@@ -36,6 +36,7 @@ export async function addTask(task: Task):Promise<number> {
 }
 
 export async function deleteTask(id: number) {
+  //löscht den task aus der parent tabelle und den dazugehörigen todo / habit -> wegen on delete cascade
   const db = await DB.createDBConnection();
 
   const stmt = await db.prepare("delete from task where id = ?1");

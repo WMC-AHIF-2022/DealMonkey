@@ -46,6 +46,7 @@ function addTask(task) {
 exports.addTask = addTask;
 function deleteTask(id) {
     return __awaiter(this, void 0, void 0, function* () {
+        //löscht den task aus der parent tabelle und den dazugehörigen todo / habit -> wegen on delete cascade
         const db = yield database_1.DB.createDBConnection();
         const stmt = yield db.prepare("delete from task where id = ?1");
         yield stmt.bind({ 1: id });

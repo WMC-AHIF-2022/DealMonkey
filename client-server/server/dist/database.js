@@ -26,6 +26,7 @@ class DB {
     }
     static ensureTablesCreated(connection) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield connection.run(`PRAGMA foreign_keys = ON`);
             yield connection.run(`
             CREATE TABLE IF NOT EXISTS user (
                 id INTEGER PRIMARY KEY,
@@ -43,8 +44,8 @@ class DB {
                theme TEXT UNIQUE NOT NULL,
                userId INTEGER NOT NULL,
                userProfile TEXT NOT NULL,
-               FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
-            ) strict;`);
+               FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+            )`);
             yield connection.run(`
             create table if not exists task (
               id INTEGER PRIMARY KEY,
@@ -52,29 +53,29 @@ class DB {
               category TEXT,
               color TEXT NOT NULL,
               userId INTEGER NOT NULL,
-                FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
-            ) strict;`);
+              FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+            )`);
             yield connection.run(`
             create table if not exists deal (
                id INTEGER PRIMARY KEY,
                name TEXT NOT NULL,
                taskId INTEGER NOT NULL,
                type TEXT NOT NULL,
-               FOREIGN KEY (taskId) REFERENCES task (id) ON DELETE CASCADE
-            ) strict;`);
+               FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE
+            )`);
             yield connection.run(`
             create table if not exists todo (
                 id INTEGER,
                 priority TEXT NOT NULL,
-                FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
-            ) strict;`);
+                FOREIGN KEY (id) REFERENCES task(id) ON DELETE CASCADE
+            )`);
             yield connection.run(`
             create table if not exists habit (
               id INTEGER,
               frequency TEXT NOT NULL,
               reminder TEXT,
-              FOREIGN KEY (id) REFERENCES task (id) ON DELETE CASCADE
-          ) strict;`);
+              FOREIGN KEY (id) REFERENCES task(id) ON DELETE CASCADE
+          )`);
         });
     }
 }
