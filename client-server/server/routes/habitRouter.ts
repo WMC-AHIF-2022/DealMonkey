@@ -60,7 +60,7 @@ habitRouter.put("/", async (request, response) => {
   };
 
   try {
-    const updatedHabit = updateHabit(task, frequency, reminder);
+    const updatedHabit:Habit = await updateHabit(task, frequency, reminder);
     response.status(StatusCodes.ACCEPTED).json(updatedHabit);
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);

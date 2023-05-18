@@ -61,7 +61,7 @@ exports.habitRouter.put("/", (request, response) => __awaiter(void 0, void 0, vo
         userId: userId,
     };
     try {
-        const updatedHabit = (0, habit_repository_1.updateHabit)(task, frequency, reminder);
+        const updatedHabit = yield (0, habit_repository_1.updateHabit)(task, frequency, reminder);
         response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(updatedHabit);
     }
     catch (error) {

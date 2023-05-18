@@ -12,6 +12,7 @@ export async function getAllTasks(userId: number): Promise<Task[]> {
 }
 
 export async function addTask(task: Task):Promise<number> {
+  //add parent task (to create id for corresponding habit OR todo)
   const db = await DB.createDBConnection();
 
   const stmt = await db.prepare("INSERT INTO task (TITLE, CATEGORY, COLOR, USERID) VALUES (?1, ?2, ?3, ?4)");
@@ -41,7 +42,7 @@ export async function deleteTask(id: number) {
 
   const stmt = await db.prepare("delete from task where id = ?1");
   await stmt.bind({ 1: id });
-  const operationResult = await stmt.run();
+  await stmt.run();
 
   await stmt.finalize();
   await db.close();
@@ -57,7 +58,7 @@ export async function updateTask(task: Task):Promise<number> {
     3: task.color,
     4: task.id,
   });
-  const operationResult = await stmt.run();
+  await stmt.run();
 
   stmt.finalize();
   db.close();

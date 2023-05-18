@@ -11,7 +11,41 @@ taskRouter.get("/:userId", async (request, response) => {
     response.status(StatusCodes.OK).json(habits);
 });
 
-taskRouter.post("/", async (request, response) => {
+taskRouter.delete("/:id", async (request, response) => {
+    const id = Number.parseInt(request.params.id);
+  
+    try {
+      await deleteTask(id);
+      response.status(StatusCodes.ACCEPTED).json({ message: "Task deleted" });
+    } catch (error) {
+      response.status(StatusCodes.BAD_REQUEST).json(error);
+    }
+});
+  
+/*taskRouter.put("/", async (request, response) => {
+    const id = Number.parseInt(request.body.id);
+    const title: string = request.body.title;
+    const category: string = request.body.category;
+    const color: string = request.body.color;
+    const userId: number = Number.parseInt(request.body.userId);
+    
+    const task: Task = {
+      id: id,
+      title: title,
+      category: category,
+      color: color,
+      userId: userId,
+    };
+  
+    try {
+      await updateTask(task);
+      response.status(StatusCodes.ACCEPTED).json(task);
+    } catch (error) {
+      response.status(StatusCodes.BAD_REQUEST).json(error);
+    }
+});*/
+
+/*taskRouter.post("/", async (request, response) => {
     const title: string = request.body.title;
     const category: string = request.body.category;
     const color: string = request.body.color;
@@ -37,38 +71,4 @@ taskRouter.post("/", async (request, response) => {
     } catch (error) {
       response.status(StatusCodes.BAD_REQUEST).json(error);
     }
-});
-
-taskRouter.delete("/:id", async (request, response) => {
-    const id = Number.parseInt(request.params.id);
-  
-    try {
-      await deleteTask(id);
-      response.status(StatusCodes.ACCEPTED).json({ message: "Task deleted" });
-    } catch (error) {
-      response.status(StatusCodes.BAD_REQUEST).json(error);
-    }
-});
-  
-taskRouter.put("/", async (request, response) => {
-    const id = Number.parseInt(request.body.id);
-    const title: string = request.body.title;
-    const category: string = request.body.category;
-    const color: string = request.body.color;
-    const userId: number = Number.parseInt(request.body.userId);
-    
-    const task: Task = {
-      id: id,
-      title: title,
-      category: category,
-      color: color,
-      userId: userId,
-    };
-  
-    try {
-      await updateTask(task);
-      response.status(StatusCodes.ACCEPTED).json(task);
-    } catch (error) {
-      response.status(StatusCodes.BAD_REQUEST).json(error);
-    }
-});
+});*/

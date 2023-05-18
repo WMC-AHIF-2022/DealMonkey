@@ -22,30 +22,33 @@ exports.taskRouter.get("/:userId", (request, response) => __awaiter(void 0, void
     const habits = yield (0, task_repository_1.getAllTasks)(userId);
     response.status(http_status_codes_1.StatusCodes.OK).json(habits);
 }));
-exports.taskRouter.post("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-    const title = request.body.title;
-    const category = request.body.category;
-    const color = request.body.color;
-    const userId = Number.parseInt(request.body.userId);
+/*taskRouter.post("/", async (request, response) => {
+    const title: string = request.body.title;
+    const category: string = request.body.category;
+    const color: string = request.body.color;
+    const userId: number = Number.parseInt(request.body.userId);
+  
     //Todo: Validation
-    const newTask = {
-        id: -1,
-        title: title,
-        category: category,
-        color: color,
-        userId: userId,
+  
+    const newTask: Task = {
+      id: -1,
+      title: title,
+      category: category,
+      color: color,
+      userId: userId,
     };
+  
     try {
-        console.log(newTask);
-        (0, task_repository_1.addTask)(newTask);
-        console.log("war in add");
-        console.log(newTask);
-        response.status(http_status_codes_1.StatusCodes.CREATED).json(newTask);
+      console.log(newTask);
+      addTask(newTask);
+      console.log("war in add");
+      console.log(newTask);
+
+      response.status(StatusCodes.CREATED).json(newTask);
+    } catch (error) {
+      response.status(StatusCodes.BAD_REQUEST).json(error);
     }
-    catch (error) {
-        response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
-    }
-}));
+});*/
 exports.taskRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number.parseInt(request.params.id);
     try {
@@ -56,24 +59,25 @@ exports.taskRouter.delete("/:id", (request, response) => __awaiter(void 0, void 
         response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
     }
 }));
-exports.taskRouter.put("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+/*taskRouter.put("/", async (request, response) => {
     const id = Number.parseInt(request.body.id);
-    const title = request.body.title;
-    const category = request.body.category;
-    const color = request.body.color;
-    const userId = Number.parseInt(request.body.userId);
-    const task = {
-        id: id,
-        title: title,
-        category: category,
-        color: color,
-        userId: userId,
+    const title: string = request.body.title;
+    const category: string = request.body.category;
+    const color: string = request.body.color;
+    const userId: number = Number.parseInt(request.body.userId);
+    
+    const task: Task = {
+      id: id,
+      title: title,
+      category: category,
+      color: color,
+      userId: userId,
     };
+  
     try {
-        yield (0, task_repository_1.updateTask)(task);
-        response.status(http_status_codes_1.StatusCodes.ACCEPTED).json(task);
+      await updateTask(task);
+      response.status(StatusCodes.ACCEPTED).json(task);
+    } catch (error) {
+      response.status(StatusCodes.BAD_REQUEST).json(error);
     }
-    catch (error) {
-        response.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(error);
-    }
-}));
+});*/ 

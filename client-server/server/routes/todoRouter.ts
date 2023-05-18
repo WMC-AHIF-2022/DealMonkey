@@ -30,7 +30,7 @@ todoRouter.post("/", async (request, response) => {
     };
   
     try {
-      const addedTodo = await addTodo(newTask, priority);
+      const addedTodo:Todo = await addTodo(newTask, priority);
       response.status(StatusCodes.CREATED).json(addedTodo);
     } catch (error) {
       response.status(StatusCodes.BAD_REQUEST).json(error);

@@ -23,6 +23,7 @@ function getAllTasks(userId) {
 exports.getAllTasks = getAllTasks;
 function addTask(task) {
     return __awaiter(this, void 0, void 0, function* () {
+        //add parent task (to create id for corresponding habit OR todo)
         const db = yield database_1.DB.createDBConnection();
         const stmt = yield db.prepare("INSERT INTO task (TITLE, CATEGORY, COLOR, USERID) VALUES (?1, ?2, ?3, ?4)");
         yield stmt.bind({
@@ -50,7 +51,7 @@ function deleteTask(id) {
         const db = yield database_1.DB.createDBConnection();
         const stmt = yield db.prepare("delete from task where id = ?1");
         yield stmt.bind({ 1: id });
-        const operationResult = yield stmt.run();
+        yield stmt.run();
         yield stmt.finalize();
         yield db.close();
     });
@@ -66,7 +67,7 @@ function updateTask(task) {
             3: task.color,
             4: task.id,
         });
-        const operationResult = yield stmt.run();
+        yield stmt.run();
         stmt.finalize();
         db.close();
         return task.id;
