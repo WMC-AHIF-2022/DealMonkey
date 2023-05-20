@@ -164,7 +164,7 @@ const Card = () => {
     </div>
   );
 };
-getHabits();
+
   useEffect(() => {
     getProfile();
     getHabits();
