@@ -62,7 +62,7 @@ const HabitPage = () => {
   const deleteHabit = async (id: number) => {
     try {
       const response = await fetchRestEndpoint(
-        "http://localhost:8000/api/habits/" + id,
+        "http://localhost:8000/api/tasks/" + id,
         "DELETE"
       );
 

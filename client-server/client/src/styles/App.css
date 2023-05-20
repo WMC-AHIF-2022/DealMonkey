@@ -35,3 +35,17 @@ button {
   position: relative;
   min-height: 100vh;
 }
+
+a.ant-picker-now-btn {
+  font-size: 0;
+}
+
+.ant-picker-ok > button.ant-btn:hover {
+  background-color: #ff6900;
+}
+
+.ant-picker-ok > button.ant-btn {
+  font-size: 1em; /* original font size */
+  background-color: #ee6c4d;
+  width: 6em;
+}

@@ -9,28 +9,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateHabit = exports.deleteHabit = exports.deleteTable = exports.addHabit = exports.getAllHabits = void 0;
+exports.updateHabit = exports.addHabit = exports.getAllHabits = void 0;
 const database_1 = require("../../database");
+const task_repository_1 = require("./task-repository");
 function getAllHabits(userId) {
     return __awaiter(this, void 0, void 0, function* () {
+        const tasks = yield (0, task_repository_1.getAllTasks)(userId);
         const db = yield database_1.DB.createDBConnection();
-        const habits = yield db.all("SELECT * FROM habit WHERE userId = " + userId);
+        const habits = yield db.all("SELECT * FROM habit");
+        habits.filter((habit) => habit.userId === userId);
+        const allHabits = [];
+        for (let i = 0; i < habits.length; i++) {
+            for (let j = 0; j < tasks.length; j++) {
+                if (habits[i].id === tasks[j].id) {
+                    allHabits.push({
+                        id: tasks[j].id,
+                        title: tasks[j].title,
+                        color: tasks[j].color,
+                        category: tasks[j].category,
+                        userId: tasks[j].userId,
+                        frequency: habits[i].frequency,
+                        reminder: habits[i].reminder,
+                    });
+                }
+            }
+        }
         yield db.close();
-        return habits;
+        return allHabits;
     });
 }
 exports.getAllHabits = getAllHabits;
-function addHabit(habit) {
+function addHabit(task, frequency, reminder) {
     return __awaiter(this, void 0, void 0, function* () {
+        //adding task (parent) to get id
+        const id = yield (0, task_repository_1.addTask)(task);
+        //adding habit:
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("INSERT INTO habit (TITLE, FREQUENCY, REMINDER, CATEGORY, COLOR, USERID) VALUES (?1, ?2, ?3, ?4, ?5, ?6)");
+        const stmt = yield db.prepare("INSERT INTO habit VALUES (?1, ?2, ?3)");
         yield stmt.bind({
-            1: habit.title,
-            2: habit.frequency,
-            3: habit.reminder,
-            4: habit.category,
-            5: habit.color,
-            6: habit.userId,
+            1: id,
+            2: frequency,
+            3: reminder,
         });
         const operationResult = yield stmt.run();
         yield stmt.finalize();
@@ -39,46 +58,38 @@ function addHabit(habit) {
             operationResult.changes !== 1) {
             throw new Error("Could not add habit");
         }
-        else {
-            habit.id = operationResult.lastID;
-        }
+        //returning new habit
+        const jsonString = JSON.stringify({
+            id: id,
+            frequency: frequency,
+            reminder: reminder,
+        });
+        return JSON.parse(jsonString);
     });
 }
 exports.addHabit = addHabit;
-function deleteTable() {
+function updateHabit(task, frequency, reminder) {
     return __awaiter(this, void 0, void 0, function* () {
+        //updating task (parent)
+        const id = yield (0, task_repository_1.updateTask)(task);
+        //updating habit:
         const db = yield database_1.DB.createDBConnection();
-        //await db.all("DROP FROM habit");
-        yield db.close();
-    });
-}
-exports.deleteTable = deleteTable;
-function deleteHabit(id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("delete from habit where id = ?1");
-        yield stmt.bind({ 1: id });
-        const operationResult = yield stmt.run();
-        yield stmt.finalize();
-        yield db.close();
-    });
-}
-exports.deleteHabit = deleteHabit;
-function updateHabit(habit) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("update habit set title = ?1, frequency = ?2, category = ?3, reminder = ?4, color = ?5 where id = ?6");
+        const stmt = yield db.prepare("update habit set frequency = ?2, reminder = ?3 where id = ?1");
         yield stmt.bind({
-            1: habit.title,
-            2: habit.frequency,
-            3: habit.category,
-            4: habit.reminder,
-            5: habit.color,
-            6: habit.id,
+            1: id,
+            2: frequency,
+            3: reminder,
         });
         const operationResult = yield stmt.run();
         stmt.finalize();
         db.close();
+        //returning new habit
+        const jsonString = JSON.stringify({
+            id: id,
+            frequency: frequency,
+            reminder: reminder,
+        });
+        return JSON.parse(jsonString);
     });
 }
 exports.updateHabit = updateHabit;
