@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TodoList from "../../components/todoList";
 import Form from "../../components/todo-form";
 import toast, { Toaster } from "react-hot-toast";
+import SideNavigation from "../../components/sideNavigation";
 
 interface TodoItem {
   id: number;
@@ -89,7 +90,11 @@ const Todos = () => {
 
   return (
     <Layout>
-      <Toaster />
+      <div className="grid grid-cols-6 h-max">
+        <SideNavigation/>
+         
+        <div className="col-span-5 px-12 mt-4">
+        <Toaster />
       <div className="">
         <TodoList
           todos={todos}
@@ -130,6 +135,8 @@ const Todos = () => {
             onUpdate={updateTodo}
           />
         </SlidingPaneCom>
+      </div>
+        </div>
       </div>
     </Layout>
   );

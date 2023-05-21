@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-
 import "./userProfile.css";
 import {
   Box,
@@ -17,6 +16,7 @@ import FormInput from "../../components/form-input";
 import { fetchRestEndpoint } from "../../utils/client-server";
 import toast, { Toaster } from "react-hot-toast";
 import flame from "../../img/flame.png";
+import SideNavigation from "../../components/sideNavigation";
 
 export interface User {
   id: number;
@@ -172,74 +172,69 @@ const Card = () => {
 
   return (
     <Layout>
-      <Toaster />
-      <div className="profileArea1">
-        {open ? (
-          <Popup closePopup={() => setOpen(false)}>
-            <FormInput
-              className="mt-5"
-              label="username"
-              placeholder="Username"
-              type="username"
-              required
-              name="username"
-              value={userProfile}
-              onChange={handleProfileChange}
-            />
+      <div className="grid grid-cols-6 h-max">
+          <SideNavigation/>
+              
+          <div className="col-span-5 px-12 mt-4">
+          <Toaster />
+            <div className="profileArea1">
+              {open ? (
+                <Popup closePopup={() => setOpen(false)}>
+                  <FormInput
+                    className="mt-5"
+                    label="username"
+                    placeholder="Username"
+                    type="username"
+                    required
+                    name="username"
+                    value={userProfile}
+                    onChange={handleProfileChange}
+                  />
 
-            <button
-              onClick={updateProfile}
-              className="mt-5 rounded-lg bg-orange-400"
-              type="submit"
-            >
-              Save
-            </button>
-          </Popup>
-        ) : null}
-        <div className="profileTable1">
-          <div className="row">
-            <div className="profile-nav col-md-3">
-              <div className="panel">
-                <div className="user-heading round">
-                  <a href="#">
-                    <img
-                      onClick={() => setOpen(true)}
-                      src={userProfile}
-                      alt="Profile-Picture"
-                    />
-                  </a>
-                  <div className="username">
-                    <h1>{auth()?.username}</h1>
+                  <button
+                    onClick={updateProfile}
+                    className="mt-5 rounded-lg bg-orange-400"
+                    type="submit"
+                  >
+                    Save
+                  </button>
+                </Popup>
+              ) : null}
+              <div className="profileTable1">
+                <div className="row">
+                  <div className="profile-nav col-md-3">
+                    <div className="panel">
+                      <div className="user-heading round">
+                        <a href="#">
+                          <img
+                            onClick={() => setOpen(true)}
+                            src={userProfile}
+                            alt="Profile-Picture"
+                          />
+                        </a>
+                        <div className="username">
+                          <h1>{auth()?.username}</h1>
+                        </div>
+                        <div className="profileButtons">
+                          <ToggleButtonGroup
+                            value={alignment}
+                            exclusive
+                            onChange={handleChange}
+                            aria-label="Platform"
+                          >
+                            <ToggleButton value="Stats">Stats</ToggleButton>
+                            <ToggleButton value="Settings">Settings</ToggleButton>
+                          </ToggleButtonGroup>
+                          -{" "}
+                        </div>
+                        <Card />
+                      </div>
+                    </div>
                   </div>
-                  <div className="profileButtons">
-                    <ToggleButtonGroup
-                      value={alignment}
-                      exclusive
-                      onChange={handleChange}
-                      aria-label="Platform"
-                    >
-                      <ToggleButton value="Stats">Stats</ToggleButton>
-                      <ToggleButton value="Settings">Settings</ToggleButton>
-                    </ToggleButtonGroup>
-                    -{" "}
-                  </div>
-
-                  <div className="mt-8">
-                    <h3 className="text-left mb-3">Level 01</h3>
-                    <Box sx={{ width: "100%", color: "#FF0000" }}>
-                      <LinearProgress
-                        className="mb-12"
-                        variant="buffer"
-                        value={progress}
-                      />
-                    </Box>
-                  </div>
-                  <Card />
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
     </Layout>
   );

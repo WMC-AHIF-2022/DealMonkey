@@ -10,7 +10,7 @@ const LoggedInLayout = ({ children }: any) => {
       <div className="font mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:mt-8">
         {children}
       </div>
-      <Footer />
+      {/*<Footer />*/}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import HabitList from "../../components/habitList";
 import dayjs, { Dayjs } from "dayjs";
 import Form from "../../components/form";
 import toast, { Toaster } from "react-hot-toast";
+import SideNavigation from "../../components/sideNavigation";
 
 interface HabitItem {
   id: number;
@@ -100,50 +101,56 @@ const HabitPage = () => {
 
   return (
     <Layout>
-      <Toaster />
-      <div className="">
-        <HabitList
-          habits={habits}
-          setOpen={setOpen}
-          setTitle={setTitle}
-          setFrequency={setFrequency}
-          setReminder={setReminder}
-          setCategory={setCategory}
-          setColor={setColor}
-          habitOnClickHandler={habitOnClickHandler}
-        />
-        <div style={{ marginTop: "32px" }}>
-          <button
-            className="bg-red-400 rounded-lg"
-            onClick={() => {
-              setOpen(true);
-              resetForm();
-            }}
-          >
-            Add Habit
-          </button>
-        </div>
+      <div className="grid grid-cols-6 h-max">
+        <SideNavigation/>
+         
+        <div className="col-span-5 px-12 mt-4">
+        <Toaster />
+          <div className="">
+            <HabitList
+              habits={habits}
+              setOpen={setOpen}
+              setTitle={setTitle}
+              setFrequency={setFrequency}
+              setReminder={setReminder}
+              setCategory={setCategory}
+              setColor={setColor}
+              habitOnClickHandler={habitOnClickHandler}
+            />
+            <div style={{ marginTop: "32px" }}>
+              <button
+                className="bg-red-400 rounded-lg"
+                onClick={() => {
+                  setOpen(true);
+                  resetForm();
+                }}
+              >
+                Add Habit
+              </button>
+            </div>
 
-        <SlidingPaneCom setOpen={setOpen} open={open}>
-          <Form
-            title={title}
-            frequency={frequency}
-            reminder={reminder}
-            category={category}
-            color={color}
-            setTitle={setTitle}
-            setFrequency={setFrequency}
-            setReminder={setReminder}
-            setCategory={setCategory}
-            setColor={setColor}
-            setHabits={setHabits}
-            updateBtn={updateBtn}
-            deleteBtn={deleteBtn}
-            saveBtn={saveBtn}
-            onDelete={deleteHabit}
-            onUpdate={updateHabit}
-          />
-        </SlidingPaneCom>
+            <SlidingPaneCom setOpen={setOpen} open={open}>
+              <Form
+                title={title}
+                frequency={frequency}
+                reminder={reminder}
+                category={category}
+                color={color}
+                setTitle={setTitle}
+                setFrequency={setFrequency}
+                setReminder={setReminder}
+                setCategory={setCategory}
+                setColor={setColor}
+                setHabits={setHabits}
+                updateBtn={updateBtn}
+                deleteBtn={deleteBtn}
+                saveBtn={saveBtn}
+                onDelete={deleteHabit}
+                onUpdate={updateHabit}
+              />
+            </SlidingPaneCom>
+          </div>
+        </div>
       </div>
     </Layout>
   );
