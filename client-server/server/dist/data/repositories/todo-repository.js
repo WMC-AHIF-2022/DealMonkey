@@ -15,10 +15,25 @@ const task_repository_1 = require("./task-repository");
 function getAllTodos(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
+        const tasks = yield (0, task_repository_1.getAllTasks)(userId);
         const todos = yield db.all("SELECT * FROM todo");
-        todos.filter(todo => todo.userId === userId);
+        const userTodos = [];
+        for (let i = 0; i < todos.length; i++) {
+            for (let j = 0; j < tasks.length; j++) {
+                if (tasks[j].userId === userId && todos[i].id === tasks[j].id) {
+                    userTodos.push({
+                        id: tasks[j].id,
+                        title: tasks[j].title,
+                        color: tasks[j].color,
+                        category: tasks[j].category,
+                        userId: tasks[j].userId,
+                        priority: todos[i].priority
+                    });
+                }
+            }
+        }
         yield db.close();
-        return todos;
+        return userTodos;
     });
 }
 exports.getAllTodos = getAllTodos;

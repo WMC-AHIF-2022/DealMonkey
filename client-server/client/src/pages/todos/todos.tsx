@@ -5,7 +5,7 @@ import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
 import SlidingPaneCom from "../../components/slidingPane";
 import "react-toastify/dist/ReactToastify.css";
 import TodoList from "../../components/todoList";
-import Form from "../../components/form";
+import Form from "../../components/todo-form";
 import toast, { Toaster } from "react-hot-toast";
 
 interface TodoItem {
@@ -38,9 +38,10 @@ const Todos = () => {
 
   const getTodos = async () => {
     try {
-      const response = await fetchRestEndpoint(`http://localhost:8000/api/habits/${auth()?.id}`, "GET");
-
+      const response = await fetchRestEndpoint(`http://localhost:8000/api/todos/${auth()?.id}`, "GET");
+    
       const data: TodoItem[] = await response.json();
+      console.log(data);
       setTodos(data);
 
     } catch (error: any) {

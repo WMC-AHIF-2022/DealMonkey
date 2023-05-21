@@ -14,15 +14,14 @@ const database_1 = require("../../database");
 const task_repository_1 = require("./task-repository");
 function getAllHabits(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const tasks = yield (0, task_repository_1.getAllTasks)(userId);
         const db = yield database_1.DB.createDBConnection();
+        const tasks = yield (0, task_repository_1.getAllTasks)(userId);
         const habits = yield db.all("SELECT * FROM habit");
-        habits.filter((habit) => habit.userId === userId);
-        const allHabits = [];
+        const userHabits = [];
         for (let i = 0; i < habits.length; i++) {
             for (let j = 0; j < tasks.length; j++) {
-                if (habits[i].id === tasks[j].id) {
-                    allHabits.push({
+                if (tasks[j].userId === userId && habits[i].id === tasks[j].id) {
+                    userHabits.push({
                         id: tasks[j].id,
                         title: tasks[j].title,
                         color: tasks[j].color,
@@ -35,7 +34,7 @@ function getAllHabits(userId) {
             }
         }
         yield db.close();
-        return allHabits;
+        return userHabits;
     });
 }
 exports.getAllHabits = getAllHabits;

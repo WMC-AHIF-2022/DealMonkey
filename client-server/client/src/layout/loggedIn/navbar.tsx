@@ -22,7 +22,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const navigation = [
-    { Item1: "Dashboard", Item2: "Habits", Item3: "Tasks" },
+    { Item1: "Dashboard", Item2: "Habits", Item3: "Todos" },
     { Item1: "Home", Item2: "About", Item3: "Login" },
   ];
 
@@ -76,7 +76,7 @@ export default function Navbar() {
                     {auth() != null ? navigation[0].Item2 : navigation[1].Item2}
                   </a>
                   <a
-                    href="/tasks"
+                    href="/todos"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
                     {auth() != null ? navigation[0].Item3 : navigation[1].Item3}
@@ -171,31 +171,24 @@ export default function Navbar() {
               {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
               <Disclosure.Button
                 as="a"
-                href="#"
+                href="/dashboard"
                 className="block border-l-4 border-orange-400 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
               >
                 Dashboard
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="#"
+                href="/myhabits"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
-                Team
+                Habits
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="#"
+                href="/todos"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
-                Projects
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-              >
-                Calendar
+                Todos
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>

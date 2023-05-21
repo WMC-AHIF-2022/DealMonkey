@@ -1,16 +1,32 @@
 import { Todo } from "../interfaces/todo";
 import { Task } from "../interfaces/task";
 import { DB } from "../../database";
-import { addTask, updateTask } from "./task-repository";
+import { addTask, getAllTasks, updateTask } from "./task-repository";
 
 export async function getAllTodos(userId: number): Promise<Todo[]> {
   const db = await DB.createDBConnection();
 
+  const tasks = await getAllTasks(userId);
   const todos = await db.all<Todo[]>("SELECT * FROM todo");
-  todos.filter(todo => todo.userId === userId);
+
+  const userTodos: Todo[] = [];
+  for (let i = 0; i < todos.length; i++) {
+    for (let j = 0; j < tasks.length; j++) {
+      if (tasks[j].userId === userId && todos[i].id === tasks[j].id) {
+        userTodos.push({
+          id: tasks[j].id,
+          title: tasks[j].title,
+          color: tasks[j].color,
+          category: tasks[j].category,
+          userId: tasks[j].userId,
+          priority: todos[i].priority
+        });
+      }
+    }
+  }
 
   await db.close();
-  return todos!;
+  return userTodos!;
 }
 
 export async function addTodo(task: Task, priority: string):Promise<Todo> {

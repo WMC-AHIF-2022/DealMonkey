@@ -4,18 +4,16 @@ import { DB } from "../../database";
 import { addTask, getAllTasks, updateTask } from "./task-repository";
 
 export async function getAllHabits(userId: number): Promise<Habit[]> {
-  const tasks = await getAllTasks(userId);
   const db = await DB.createDBConnection();
 
+  const tasks = await getAllTasks(userId);
   const habits = await db.all<Habit[]>("SELECT * FROM habit");
-  habits.filter((habit) => habit.userId === userId);
 
-  const allHabits: Habit[] = [];
-
+  const userHabits: Habit[] = [];
   for (let i = 0; i < habits.length; i++) {
     for (let j = 0; j < tasks.length; j++) {
-      if (habits[i].id === tasks[j].id) {
-        allHabits.push({
+      if (tasks[j].userId === userId && habits[i].id === tasks[j].id) {
+        userHabits.push({
           id: tasks[j].id,
           title: tasks[j].title,
           color: tasks[j].color,
@@ -29,7 +27,7 @@ export async function getAllHabits(userId: number): Promise<Habit[]> {
   }
 
   await db.close();
-  return allHabits!;
+  return userHabits!;
 }
 
 export async function addHabit(
