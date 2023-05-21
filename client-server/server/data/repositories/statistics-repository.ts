@@ -11,7 +11,7 @@ export async function addStatistics(statistic: Statistic) {
     1: statistic.userId,
     2: statistic.currentStreak,
     3: statistic.highestStreak,
-    4: statistic.pointsMultiplier
+    4: statistic.pointsMultiplier,
   });
   const operationResult = await stmt.run();
   await stmt.finalize();
@@ -23,9 +23,13 @@ export async function addStatistics(statistic: Statistic) {
   ) {
     throw new Error("The statistic could not be added");
   }
+
+  console.log("done");
 }
 
-export async function getStatisticById(userId: number): Promise<Statistic | undefined> {
+export async function getStatisticById(
+  userId: number
+): Promise<Statistic | undefined> {
   const db = await DB.createDBConnection();
   const stmt = await db.prepare(`SELECT * FROM statistic WHERE userId = ?1`);
   await stmt.bind({ 1: userId });
@@ -35,9 +39,7 @@ export async function getStatisticById(userId: number): Promise<Statistic | unde
   return statistic;
 }
 
-export async function updateStatistic(
-  statistic: Statistic
-) {
+export async function updateStatistic(statistic: Statistic) {
   const db = await DB.createDBConnection();
   const stmt = await db.prepare(
     "UPDATE statistic set currentStreak = ?1, highestStreak = ?2, pointsMultiplier = ?3 where userId = ?4"
@@ -46,7 +48,7 @@ export async function updateStatistic(
     1: statistic.currentStreak,
     2: statistic.highestStreak,
     3: statistic.pointsMultiplier,
-    4: statistic.userId
+    4: statistic.userId,
   });
   const operationResult = await stmt.run();
   stmt.finalize();

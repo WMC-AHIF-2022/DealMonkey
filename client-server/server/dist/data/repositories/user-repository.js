@@ -34,7 +34,7 @@ function addUser(user) {
                 userId: user.id,
                 currentStreak: 0,
                 highestStreak: 0,
-                pointsMultiplier: 1
+                pointsMultiplier: 1,
             };
             yield (0, statistics_repository_1.addStatistics)(statistic);
         }
@@ -61,6 +61,7 @@ function addSetting(userId) {
         else {
             userId = operationResult.lastID;
         }
+        console.log("settings done");
     });
 }
 exports.addSetting = addSetting;
@@ -105,6 +106,7 @@ function deleteUser(id) {
         const result = yield stmt.get();
         yield stmt.finalize();
         yield db.close();
+        console.log(result);
         return result !== undefined;
     });
 }

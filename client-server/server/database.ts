@@ -31,7 +31,7 @@ export class DB {
     await connection.run(`
             create table if not exists setting(
                id INTEGER PRIMARY KEY,
-               theme TEXT UNIQUE NOT NULL,
+               theme TEXT NOT NULL,
                userId INTEGER NOT NULL,
                userProfile TEXT NOT NULL,
                FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
@@ -67,7 +67,7 @@ export class DB {
               FOREIGN KEY (id) REFERENCES task(id) ON DELETE CASCADE
           )`);
 
-          await connection.run(`
+    await connection.run(`
             create table if not exists statistic (
               userId INTEGER,
               currentStreak INTEGER,

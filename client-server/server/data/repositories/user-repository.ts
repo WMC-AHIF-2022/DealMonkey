@@ -1,10 +1,7 @@
 import { User, loginAuthResult } from "../interfaces/user";
 import { DB } from "../../database";
-import {
-  addStatistics
-} from "../repositories/statistics-repository";
+import { addStatistics } from "../repositories/statistics-repository";
 import { Statistic } from "../interfaces/statistic";
-
 
 export async function addUser(user: User) {
   const db = await DB.createDBConnection();
@@ -32,9 +29,9 @@ export async function addUser(user: User) {
       userId: user.id,
       currentStreak: 0,
       highestStreak: 0,
-      pointsMultiplier: 1
+      pointsMultiplier: 1,
     };
-    
+
     await addStatistics(statistic);
   }
 
@@ -63,6 +60,8 @@ export async function addSetting(userId: number) {
   } else {
     userId = operationResult.lastID!;
   }
+
+  console.log("settings done");
 }
 
 export async function getAllUsers(): Promise<User[]> {
@@ -103,6 +102,7 @@ export async function deleteUser(id: number): Promise<boolean> {
   const result: User | undefined = await stmt.get<User>();
   await stmt.finalize();
   await db.close();
+  console.log(result);
   return result !== undefined;
 }
 

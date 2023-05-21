@@ -41,7 +41,7 @@ class DB {
             yield connection.run(`
             create table if not exists setting(
                id INTEGER PRIMARY KEY,
-               theme TEXT UNIQUE NOT NULL,
+               theme TEXT NOT NULL,
                userId INTEGER NOT NULL,
                userProfile TEXT NOT NULL,
                FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE

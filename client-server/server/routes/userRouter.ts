@@ -81,7 +81,10 @@ userRouter.post("/login", async (request, response) => {
 
 userRouter.delete("/:id", async (request, response) => {
   const id = Number(request.params.id);
-  if (await deleteUser(id)) {
+
+  const result = await deleteUser(id);
+
+  if (result) {
     response.sendStatus(StatusCodes.OK);
   } else {
     response.sendStatus(StatusCodes.BAD_REQUEST);

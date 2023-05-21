@@ -19,7 +19,7 @@ function addStatistics(statistic) {
             1: statistic.userId,
             2: statistic.currentStreak,
             3: statistic.highestStreak,
-            4: statistic.pointsMultiplier
+            4: statistic.pointsMultiplier,
         });
         const operationResult = yield stmt.run();
         yield stmt.finalize();
@@ -28,6 +28,7 @@ function addStatistics(statistic) {
             operationResult.changes !== 1) {
             throw new Error("The statistic could not be added");
         }
+        console.log("done");
     });
 }
 exports.addStatistics = addStatistics;
@@ -51,7 +52,7 @@ function updateStatistic(statistic) {
             1: statistic.currentStreak,
             2: statistic.highestStreak,
             3: statistic.pointsMultiplier,
-            4: statistic.userId
+            4: statistic.userId,
         });
         const operationResult = yield stmt.run();
         stmt.finalize();

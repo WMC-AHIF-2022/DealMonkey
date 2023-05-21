@@ -76,7 +76,8 @@ exports.userRouter.post("/login", (request, response) => __awaiter(void 0, void 
 }));
 exports.userRouter.delete("/:id", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(request.params.id);
-    if (yield (0, user_repository_1.deleteUser)(id)) {
+    const result = yield (0, user_repository_1.deleteUser)(id);
+    if (result) {
         response.sendStatus(http_status_codes_1.StatusCodes.OK);
     }
     else {
