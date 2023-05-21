@@ -215,7 +215,7 @@ const Card = () => {
                         <div className="username">
                           <h1>{auth()?.username}</h1>
                         </div>
-                        <div className="profileButtons">
+                        <div className="profileButtons mb-12">
                           <ToggleButtonGroup
                             value={alignment}
                             exclusive
