@@ -6,11 +6,11 @@ POST http://localhost:8000/api/todos HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "Do Homework",
+  "title": "Repair broken Vase",
   "category": "School",
   "color": "#e9edc9",
   "userId": 1,
-  "priority": "heftig"
+  "priority": "Easy"
 }
 
 ####################################

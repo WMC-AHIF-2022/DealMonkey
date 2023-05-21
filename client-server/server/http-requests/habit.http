@@ -7,7 +7,7 @@ POST http://localhost:8000/api/habits HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "Do Homework",
+  "title": "Do Math Homework",
   "frequency": "once a month",
   "reminder": "11:45",
   "category": "school",
@@ -25,7 +25,7 @@ Content-Type: application/json
   "title": "Walk Doggiii",
   "frequency": "once a year",
   "reminder": "11:45",
-  "category": "school",
+  "category": "Private",
   "color": "#e9edc9",
-  "userId": 3
+  "userId": 1
 }
