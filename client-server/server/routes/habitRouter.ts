@@ -35,7 +35,7 @@ habitRouter.post("/", async (request, response) => {
   };
 
   try {
-    const newHabit:Habit = await addHabit(newTask, frequency, reminder);
+    const newHabit: Habit = await addHabit(newTask, frequency, reminder);
     response.status(StatusCodes.CREATED).json(newHabit);
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);
@@ -60,7 +60,7 @@ habitRouter.put("/", async (request, response) => {
   };
 
   try {
-    const updatedHabit:Habit = await updateHabit(task, frequency, reminder);
+    const updatedHabit: Habit = await updateHabit(task, frequency, reminder);
     response.status(StatusCodes.ACCEPTED).json(updatedHabit);
   } catch (error) {
     response.status(StatusCodes.BAD_REQUEST).json(error);

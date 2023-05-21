@@ -1,5 +1,10 @@
 import { User, loginAuthResult } from "../interfaces/user";
 import { DB } from "../../database";
+import {
+  addStatistics
+} from "../repositories/statistics-repository";
+import { Statistic } from "../interfaces/statistic";
+
 
 export async function addUser(user: User) {
   const db = await DB.createDBConnection();
@@ -22,6 +27,15 @@ export async function addUser(user: User) {
     throw new Error("Username is already known");
   } else {
     user.id = operationResult.lastID!;
+
+    const statistic: Statistic = {
+      userId: user.id,
+      currentStreak: 0,
+      highestStreak: 0,
+      pointsMultiplier: 1
+    };
+    
+    await addStatistics(statistic);
   }
 
   await addSetting(user.id);

@@ -14,11 +14,28 @@ const database_1 = require("../../database");
 const task_repository_1 = require("./task-repository");
 function getAllHabits(userId) {
     return __awaiter(this, void 0, void 0, function* () {
+        const tasks = yield (0, task_repository_1.getAllTasks)(userId);
         const db = yield database_1.DB.createDBConnection();
         const habits = yield db.all("SELECT * FROM habit");
-        habits.filter(habit => habit.userId === userId);
+        habits.filter((habit) => habit.userId === userId);
+        const allHabits = [];
+        for (let i = 0; i < habits.length; i++) {
+            for (let j = 0; j < tasks.length; j++) {
+                if (habits[i].id === tasks[j].id) {
+                    allHabits.push({
+                        id: tasks[j].id,
+                        title: tasks[j].title,
+                        color: tasks[j].color,
+                        category: tasks[j].category,
+                        userId: tasks[j].userId,
+                        frequency: habits[i].frequency,
+                        reminder: habits[i].reminder,
+                    });
+                }
+            }
+        }
         yield db.close();
-        return habits;
+        return allHabits;
     });
 }
 exports.getAllHabits = getAllHabits;
@@ -42,7 +59,11 @@ function addHabit(task, frequency, reminder) {
             throw new Error("Could not add habit");
         }
         //returning new habit
-        const jsonString = JSON.stringify({ id: id, frequency: frequency, reminder: reminder });
+        const jsonString = JSON.stringify({
+            id: id,
+            frequency: frequency,
+            reminder: reminder,
+        });
         return JSON.parse(jsonString);
     });
 }
@@ -63,7 +84,11 @@ function updateHabit(task, frequency, reminder) {
         stmt.finalize();
         db.close();
         //returning new habit
-        const jsonString = JSON.stringify({ id: id, frequency: frequency, reminder: reminder });
+        const jsonString = JSON.stringify({
+            id: id,
+            frequency: frequency,
+            reminder: reminder,
+        });
         return JSON.parse(jsonString);
     });
 }

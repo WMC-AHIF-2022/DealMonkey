@@ -16,6 +16,7 @@ import { Popup } from "../../components/popup";
 import FormInput from "../../components/form-input";
 import { fetchRestEndpoint } from "../../utils/client-server";
 import toast, { Toaster } from "react-hot-toast";
+import flame from "../../img/flame.png";
 
 export interface User {
   id: number;
@@ -36,6 +37,9 @@ export interface Setting {
 }
 
 const UserProfile = () => {
+
+  const [habits, setHabits] = useState<HabitItem[]>([]);
+
   // const [user, setMyObject] = useState<User | null>(null);
 
   // const p = sessionStorage.getItem('userProfile') as string;
@@ -105,8 +109,65 @@ const UserProfile = () => {
     }
   };
 
+  interface HabitItem {
+    id: number;
+    title: string;
+    frequency: string;
+    reminder: string;
+    category: string;
+    color: string;
+    userId: number;
+  }
+
+const getHabits = async () => {
+    try {
+      const response = await fetchRestEndpoint(
+        "http://localhost:8000/api/habits/" + auth()?.id,
+        "GET"
+      ).then((res) => res.json()).then ((res) => {
+        setHabits(res);
+      });
+
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+};
+
+const Card = () => {
+
+  console.log(habits);
+
+  return (
+    <div className="habitsView">
+      {habits.map((habit) => (
+        <div className="activityTitle mb-6" >
+          <div className="cardTop">
+                <h1 className="text-lg ml-4 mt-2">{habit.title}</h1>
+                <img src={flame} width="40" height="30" />
+            </div>
+            <div className="cardBottom">
+                <div>
+                    <div className="circle"></div>
+                    <h3 className="mb-4">Current Streak</h3>
+                </div>
+                <div>
+                    <div className="circle"></div>
+                    <h3 className="mb-4">Highest Streak</h3>
+                </div>
+                <div>
+                    <div className="circle"></div>
+                    <h3 className="mb-4">Point Multiplier</h3>
+                </div>
+            </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
   useEffect(() => {
     getProfile();
+    getHabits();
   }, []);
 
   return (
@@ -173,8 +234,6 @@ const UserProfile = () => {
                       />
                     </Box>
                   </div>
-                  <Card />
-                  <Card />
                   <Card />
                 </div>
               </div>

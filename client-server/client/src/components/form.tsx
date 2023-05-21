@@ -121,8 +121,6 @@ const Form = ({
           onChange={handleFrequencyChange}
         >
           <MenuItem value={"Day"}>Every Day</MenuItem>
-          <MenuItem value={"Week"}>Once a Week</MenuItem>
-          <MenuItem value={"Month"}>Once a Month</MenuItem>
         </Select>
       </FormControl>
 
@@ -132,8 +130,13 @@ const Form = ({
           value={reminder}
           onChange={(value) => setReminder(value)}
         />*/}
-
-        <TimePicker value={reminder} onChange={(value) => setReminder(value)} />
+        <TimePicker
+          value={reminder}
+          onChange={(value) => setReminder(value)}
+          defaultValue={dayjs("12:00", "HH:mm")}
+          format={"HH:mm"}
+          size="large"
+        />
       </div>
 
       {/*Color Picker*/}

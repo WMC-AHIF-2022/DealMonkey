@@ -6,6 +6,11 @@
     padding-right: 10px;
 }
 
+.habitsView {
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+
 .circle {
     display: flex;
     border: 1px solid black;

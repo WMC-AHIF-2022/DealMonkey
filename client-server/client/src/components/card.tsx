@@ -6,6 +6,7 @@ import flame from '../img/flame.png';
 const Card = () => {
     return (
         <div className="activityTitle mb-6">
+            
             <div className="cardTop">
                 <h1 className="text-lg ml-4 mt-2">Running</h1>
                 <img src={flame} width="40" height="30" />

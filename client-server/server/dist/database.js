@@ -76,6 +76,14 @@ class DB {
               reminder TEXT,
               FOREIGN KEY (id) REFERENCES task(id) ON DELETE CASCADE
           )`);
+            yield connection.run(`
+            create table if not exists statistic (
+              userId INTEGER,
+              currentStreak INTEGER,
+              highestStreak INTEGER,
+              pointsMultiplier INTEGER,
+              FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+          )`);
         });
     }
 }
