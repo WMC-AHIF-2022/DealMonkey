@@ -1,36 +1,30 @@
-import React from "react";
-import { useState, useEffect } from "react";
 import Layout from "../../layout/loggedIn/layout";
+import { useState, useEffect } from "react";
 import { fetchRestEndpoint } from "../../utils/client-server";
 import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
 import SlidingPaneCom from "../../components/slidingPane";
 import "react-toastify/dist/ReactToastify.css";
-import HabitList from "../../components/habitList";
-import dayjs, { Dayjs } from "dayjs";
+import TodoList from "../../components/todoList";
 import Form from "../../components/form";
 import toast, { Toaster } from "react-hot-toast";
 
-interface HabitItem {
+interface TodoItem {
   id: number;
   title: string;
-  frequency: string;
-  reminder: string;
   category: string;
   color: string;
   userId: number;
+  priority: string;
 }
 
-const HabitPage = () => {
+const Todos = () => {
   const auth = useAuthUser();
   const [open, setOpen] = useState(false);
-  const [habits, setHabits] = useState<HabitItem[]>([]);
+  const [todos, setTodos] = useState<TodoItem[]>([]);
   const [color, setColor] = useState("#fff");
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
-  const [frequency, setFrequency] = useState("");
-  const [reminder, setReminder] = React.useState<Dayjs | null>(
-    dayjs(new Date().toISOString())
-  );
+  const [priority, setPriority] = useState("");
 
   const [deleteBtn, setDeleteBtn] = useState(false);
   const [saveBtn, setSaveBtn] = useState(true);
@@ -42,72 +36,65 @@ const HabitPage = () => {
     setUpdateBtn(true);
   };
 
-  const getHabits = async () => {
+  const getTodos = async () => {
     try {
-      const response = await fetchRestEndpoint(
-        "http://localhost:8000/api/habits/" + auth()?.id,
-        "GET"
-      );
+      const response = await fetchRestEndpoint(`http://localhost:8000/api/habits/${auth()?.id}`, "GET");
 
-      const data: HabitItem[] = await response.json();
-      setHabits(data);
-      console.log(data);
+      const data: TodoItem[] = await response.json();
+      setTodos(data);
+
     } catch (error: any) {
       toast.error(error.message);
     }
   };
 
-  const deleteHabit = async (id: number) => {
+  const deleteTodo = async (id: number) => {
     try {
-      const response = await fetchRestEndpoint(
-        "http://localhost:8000/api/tasks/" + id,
-        "DELETE"
-      );
+      await fetchRestEndpoint(`http://localhost:8000/api/tasks/${id}`, "DELETE");
+      toast.success("Todo deleted");
 
-      toast.success("Habit deleted");
     } catch (error: any) {
       toast.error(error.message);
     }
 
-    getHabits();
+    getTodos();
   };
 
-  const updateHabit = async (habit: HabitItem) => {
+  const updateTodo = async (todo: TodoItem) => {
     try {
-      await fetchRestEndpoint("http://localhost:8000/api/habits", "PUT", habit);
-      toast.success("Habit updated");
+      await fetchRestEndpoint("http://localhost:8000/api/todos", "PUT", todo);
+      toast.success("Todo updated");
     } catch (error: any) {
       toast.error(error.message);
     }
 
-    getHabits();
+    getTodos();
   };
 
   const resetForm = () => {
     setTitle("");
-    setFrequency("");
+    setPriority("");
     setCategory("");
     setColor("#fff");
-    setReminder(dayjs("2022-04-17T15:30"));
+    setPriority("");
     setSaveBtn(true);
     setDeleteBtn(false);
     setUpdateBtn(false);
   };
 
   useEffect(() => {
-    getHabits();
+    getTodos();
   }, []);
 
   return (
     <Layout>
       <Toaster />
       <div className="">
-        <HabitList
-          habits={habits}
+        <TodoList
+          todos={todos}
           setOpen={setOpen}
           setTitle={setTitle}
-          setFrequency={setFrequency}
-          setReminder={setReminder}
+          setPriority={setPriority}
           setCategory={setCategory}
           setColor={setColor}
           habitOnClickHandler={habitOnClickHandler}
@@ -120,28 +107,26 @@ const HabitPage = () => {
               resetForm();
             }}
           >
-            Add Habit
+            Add Todo
           </button>
         </div>
 
         <SlidingPaneCom setOpen={setOpen} open={open}>
           <Form
             title={title}
-            frequency={frequency}
-            reminder={reminder}
+            priority={priority}
             category={category}
             color={color}
             setTitle={setTitle}
-            setFrequency={setFrequency}
-            setReminder={setReminder}
+            setPriority={setPriority}
             setCategory={setCategory}
             setColor={setColor}
-            setHabits={setHabits}
+            setTodos={setTodos}
             updateBtn={updateBtn}
             deleteBtn={deleteBtn}
             saveBtn={saveBtn}
-            onDelete={deleteHabit}
-            onUpdate={updateHabit}
+            onDelete={deleteTodo}
+            onUpdate={updateTodo}
           />
         </SlidingPaneCom>
       </div>
@@ -149,4 +134,4 @@ const HabitPage = () => {
   );
 };
 
-export default HabitPage;
+export default Todos;

@@ -58,9 +58,9 @@ const Dashboard = () => {
           <button
             className="mt-10 bg-orange-500 rounded-md mainBtn"
             id="btn-id-1"
-            onClick={() => routeChange("tasks")}
+            onClick={() => routeChange("../todos")}
           >
-            Tasks
+            Todos
           </button>
         </div>
         <div>
