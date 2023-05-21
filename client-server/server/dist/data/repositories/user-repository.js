@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAllUsers = exports.deleteUser = exports.isAuthorized = exports.getUserById = exports.getAllUsers = exports.addSetting = exports.addUser = void 0;
 const database_1 = require("../../database");
+const statistics_repository_1 = require("../repositories/statistics-repository");
 function addUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
@@ -29,6 +30,13 @@ function addUser(user) {
         }
         else {
             user.id = operationResult.lastID;
+            const statistic = {
+                userId: user.id,
+                currentStreak: 0,
+                highestStreak: 0,
+                pointsMultiplier: 1
+            };
+            yield (0, statistics_repository_1.addStatistics)(statistic);
         }
         yield addSetting(user.id);
     });
