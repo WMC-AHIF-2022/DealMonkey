@@ -6,7 +6,6 @@ export async function getAllTasks(userId: number): Promise<Task[]> {
 
   const userTasks: Task[] = [];
   const tasks = await db.all<Task[]>("SELECT * FROM task");
-  //tasks.filter(task => task.userId === userId);
   
   for(const task of tasks) {
     if(task.userId === userId) {
