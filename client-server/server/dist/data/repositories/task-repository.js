@@ -14,10 +14,16 @@ const database_1 = require("../../database");
 function getAllTasks(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
+        const userTasks = [];
         const tasks = yield db.all("SELECT * FROM task");
-        tasks.filter(task => task.userId === userId);
+        //tasks.filter(task => task.userId === userId);
+        for (const task of tasks) {
+            if (task.userId === userId) {
+                userTasks.push(task);
+            }
+        }
         yield db.close();
-        return tasks;
+        return userTasks;
     });
 }
 exports.getAllTasks = getAllTasks;

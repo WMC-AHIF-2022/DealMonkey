@@ -37,11 +37,11 @@ userRouter.post("/registration", async (request, response) => {
   const birthdate: string = request.body.birthdate;
 
   //TODO improve validation
-  if (password.trim().length === 0) {
+  /*if (password.trim().length === 0) {
     console.log("Trim error");
     response.sendStatus(StatusCodes.BAD_REQUEST);
     return;
-  }
+  }*/
 
   const user: User = {
     id: -1,

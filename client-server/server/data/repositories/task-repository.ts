@@ -4,11 +4,18 @@ import { DB } from "../../database";
 export async function getAllTasks(userId: number): Promise<Task[]> {
   const db = await DB.createDBConnection();
 
+  const userTasks: Task[] = [];
   const tasks = await db.all<Task[]>("SELECT * FROM task");
-  tasks.filter(task => task.userId === userId);
+  //tasks.filter(task => task.userId === userId);
+  
+  for(const task of tasks) {
+    if(task.userId === userId) {
+      userTasks.push(task);
+    }
+  }
 
   await db.close();
-  return tasks!;
+  return userTasks!;
 }
 
 export async function addTask(task: Task):Promise<number> {

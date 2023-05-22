@@ -39,11 +39,11 @@ exports.userRouter.post("/registration", (request, response) => __awaiter(void 0
     const email = request.body.email;
     const birthdate = request.body.birthdate;
     //TODO improve validation
-    if (password.trim().length === 0) {
-        console.log("Trim error");
-        response.sendStatus(http_status_codes_1.StatusCodes.BAD_REQUEST);
-        return;
-    }
+    /*if (password.trim().length === 0) {
+      console.log("Trim error");
+      response.sendStatus(StatusCodes.BAD_REQUEST);
+      return;
+    }*/
     const user = {
         id: -1,
         username: username,
