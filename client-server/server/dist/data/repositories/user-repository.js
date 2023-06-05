@@ -15,11 +15,13 @@ const statistics_repository_1 = require("../repositories/statistics-repository")
 function addUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare("INSERT INTO user (USERNAME, PASSWORD, EMAIL) VALUES (?1, ?2, ?3)");
+        const stmt = yield db.prepare("INSERT INTO user (USERNAME, PASSWORD, EMAIL, BIRTHDATE,  REGISTRATIONDATE) VALUES (?1, ?2, ?3, ?4, ?5)");
         yield stmt.bind({
             1: user.username,
             2: user.password,
             3: user.email,
+            4: user.birthdate,
+            5: user.registrationDate,
         });
         const operationResult = yield stmt.run();
         yield stmt.finalize();

@@ -6,12 +6,14 @@ import { Statistic } from "../interfaces/statistic";
 export async function addUser(user: User) {
   const db = await DB.createDBConnection();
   const stmt = await db.prepare(
-    "INSERT INTO user (USERNAME, PASSWORD, EMAIL) VALUES (?1, ?2, ?3)"
+    "INSERT INTO user (USERNAME, PASSWORD, EMAIL, BIRTHDATE,  REGISTRATIONDATE) VALUES (?1, ?2, ?3, ?4, ?5)"
   );
   await stmt.bind({
     1: user.username,
     2: user.password,
     3: user.email,
+    4: user.birthdate,
+    5: user.registrationDate,
   });
   const operationResult = await stmt.run();
   await stmt.finalize();

@@ -11,11 +11,12 @@ const defaultFormFields = {
   username: "",
   password: "",
   birthdate: "",
+  email: "",
 };
 
 const Register = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { username, password, birthdate } = formFields;
+  const { username, password, birthdate, email } = formFields;
 
   const resetFormFields = () => {
     return setFormFields(defaultFormFields);
@@ -31,7 +32,7 @@ const Register = () => {
 
     try {
       // make the API call
-      await register(username, password, birthdate);
+      await register(username, password, birthdate, email);
       resetFormFields();
     } catch (error: any) {
       toast.error("Registration failed!");
@@ -78,10 +79,22 @@ const Register = () => {
             <div className="form-group mt-3">
               <FormInput
                 label="Birthdate"
+                placeholder="Birthdate"
                 type="date"
                 required
                 name="birthdate"
                 value={birthdate}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-group mt-3">
+              <FormInput
+                label="email"
+                type="email"
+                placeholder="Email"
+                required
+                name="email"
+                value={email}
                 onChange={handleChange}
               />
             </div>

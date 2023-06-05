@@ -18,10 +18,11 @@ export const getData = async (username: string, password: string) => {
 export const register = async (
   username: string,
   password: string,
-  birthdate: string
+  birthdate: string,
+  email: string
 ) => {
   const data = JSON.parse(
-    `{"username": "${username}", "password": "${password}", "birthdate": "${birthdate}"}`
+    `{"username": "${username}", "password": "${password}", "birthdate": "${birthdate}", "email": "${email}"}`
   );
   await fetchRestEndpoint(
     "http://localhost:8000/users/registration",
