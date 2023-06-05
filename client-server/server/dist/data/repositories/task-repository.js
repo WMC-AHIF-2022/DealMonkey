@@ -16,7 +16,6 @@ function getAllTasks(userId) {
         const db = yield database_1.DB.createDBConnection();
         const userTasks = [];
         const tasks = yield db.all("SELECT * FROM task");
-        //tasks.filter(task => task.userId === userId);
         for (const task of tasks) {
             if (task.userId === userId) {
                 userTasks.push(task);
