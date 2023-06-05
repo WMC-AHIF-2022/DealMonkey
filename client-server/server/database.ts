@@ -1,7 +1,7 @@
 import { Database as Driver } from "sqlite3";
 import { open, Database } from "sqlite";
 
-export const dbFileName: string = "database.db";
+export const dbFileName: string = "./database.db";
 
 export class DB {
   public static async createDBConnection(): Promise<Database> {
@@ -24,12 +24,10 @@ export class DB {
                 password TEXT NOT NULL,
                 email TEXT,                
                 birthdate TEXT,
-                points INTEGER,
-                level INTEGER,
                 registrationDate TEXT
             ) `);
     await connection.run(`
-            create table if not exists setting(
+            create table if not exists setting (
                id INTEGER PRIMARY KEY,
                theme TEXT NOT NULL,
                userId INTEGER NOT NULL,
@@ -51,6 +49,7 @@ export class DB {
                name TEXT NOT NULL,
                taskId INTEGER NOT NULL,
                type TEXT NOT NULL,
+               points INTEGER NOT NULL,
                FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE
             )`);
     await connection.run(`
@@ -66,7 +65,6 @@ export class DB {
               reminder TEXT,
               FOREIGN KEY (id) REFERENCES task(id) ON DELETE CASCADE
           )`);
-
     await connection.run(`
             create table if not exists statistic (
               userId INTEGER,
@@ -75,5 +73,27 @@ export class DB {
               pointsMultiplier INTEGER,
               FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
           )`);
+    await connection.run(`
+          create table if not exists progress (
+            userId INTEGER NOT NULL,
+            points INTEGER NOT NULL,
+            experience INTEGER NOT NULL,
+            FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+        )`);
+    await connection.run(`
+        create table if not exists avatar (
+          avatarId INTERGER PRIMARY KEY,
+          link TEXT NOT NULL,
+          name TEXT,
+          preis INTEGER NOT NULL,
+          unlockLevel INTEGER NOT NULL
+      )`);
+    await connection.run(`
+        create table if not exists avatar (
+          avatarId INTERGER NOT NULL,
+          userId INTEGER NOT NULL,
+          FOREIGN KEY (avatarId) REFERENCES avatar(avatarId) ON DELETE CASCADE,
+          FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+      )`);
   }
 }

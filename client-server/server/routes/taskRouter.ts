@@ -1,6 +1,6 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
-import { Task } from "../data/interfaces/task";
+import { Task } from "../data/interfaces/model";
 import { getAllTasks, addTask, deleteTask, updateTask } from "../data/repositories/task-repository";
 
 export const taskRouter = express.Router();

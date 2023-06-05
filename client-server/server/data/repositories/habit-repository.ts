@@ -1,5 +1,4 @@
-import { Habit } from "../interfaces/habit";
-import { Task } from "../interfaces/task";
+import { Habit, Task } from "../interfaces/model";
 import { DB } from "../../database";
 import { addTask, getAllTasks, updateTask } from "./task-repository";
 

@@ -1,4 +1,4 @@
-import { Task } from "../interfaces/task";
+import { Task } from "../interfaces/model";
 import { DB } from "../../database";
 
 export async function getAllTasks(userId: number): Promise<Task[]> {

@@ -5,9 +5,10 @@ POST http://localhost:8000/users/registration HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "admin",
+  "username": "admin3",
   "password": "admin",
-  "email": "admin@gmail.com"
+  "email": "admin@gmail.com",
+  "birthdate": "2006-01-13"
 }
 
 ###################################################

@@ -1,7 +1,6 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
-import { Statistic } from "../data/interfaces/statistic";
-
+import { Statistic } from "../data/interfaces/model";
 import {
   getStatisticById,
   updateStatistic

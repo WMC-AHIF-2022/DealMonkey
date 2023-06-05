@@ -1,5 +1,4 @@
-import { Todo } from "../interfaces/todo";
-import { Task } from "../interfaces/task";
+import { Todo, Task } from "../interfaces/model";
 import { DB } from "../../database";
 import { addTask, getAllTasks, updateTask } from "./task-repository";
 

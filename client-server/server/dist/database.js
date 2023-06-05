@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DB = exports.dbFileName = void 0;
 const sqlite3_1 = require("sqlite3");
 const sqlite_1 = require("sqlite");
-exports.dbFileName = "database.db";
+exports.dbFileName = "./database.db";
 class DB {
     static createDBConnection() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -34,12 +34,10 @@ class DB {
                 password TEXT NOT NULL,
                 email TEXT,                
                 birthdate TEXT,
-                points INTEGER,
-                level INTEGER,
                 registrationDate TEXT
             ) `);
             yield connection.run(`
-            create table if not exists setting(
+            create table if not exists setting (
                id INTEGER PRIMARY KEY,
                theme TEXT NOT NULL,
                userId INTEGER NOT NULL,
@@ -61,6 +59,7 @@ class DB {
                name TEXT NOT NULL,
                taskId INTEGER NOT NULL,
                type TEXT NOT NULL,
+               points INTEGER NOT NULL,
                FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE
             )`);
             yield connection.run(`
@@ -84,6 +83,28 @@ class DB {
               pointsMultiplier INTEGER,
               FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
           )`);
+            yield connection.run(`
+          create table if not exists progress (
+            userId INTEGER NOT NULL,
+            points INTEGER NOT NULL,
+            experience INTEGER NOT NULL,
+            FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+        )`);
+            yield connection.run(`
+        create table if not exists avatar (
+          avatarId INTERGER PRIMARY KEY,
+          link TEXT NOT NULL,
+          name TEXT,
+          preis INTEGER NOT NULL,
+          unlockLevel INTEGER NOT NULL
+      )`);
+            yield connection.run(`
+        create table if not exists avatar (
+          avatarId INTERGER NOT NULL,
+          userId INTEGER NOT NULL,
+          FOREIGN KEY (avatarId) REFERENCES avatar(avatarId) ON DELETE CASCADE,
+          FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+      )`);
         });
     }
 }

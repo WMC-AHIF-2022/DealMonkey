@@ -1,7 +1,6 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
-import { Todo } from "../data/interfaces/todo";
-import { Task } from "../data/interfaces/task";
+import { Todo, Task } from "../data/interfaces/model";
 import { getAllTodos, addTodo, updateTodo } from "../data/repositories/todo-repository";
 
 export const todoRouter = express.Router();
