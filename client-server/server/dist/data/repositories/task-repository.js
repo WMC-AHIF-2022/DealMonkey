@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTask = exports.deleteTask = exports.addTask = exports.getAllTasks = void 0;
+exports.updateTask = exports.deleteTask = exports.addTask = exports.getTaskById = exports.getAllTasks = void 0;
 const database_1 = require("../../database");
 function getAllTasks(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -26,6 +26,18 @@ function getAllTasks(userId) {
     });
 }
 exports.getAllTasks = getAllTasks;
+function getTaskById(taskId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare('select * from Tasks where id = ?1');
+        yield stmt.bind({ 1: taskId });
+        const task = yield stmt.get();
+        yield stmt.finalize();
+        yield db.close();
+        return task;
+    });
+}
+exports.getTaskById = getTaskById;
 function addTask(task) {
     return __awaiter(this, void 0, void 0, function* () {
         //add parent task (to create id for corresponding habit OR todo)

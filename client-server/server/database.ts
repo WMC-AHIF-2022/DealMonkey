@@ -48,7 +48,6 @@ export class DB {
                id INTEGER PRIMARY KEY,
                name TEXT NOT NULL,
                taskId INTEGER NOT NULL,
-               type TEXT NOT NULL,
                points INTEGER NOT NULL,
                FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE
             )`);
@@ -89,7 +88,7 @@ export class DB {
           unlockLevel INTEGER NOT NULL
       )`);
     await connection.run(`
-        create table if not exists avatar (
+        create table if not exists userAvatars (
           avatarId INTERGER NOT NULL,
           userId INTEGER NOT NULL,
           FOREIGN KEY (avatarId) REFERENCES avatar(avatarId) ON DELETE CASCADE,

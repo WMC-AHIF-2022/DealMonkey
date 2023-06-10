@@ -53,3 +53,9 @@ export interface Progress {
     points: number,
     experience: number
 }
+export interface Deal {
+    id:number,
+    name:string,
+    taskId:number,
+    points:number
+}

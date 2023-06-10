@@ -17,6 +17,20 @@ export async function getAllTasks(userId: number): Promise<Task[]> {
   return userTasks!;
 }
 
+export async function getTaskById(taskId: number): Promise<Task | undefined> {
+  const db = await DB.createDBConnection();
+
+  const stmt = await db.prepare('select * from Tasks where id = ?1');
+  await stmt.bind({1: taskId });
+  const task = await stmt.get<Task>();
+  
+  await stmt.finalize();
+  await db.close();
+
+  return task;
+}
+
+
 export async function addTask(task: Task):Promise<number> {
   //add parent task (to create id for corresponding habit OR todo)
   const db = await DB.createDBConnection();
@@ -71,3 +85,4 @@ export async function updateTask(task: Task):Promise<number> {
 
   return task.id;
 }
+
