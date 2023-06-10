@@ -41,10 +41,10 @@ function addDeal(taskId) {
         if (task === undefined) {
             throw new Error("task doesn't exist - couldn't create deal for it.");
         }
-        //create deal
         const db = yield database_1.DB.createDBConnection();
         const stmt = yield db.prepare('insert into Deal (name, taskId, points) values (?1, ?2, ?3)');
         const points = yield (0, progress_repository_1.calculatePoints)(task.userId);
+        console.log(points);
         yield stmt.bind({ 1: task.title, 2: taskId, 3: points });
         yield stmt.run();
         yield stmt.finalize();

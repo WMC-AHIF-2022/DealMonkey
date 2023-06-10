@@ -37,6 +37,8 @@ export async function addHabit(
 ) {
   //adding task (parent) to get id
   const id = await addTask(task);
+
+  console.log("created parent task for habit");
   
   //adding deal for this habit:
   await addDeal(id);

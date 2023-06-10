@@ -53,7 +53,7 @@ exports.addProgress = addProgress;
 //y ... experience
 //g(y) ... level
 function calculateLevel(experience) {
-    return Math.floor(((Math.sqrt(50 * experience + 625) - 75) / 50) + 1);
+    return Math.floor((Math.sqrt(50 * experience + 625) - 75) / 50) + 2;
 }
 function calculateExperience(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -66,8 +66,10 @@ function calculateExperience(userId) {
 function calculatePoints(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const progress = yield getProgressByUserId(userId);
+        console.log(progress);
         const level = calculateLevel(progress.experience);
-        return Math.floor((Math.log10(level * 10) + 20) * ((progress.experience) / 100));
+        console.log(level);
+        return Math.ceil((Math.log10(level * 10) + 20) * ((progress.experience) / 100)) + 10;
     });
 }
 exports.calculatePoints = calculatePoints;

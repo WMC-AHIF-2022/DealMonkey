@@ -20,10 +20,10 @@ export async function getAllTasks(userId: number): Promise<Task[]> {
 export async function getTaskById(taskId: number): Promise<Task | undefined> {
   const db = await DB.createDBConnection();
 
-  const stmt = await db.prepare('select * from Tasks where id = ?1');
+  const stmt = await db.prepare('select * from task where id = ?1');
   await stmt.bind({1: taskId });
   const task = await stmt.get<Task>();
-  
+
   await stmt.finalize();
   await db.close();
 

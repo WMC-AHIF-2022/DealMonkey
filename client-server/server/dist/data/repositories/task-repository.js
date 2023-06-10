@@ -29,7 +29,7 @@ exports.getAllTasks = getAllTasks;
 function getTaskById(taskId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare('select * from Tasks where id = ?1');
+        const stmt = yield db.prepare('select * from task where id = ?1');
         yield stmt.bind({ 1: taskId });
         const task = yield stmt.get();
         yield stmt.finalize();

@@ -45,7 +45,7 @@ export async function addProgress(userId: number) {
 //y ... experience
 //g(y) ... level
 function calculateLevel(experience:number):number {
-    return Math.floor(((Math.sqrt(50 * experience + 625) - 75) / 50) + 1);
+    return Math.floor((Math.sqrt(50 * experience + 625) - 75) / 50) + 2;
 }
 
 async function calculateExperience(userId:number):Promise<number> {
@@ -56,9 +56,11 @@ async function calculateExperience(userId:number):Promise<number> {
   return (Math.floor((Math.random()) * 80) + 50) * level;
 }
 
-export async function calculatePoints(userId: number) {
+export async function calculatePoints(userId: number):Promise<number> {
   const progress = await getProgressByUserId(userId);
+  console.log(progress);
   const level = calculateLevel(progress!.experience);
+  console.log(level);
 
-  return Math.floor((Math.log10(level * 10) + 20) * ((progress!.experience) / 100));
+  return Math.ceil((Math.log10(level * 10) + 20) * ((progress!.experience) / 100)) + 10;
 }

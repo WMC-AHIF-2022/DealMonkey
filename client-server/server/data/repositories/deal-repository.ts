@@ -10,7 +10,6 @@ async function getAllDeals():Promise<Deal[]> {
     return deals;
 }
 
-
 export async function getAllDealsByUser(userId: number):Promise<Deal[]> {
     const deals = await getAllDeals();
 
@@ -27,15 +26,14 @@ export async function getAllDealsByUser(userId: number):Promise<Deal[]> {
 
 export async function addDeal(taskId: number):Promise<void> {
     const task = await getTaskById(taskId);
-
     if(task === undefined) {
         throw new Error("task doesn't exist - couldn't create deal for it.");
     }
 
-    //create deal
     const db = await DB.createDBConnection();
     const stmt = await db.prepare('insert into Deal (name, taskId, points) values (?1, ?2, ?3)');
     const points = await calculatePoints(task.userId);
+    console.log(points);
     await stmt.bind({1: task.title, 2: taskId, 3: points});
     await stmt.run();
     await stmt.finalize();

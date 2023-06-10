@@ -43,6 +43,7 @@ function addHabit(task, frequency, reminder) {
     return __awaiter(this, void 0, void 0, function* () {
         //adding task (parent) to get id
         const id = yield (0, task_repository_1.addTask)(task);
+        console.log("created parent task for habit");
         //adding deal for this habit:
         yield (0, deal_repository_1.addDeal)(id);
         //adding habit:
