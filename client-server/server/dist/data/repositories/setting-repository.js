@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSettingById = exports.updateSettings = void 0;
+exports.addSetting = exports.getSettingById = exports.updateSettings = void 0;
 const database_1 = require("../../database");
 function updateSettings(profile, userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -37,3 +37,26 @@ function getSettingById(id) {
     });
 }
 exports.getSettingById = getSettingById;
+function addSetting(userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare("INSERT INTO setting (THEME, USERID, USERPROFILE) VALUES (?1, ?2, ?3)");
+        yield stmt.bind({
+            1: "light",
+            2: userId,
+            3: "https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg",
+        });
+        const operationResult = yield stmt.run();
+        yield stmt.finalize();
+        yield db.close();
+        if (typeof operationResult.changes !== "number" ||
+            operationResult.changes !== 1) {
+            throw new Error("Username is already known");
+        }
+        else {
+            userId = operationResult.lastID;
+        }
+        console.log("settings done");
+    });
+}
+exports.addSetting = addSetting;

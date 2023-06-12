@@ -8,7 +8,7 @@ Content-Type: application/json
   "username": "admin",
   "password": "admin",
   "email": "admin@gmail.com",
-  "birthdate": "Cool Birthdate"
+  "birthdate": "2006-01-13"
 }
 
 ###################################################

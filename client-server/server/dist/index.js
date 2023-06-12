@@ -47,6 +47,7 @@ app.use("/api/habits", habitRouter_1.habitRouter);
 app.use("/api/settings", settingRouter_1.settingsRouter);
 app.use("/users", userRouter_1.userRouter);
 app.use("/api/statistics", statisticsRouter_1.statisticsRounter);
+app.use("/api/deals", dealRouter_1.dealRouter);
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

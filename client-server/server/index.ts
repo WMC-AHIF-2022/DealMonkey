@@ -10,6 +10,7 @@ import { statisticsRounter } from "./routes/statisticsRouter";
 import { Server } from "socket.io";
 import * as http from "http";
 
+import { dealRouter } from "./routes/dealRouter";
 
 dotenv.config();
 const app: Express = express();
@@ -23,6 +24,7 @@ app.use("/api/habits", habitRouter);
 app.use("/api/settings", settingsRouter);
 app.use("/users", userRouter);
 app.use("/api/statistics", statisticsRounter);
+app.use("/api/deals", dealRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

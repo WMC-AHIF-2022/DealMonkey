@@ -4,7 +4,7 @@ import {
   updateSettings,
   getSettingById,
 } from "../data/repositories/setting-repository";
-import { Setting } from "../data/interfaces/setting";
+import { Setting } from "../data/interfaces/model";
 
 require("dotenv").config();
 

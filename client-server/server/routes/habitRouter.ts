@@ -1,7 +1,6 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
-import { Habit } from "../data/interfaces/habit";
-import { Task } from "../data/interfaces/task";
+import { Habit, Task } from "../data/interfaces/model";
 import {
   addHabit,
   getAllHabits,

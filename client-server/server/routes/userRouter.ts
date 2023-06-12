@@ -1,6 +1,6 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
-import { User } from "../data/interfaces/user";
+import { User } from "../data/interfaces/model";
 import {
   addUser,
   getAllUsers,

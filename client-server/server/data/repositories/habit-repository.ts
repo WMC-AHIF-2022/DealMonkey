@@ -1,7 +1,7 @@
-import { Habit } from "../interfaces/habit";
-import { Task } from "../interfaces/task";
+import { Habit, Task } from "../interfaces/model";
 import { DB } from "../../database";
 import { addTask, getAllTasks, updateTask } from "./task-repository";
+import { addDeal } from "./deal-repository";
 
 export async function getAllHabits(userId: number): Promise<Habit[]> {
   const db = await DB.createDBConnection();
@@ -37,6 +37,11 @@ export async function addHabit(
 ) {
   //adding task (parent) to get id
   const id = await addTask(task);
+
+  console.log("created parent task for habit");
+  
+  //adding deal for this habit:
+  await addDeal(id);
 
   //adding habit:
   const db = await DB.createDBConnection();

@@ -1,4 +1,4 @@
-import { Statistic } from "../interfaces/statistic";
+import { Statistic } from "../interfaces/model";
 import { DB } from "../../database";
 import { json } from "stream/consumers";
 
