@@ -22,7 +22,7 @@ export default function Navbar() {
             <div className="relative flex h-16 justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button */}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -75,8 +75,10 @@ export default function Navbar() {
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button>*/}
 
-                {/* Profile dropdown */}
+                {/* Profile dropdown 
+                         
                 <Menu as="div" className="relative ">
+                  
                   <div>
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
                       <span className="inline-flex items-center ml-1 px-1 text-sm font-medium text-gray-900 pr-5 pt-2.5">
@@ -99,6 +101,7 @@ export default function Navbar() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+    
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
@@ -112,6 +115,7 @@ export default function Navbar() {
                           </a>
                         )}
                       </Menu.Item>
+                          
                       <Menu.Item>
                         {({ active }: any) => (
                           <a
@@ -141,6 +145,7 @@ export default function Navbar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
+                */}
               </div>
             </div>
           </div>
@@ -150,31 +155,24 @@ export default function Navbar() {
               {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
               <Disclosure.Button
                 as="a"
-                href="#"
-                className="block border-l-4 border-orange-400 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
+                href="/"
+                className="block border-l-4 border-orange-400 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-orange-400"
               >
-                Dashboard
+                Home
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="#"
+                href="/about"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
-                Team
+                About
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="#"
+                href="/login"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
-                Projects
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-              >
-                Calendar
+                Login
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>
