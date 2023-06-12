@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addDeal = exports.getAllDealsByUser = void 0;
+exports.addDeal = exports.getDealByTaskId = exports.getAllDealsByUser = void 0;
 const database_1 = require("../../database");
 const task_repository_1 = require("./task-repository");
 const progress_repository_1 = require("./progress-repository");
@@ -35,6 +35,18 @@ function getAllDealsByUser(userId) {
     });
 }
 exports.getAllDealsByUser = getAllDealsByUser;
+function getDealByTaskId(taskId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare('select * from Deal where taskId = ?1');
+        yield stmt.bind({ 1: taskId });
+        const deal = yield stmt.get();
+        yield stmt.finalize();
+        yield db.close();
+        return deal;
+    });
+}
+exports.getDealByTaskId = getDealByTaskId;
 function addDeal(taskId) {
     return __awaiter(this, void 0, void 0, function* () {
         const task = yield (0, task_repository_1.getTaskById)(taskId);
@@ -42,10 +54,10 @@ function addDeal(taskId) {
             throw new Error("task doesn't exist - couldn't create deal for it.");
         }
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare('insert into Deal (name, taskId, points) values (?1, ?2, ?3)');
+        const stmt = yield db.prepare('insert into Deal (taskId, points) values (?1, ?2)');
         const points = yield (0, progress_repository_1.calculatePoints)(task.userId);
-        console.log(points);
-        yield stmt.bind({ 1: task.title, 2: taskId, 3: points });
+        //console.log(points);
+        yield stmt.bind({ 1: taskId, 2: points });
         yield stmt.run();
         yield stmt.finalize();
         yield db.close();

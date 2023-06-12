@@ -46,7 +46,6 @@ export class DB {
     await connection.run(`
             create table if not exists deal (
                id INTEGER PRIMARY KEY,
-               name TEXT NOT NULL,
                taskId INTEGER NOT NULL,
                points INTEGER NOT NULL,
                FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE
