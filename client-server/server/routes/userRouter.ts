@@ -12,10 +12,13 @@ import {
 require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
+import bcrypt from "bcrypt";
+import { isAuthenticated } from "../middleware/auth-handler";
+const saltRounds = 8;
 
 export const userRouter = express.Router();
 
-userRouter.get("/", async (request, response) => {
+userRouter.get("/", isAuthenticated, async (request, response) => {
   const users = await getAllUsers();
   response.status(StatusCodes.OK).json(users);
 });
@@ -54,6 +57,8 @@ userRouter.post("/registration", async (request, response) => {
     registrationDate: new Date().toISOString(),
   };
 
+  user.password = await bcrypt.hash(password, saltRounds);
+
   try {
     await addUser(user);
     response.sendStatus(StatusCodes.CREATED);
@@ -65,6 +70,8 @@ userRouter.post("/registration", async (request, response) => {
 userRouter.post("/login", async (request, response) => {
   const username: string = request.body.username;
   const password: string = request.body.password;
+
+
 
   const result = await isAuthorized(username, password);
 

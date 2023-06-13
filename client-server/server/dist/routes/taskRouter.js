@@ -16,7 +16,9 @@ exports.taskRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = require("http-status-codes");
 const task_repository_1 = require("../data/repositories/task-repository");
+const auth_handler_1 = require("../middleware/auth-handler");
 exports.taskRouter = express_1.default.Router();
+exports.taskRouter.use(auth_handler_1.isAuthenticated);
 exports.taskRouter.get("/:userId", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = Number.parseInt(request.params.userId);
     const habits = yield (0, task_repository_1.getAllTasks)(userId);

@@ -8,12 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAllUsers = exports.deleteUser = exports.isAuthorized = exports.getUserById = exports.getAllUsers = exports.addUser = void 0;
 const database_1 = require("../../database");
 const statistics_repository_1 = require("./statistics-repository");
 const progress_repository_1 = require("./progress-repository");
 const setting_repository_1 = require("./setting-repository");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const saltRounds = 8;
 function addUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
@@ -76,7 +81,11 @@ function isAuthorized(username, password) {
         const result = yield stmt.get();
         yield stmt.finalize();
         yield db.close();
-        return result;
+        if (result == undefined) {
+            return undefined;
+        }
+        const valid = yield bcrypt_1.default.compare(password, result.password);
+        return valid ? result : undefined;
     });
 }
 exports.isAuthorized = isAuthorized;

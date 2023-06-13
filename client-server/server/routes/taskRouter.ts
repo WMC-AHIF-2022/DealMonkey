@@ -2,8 +2,10 @@ import express from "express";
 import { StatusCodes } from "http-status-codes";
 import { Task } from "../data/interfaces/model";
 import { getAllTasks, addTask, deleteTask, updateTask } from "../data/repositories/task-repository";
+import { isAuthenticated } from "../middleware/auth-handler";
 
 export const taskRouter = express.Router();
+taskRouter.use(isAuthenticated);
 
 taskRouter.get("/:userId", async (request, response) => {
     const userId = Number.parseInt(request.params.userId);

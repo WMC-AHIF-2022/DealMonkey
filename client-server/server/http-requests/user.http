@@ -1,4 +1,7 @@
+@jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY4NjY1NTg0MH0.lpYzd1G3aorthjMzyVMoeYs4lWwHk1ot8gXLfBAuCmY
+
 GET http://localhost:8000/users HTTP/1.1
+Authorization: Bearer {{jwt}}
 
 ##############################
 POST http://localhost:8000/users/registration HTTP/1.1

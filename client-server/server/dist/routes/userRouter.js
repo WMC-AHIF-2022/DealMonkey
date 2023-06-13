@@ -18,8 +18,11 @@ const http_status_codes_1 = require("http-status-codes");
 const user_repository_1 = require("../data/repositories/user-repository");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const auth_handler_1 = require("../middleware/auth-handler");
+const saltRounds = 8;
 exports.userRouter = express_1.default.Router();
-exports.userRouter.get("/", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+exports.userRouter.get("/", auth_handler_1.isAuthenticated, (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield (0, user_repository_1.getAllUsers)();
     response.status(http_status_codes_1.StatusCodes.OK).json(users);
 }));
@@ -54,6 +57,7 @@ exports.userRouter.post("/registration", (request, response) => __awaiter(void 0
         level: 1,
         registrationDate: new Date().toISOString(),
     };
+    user.password = yield bcrypt_1.default.hash(password, saltRounds);
     try {
         yield (0, user_repository_1.addUser)(user);
         response.sendStatus(http_status_codes_1.StatusCodes.CREATED);

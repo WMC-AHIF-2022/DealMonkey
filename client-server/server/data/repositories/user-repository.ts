@@ -3,6 +3,8 @@ import { addStatistics } from "./statistics-repository";
 import { User, Statistic } from "../interfaces/model";
 import { addProgress } from "./progress-repository";
 import { addSetting } from "./setting-repository";
+import bcrypt from "bcrypt";
+const saltRounds = 8;
 
 export async function addUser(user: User) {
   const db = await DB.createDBConnection();
@@ -69,7 +71,12 @@ export async function isAuthorized(
   await stmt.finalize();
   await db.close();
 
-  return result;
+  if (result == undefined) {
+    return undefined;
+  }
+
+  const valid = await bcrypt.compare(password, result.password);
+  return valid ? result : undefined;
 }
 
 export async function deleteUser(id: number): Promise<boolean> {

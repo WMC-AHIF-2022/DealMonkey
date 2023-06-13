@@ -37,6 +37,7 @@ const settingRouter_1 = require("./routes/settingRouter");
 const statisticsRouter_1 = require("./routes/statisticsRouter");
 const socket_io_1 = require("socket.io");
 const http = __importStar(require("http"));
+const dealRouter_1 = require("./routes/dealRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());

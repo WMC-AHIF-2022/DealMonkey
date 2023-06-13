@@ -22,3 +22,15 @@ exports.dealRouter.get("/:userId", (request, response) => __awaiter(void 0, void
     const deals = yield (0, deal_repository_1.getAllDealsByUser)(userId);
     response.status(http_status_codes_1.StatusCodes.OK).json(deals);
 }));
+exports.dealRouter.get("/task/:taskId", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    const taskId = Number.parseInt(request.params.taskId);
+    const deal = yield (0, deal_repository_1.getDealByTaskId)(taskId);
+    response.status(http_status_codes_1.StatusCodes.OK).json(deal);
+}));
+exports.dealRouter.post("/:taskId", (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    const taskId = Number.parseInt(request.params.taskId);
+    try {
+        (0, deal_repository_1.addDeal)(taskId);
+    }
+    catch (err) { }
+}));
