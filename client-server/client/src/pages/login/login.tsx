@@ -14,7 +14,7 @@ const defaultFormFields = {
   password: "",
 };
 
-const Login = () => {
+const Login = ({ socket }: any) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { username, password } = formFields;
   const navigate = useNavigate();

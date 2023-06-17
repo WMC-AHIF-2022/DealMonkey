@@ -36,8 +36,7 @@ export interface Setting {
   userId: number;
 }
 
-const UserProfile = () => {
-
+const UserProfile = (socket: any) => {
   const [habits, setHabits] = useState<HabitItem[]>([]);
 
   // const [user, setMyObject] = useState<User | null>(null);
@@ -119,51 +118,51 @@ const UserProfile = () => {
     userId: number;
   }
 
-const getHabits = async () => {
+  const getHabits = async () => {
     try {
       const response = await fetchRestEndpoint(
         "http://localhost:8000/api/habits/" + auth()?.id,
         "GET"
-      ).then((res) => res.json()).then ((res) => {
-        setHabits(res);
-      });
-
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          setHabits(res);
+        });
     } catch (error: any) {
       toast.error(error.message);
     }
-};
+  };
 
-const Card = () => {
+  const Card = () => {
+    console.log(habits);
 
-  console.log(habits);
-
-  return (
-    <div className="habitsView">
-      {habits.map((habit) => (
-        <div className="activityTitle mb-6" >
-          <div className="cardTop">
-                <h1 className="text-lg ml-4 mt-2">{habit.title}</h1>
-                <img src={flame} width="40" height="30" />
+    return (
+      <div className="habitsView">
+        {habits.map((habit) => (
+          <div className="activityTitle mb-6">
+            <div className="cardTop">
+              <h1 className="text-lg ml-4 mt-2">{habit.title}</h1>
+              <img src={flame} width="40" height="30" />
             </div>
             <div className="cardBottom">
-                <div>
-                    <div className="circle"></div>
-                    <h3 className="mb-4">Current Streak</h3>
-                </div>
-                <div>
-                    <div className="circle"></div>
-                    <h3 className="mb-4">Highest Streak</h3>
-                </div>
-                <div>
-                    <div className="circle"></div>
-                    <h3 className="mb-4">Point Multiplier</h3>
-                </div>
+              <div>
+                <div className="circle"></div>
+                <h3 className="mb-4">Current Streak</h3>
+              </div>
+              <div>
+                <div className="circle"></div>
+                <h3 className="mb-4">Highest Streak</h3>
+              </div>
+              <div>
+                <div className="circle"></div>
+                <h3 className="mb-4">Point Multiplier</h3>
+              </div>
             </div>
-        </div>
-      ))}
-    </div>
-  );
-};
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   useEffect(() => {
     getProfile();
@@ -173,68 +172,68 @@ const Card = () => {
   return (
     <Layout>
       <div className="grid grid-cols-6 h-max">
-          <SideNavigation/>
-              
-          <div className="col-span-5 px-12 mt-4">
-          <Toaster />
-            <div className="profileArea1">
-              {open ? (
-                <Popup closePopup={() => setOpen(false)}>
-                  <FormInput
-                    className="mt-5"
-                    label="username"
-                    placeholder="Username"
-                    type="username"
-                    required
-                    name="username"
-                    value={userProfile}
-                    onChange={handleProfileChange}
-                  />
+        <SideNavigation />
 
-                  <button
-                    onClick={updateProfile}
-                    className="mt-5 rounded-lg bg-orange-400"
-                    type="submit"
-                  >
-                    Save
-                  </button>
-                </Popup>
-              ) : null}
-              <div className="profileTable1">
-                <div className="row">
-                  <div className="profile-nav col-md-3">
-                    <div className="panel">
-                      <div className="user-heading round">
-                        <a href="#">
-                          <img
-                            onClick={() => setOpen(true)}
-                            src={userProfile}
-                            alt="Profile-Picture"
-                          />
-                        </a>
-                        <div className="username">
-                          <h1>{auth()?.username}</h1>
-                        </div>
-                        <div className="profileButtons mb-12">
-                          <ToggleButtonGroup
-                            value={alignment}
-                            exclusive
-                            onChange={handleChange}
-                            aria-label="Platform"
-                          >
-                            <ToggleButton value="Stats">Stats</ToggleButton>
-                            <ToggleButton value="Settings">Settings</ToggleButton>
-                          </ToggleButtonGroup>
-                          -{" "}
-                        </div>
-                        <Card />
+        <div className="col-span-5 px-12 mt-4">
+          <Toaster />
+          <div className="profileArea1">
+            {open ? (
+              <Popup closePopup={() => setOpen(false)}>
+                <FormInput
+                  className="mt-5"
+                  label="username"
+                  placeholder="Username"
+                  type="username"
+                  required
+                  name="username"
+                  value={userProfile}
+                  onChange={handleProfileChange}
+                />
+
+                <button
+                  onClick={updateProfile}
+                  className="mt-5 rounded-lg bg-orange-400"
+                  type="submit"
+                >
+                  Save
+                </button>
+              </Popup>
+            ) : null}
+            <div className="profileTable1">
+              <div className="row">
+                <div className="profile-nav col-md-3">
+                  <div className="panel">
+                    <div className="user-heading round">
+                      <a href="#">
+                        <img
+                          onClick={() => setOpen(true)}
+                          src={userProfile}
+                          alt="Profile-Picture"
+                        />
+                      </a>
+                      <div className="username">
+                        <h1>{auth()?.username}</h1>
                       </div>
+                      <div className="profileButtons mb-12">
+                        <ToggleButtonGroup
+                          value={alignment}
+                          exclusive
+                          onChange={handleChange}
+                          aria-label="Platform"
+                        >
+                          <ToggleButton value="Stats">Stats</ToggleButton>
+                          <ToggleButton value="Settings">Settings</ToggleButton>
+                        </ToggleButtonGroup>
+                        -{" "}
+                      </div>
+                      <Card />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </Layout>
   );

@@ -35,6 +35,7 @@ const Form = ({
   deleteBtn,
   onDelete,
   onUpdate,
+  onAdd,
 }: any) => {
   const auth = useAuthUser();
 
@@ -58,31 +59,6 @@ const Form = ({
 
   const handleFrequencyChange = (event: SelectChangeEvent) => {
     setFrequency(event.target.value as string);
-  };
-
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-
-    try {
-      // make the API call
-      let timeString: string = dayjs(reminder).toISOString();
-
-      await addHabit(title, frequency, timeString, category, color, auth()?.id);
-      toast.success("Habit created");
-
-      socket.emit("new habit", 3);
-
-      //Todo: clear form fields
-    } catch (error: any) {
-      toast.error(error.message);
-    }
-
-    try {
-      const response = await getAllHabits(auth()?.id);
-      setHabits(response);
-    } catch (error: any) {
-      toast.error(error.message);
-    }
   };
 
   return (
@@ -158,7 +134,7 @@ const Form = ({
 
       <button
         style={{ display: saveBtn == false ? "none" : "" }}
-        onClick={handleSubmit}
+        onClick={onAdd}
         className="mt-5"
       >
         Save

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.calculatePoints = exports.addProgress = exports.getProgressByUserId = void 0;
+exports.calculatePoints = exports.updateProgress = exports.addProgress = exports.getProgressByUserId = void 0;
 const database_1 = require("../../database");
 function getProgressByUserId(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -46,6 +46,22 @@ function addProgress(userId) {
     });
 }
 exports.addProgress = addProgress;
+function updateProgress(userId, points, experience) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const progress = yield getProgressByUserId(userId);
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare("update progress set points = ?1, experience = ?2 where userId = ?3");
+        yield stmt.bind({
+            1: progress.points + points,
+            2: progress.experience + experience,
+            3: userId,
+        });
+        yield stmt.run();
+        yield stmt.finalize();
+        yield db.close();
+    });
+}
+exports.updateProgress = updateProgress;
 //f(x) = 50x^2 + 150x + 100
 //x ... level
 //f(x) ... experience

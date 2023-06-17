@@ -10,6 +10,14 @@ import dayjs, { Dayjs } from "dayjs";
 import Form from "../../components/form";
 import toast, { Toaster } from "react-hot-toast";
 import SideNavigation from "../../components/sideNavigation";
+import { useNavigate } from "react-router-dom";
+import { getAllHabits, getDealById, addHabit } from "../../utils/data-utils";
+
+import DoneIcon from "@mui/icons-material/Done";
+import CloseIcon from "@mui/icons-material/Close";
+
+import Coin from "../../img/star.png";
+import { toastHandler } from "../../components/deal";
 
 interface HabitItem {
   id: number;
@@ -21,7 +29,8 @@ interface HabitItem {
   userId: number;
 }
 
-const HabitPage = () => {
+const HabitPage = ({ socket }: any) => {
+  let navigate = useNavigate();
   const auth = useAuthUser();
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState<HabitItem[]>([]);
@@ -84,6 +93,51 @@ const HabitPage = () => {
     getHabits();
   };
 
+  const onAdd = async (event: any) => {
+    event.preventDefault();
+
+    try {
+      // make the API call
+      let timeString: string = dayjs(reminder).toISOString();
+
+      let hours = dayjs(reminder).get("hour") - new Date().getHours();
+      let minutes = dayjs(reminder).get("minute") - new Date().getMinutes();
+      let seconds = dayjs(reminder).get("seconds") - new Date().getSeconds();
+
+      let totalSeconds: number = hours * 3600 + minutes * 60 + seconds;
+
+      console.log(totalSeconds);
+
+      const id = await addHabit(
+        title,
+        frequency,
+        timeString,
+        category,
+        color,
+        auth()?.id
+      );
+      toast.success("Habit created");
+
+      if (totalSeconds > 0) {
+        totalSeconds += totalSeconds + 24 * 3600;
+        socket.emit("new habit", totalSeconds, title, id);
+      }
+
+      console.log(timeString);
+
+      //Todo: clear form fields
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+
+    try {
+      const response = await getAllHabits(auth()?.id);
+      setHabits(response);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   const resetForm = () => {
     setTitle("");
     setFrequency("");
@@ -95,9 +149,21 @@ const HabitPage = () => {
     setUpdateBtn(false);
   };
 
+  const sendDeal = () => {
+    socket.emit("new habit", 5, "Walk Dog", 1);
+  };
+
   useEffect(() => {
     getHabits();
-  }, []);
+
+    socket.on("do habit", async (title: string, id: number) => {
+      const deal = await getDealById(id);
+
+      toastHandler(title, deal.points, id, navigate);
+    });
+
+    return () => socket.off("do habit");
+  }, [socket]);
 
   return (
     <Layout>
@@ -127,6 +193,10 @@ const HabitPage = () => {
               >
                 Add Habit
               </button>
+
+              <button className="bg-red-400 rounded-lg" onClick={sendDeal}>
+                Send Deal
+              </button>
             </div>
 
             <SlidingPaneCom setOpen={setOpen} open={open}>
@@ -147,6 +217,7 @@ const HabitPage = () => {
                 saveBtn={saveBtn}
                 onDelete={deleteHabit}
                 onUpdate={updateHabit}
+                onAdd={onAdd}
               />
             </SlidingPaneCom>
           </div>

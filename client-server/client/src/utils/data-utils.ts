@@ -1,4 +1,5 @@
 import { fetchRestEndpoint } from "./client-server";
+import { Deal, Habit } from "./model";
 
 export const getData = async (username: string, password: string) => {
   const data = JSON.parse(
@@ -40,16 +41,27 @@ export const addHabit = async (
   category: string,
   color: string,
   userId: string
-) => {
+): Promise<number> => {
+  let id: number = 0;
   try {
     const data = JSON.parse(
       `{"title": "${title}", "frequency": "${frequency}", "reminder": "${reminder}", "category": "${category}", "color": "${color}", "userId": "${userId}"}`
     );
 
-    await fetchRestEndpoint("http://localhost:8000/api/habits", "POST", data);
+    const response = await fetchRestEndpoint(
+      "http://localhost:8000/api/habits",
+      "POST",
+      data
+    );
+
+    const result: Habit = await response.json();
+
+    id = result.id;
   } catch (err) {
     console.log(err);
   }
+
+  return id;
 };
 
 export const logout = () => {
@@ -91,4 +103,35 @@ export const getAllTodos = async (id: number) => {
   );
 
   return await response.json();
+};
+
+export const getDealById = async (id: number) => {
+  const response = await fetchRestEndpoint(
+    "http://localhost:8000/api/deals/task/" + id,
+    "GET"
+  );
+
+  const deal: Deal = response.json();
+
+  return await deal;
+};
+
+export const updateProgress = async (
+  userId: number,
+  points: number,
+  experience: number
+) => {
+  try {
+    const data = JSON.parse(
+      `{"points": "${points}", "experience": "${experience}"}`
+    );
+
+    await fetchRestEndpoint(
+      "http://localhost:8000/api/progress/" + userId,
+      "PUT",
+      data
+    );
+  } catch (err) {
+    console.log(err);
+  }
 };

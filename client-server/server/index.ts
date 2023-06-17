@@ -8,7 +8,6 @@ import { habitRouter } from "./routes/habitRouter";
 import { settingsRouter } from "./routes/settingRouter";
 import { statisticsRounter } from "./routes/statisticsRouter";
 import { Server } from "socket.io";
-import * as http from "http";
 import { progressRouter } from "./routes/progressRouter";
 import { dealRouter } from "./routes/dealRouter";
 import { taskQueueRouter } from "./routes/taskQueueRouter";
@@ -16,8 +15,11 @@ import { taskQueueRouter } from "./routes/taskQueueRouter";
 dotenv.config();
 const app: Express = express();
 
+const uuidv4 = require("uuidv4");
+
 app.use(express.json());
 app.use(cors());
+const http = require("http").Server(app);
 
 app.use("/api/tasks", taskRouter);
 app.use("/api/todos", todoRouter);
@@ -29,29 +31,31 @@ app.use("/api/deals", dealRouter);
 app.use("/api/progress", progressRouter);
 app.use("/api/taskQueue", taskQueueRouter);
 
-const port = process.env.PORT || 8000;
+const port = 8000;
 
+/*
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+*/
 
-// create server
-const server = http.createServer(app);
-const io = new Server(server);
+http.listen(port, () => console.log("Webserver is listening on port 8000"));
 
-server.listen(8080, () => console.log("Webserver is listening on port 8080"));
+const socketIO = require("socket.io")(http, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
 
-// socket
-io.on("connection", function (socket) {
-  socket.on("new habit", function (seconds: number) {
+//Add this before the app.get() block
+socketIO.on("connection", (socket: any) => {
+  //console.log(`⚡: ${socket.id} user just connected!`);
+
+  socket.on("new habit", function (seconds: number, title: string, id: number) {
     setTimeout(() => {
-      socket.emit("do habit");
+      socket.emit("do habit", title, id);
     }, seconds * 1000);
   });
 
-  socket.on("wake-all", function (seconds: number) {
-    setTimeout(() => {
-      io.emit("wake-up", `This is the ${seconds} seconds public broadcast!`);
-    }, seconds * 1000);
-  });
+  socket.disconnect(console.log("🔥: A user disconnected"));
 });

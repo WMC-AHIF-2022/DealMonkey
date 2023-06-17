@@ -2,11 +2,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import RequireAuth from "react-auth-kit/dist/PrivateRoute";
-import { Notifications } from "react-push-notification";
+import { io } from "socket.io-client";
 
 //Styles
 import "./styles/App.css";
-
 //Pages
 import About from "./pages/about/about";
 import Home from "./pages/Home/Home";
@@ -17,16 +16,18 @@ import Profile from "./pages/profile/profile";
 import Settings from "./pages/settings/settings";
 import HabitPage from "./pages/habits/habitPage";
 import TodoPage from "./pages/todos/todos";
+import DealPage from "./pages/dealPage/dealPage";
+
+const socket: any = io("http://localhost:8000");
 
 const App = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Notifications />
       <Router>
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login socket={socket} />} />
             <Route path="/about" element={<About />} />
             <Route path="/register" element={<Register />} />
 
@@ -34,7 +35,7 @@ const App = () => {
               path="/myhabits"
               element={
                 <RequireAuth loginPath="/login">
-                  <HabitPage />
+                  <HabitPage socket={socket} />
                 </RequireAuth>
               }
             />
@@ -43,7 +44,7 @@ const App = () => {
               path="/profile"
               element={
                 <RequireAuth loginPath="/login">
-                  <Profile />
+                  <Profile socket={socket} />
                 </RequireAuth>
               }
             />
@@ -52,7 +53,7 @@ const App = () => {
               path="/dashboard"
               element={
                 <RequireAuth loginPath="/login">
-                  <Dashboard />
+                  <Dashboard socket={socket} />
                 </RequireAuth>
               }
             />
@@ -61,7 +62,16 @@ const App = () => {
               path="/todos"
               element={
                 <RequireAuth loginPath="/login">
-                  <TodoPage />
+                  <TodoPage socket={socket} />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/dealPage"
+              element={
+                <RequireAuth loginPath="/login">
+                  <DealPage />
                 </RequireAuth>
               }
             />
@@ -70,7 +80,7 @@ const App = () => {
               path="/settings"
               element={
                 <RequireAuth loginPath="/login">
-                  <Settings />
+                  <Settings socket={socket} />
                 </RequireAuth>
               }
             />

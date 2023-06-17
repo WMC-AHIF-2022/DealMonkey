@@ -18,7 +18,7 @@ interface TodoItem {
   priority: string;
 }
 
-const Todos = () => {
+const Todos = (socket: any) => {
   const auth = useAuthUser();
   const [open, setOpen] = useState(false);
   const [todos, setTodos] = useState<TodoItem[]>([]);
@@ -39,12 +39,14 @@ const Todos = () => {
 
   const getTodos = async () => {
     try {
-      const response = await fetchRestEndpoint(`http://localhost:8000/api/todos/${auth()?.id}`, "GET");
-    
+      const response = await fetchRestEndpoint(
+        `http://localhost:8000/api/todos/${auth()?.id}`,
+        "GET"
+      );
+
       const data: TodoItem[] = await response.json();
       console.log(data);
       setTodos(data);
-
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -52,9 +54,11 @@ const Todos = () => {
 
   const deleteTodo = async (id: number) => {
     try {
-      await fetchRestEndpoint(`http://localhost:8000/api/tasks/${id}`, "DELETE");
+      await fetchRestEndpoint(
+        `http://localhost:8000/api/tasks/${id}`,
+        "DELETE"
+      );
       toast.success("Todo deleted");
-
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -91,51 +95,51 @@ const Todos = () => {
   return (
     <Layout>
       <div className="grid grid-cols-6 h-max">
-        <SideNavigation/>
-         
-        <div className="col-span-5 px-12 mt-4">
-        <Toaster />
-      <div className="">
-        <TodoList
-          todos={todos}
-          setOpen={setOpen}
-          setTitle={setTitle}
-          setPriority={setPriority}
-          setCategory={setCategory}
-          setColor={setColor}
-          habitOnClickHandler={habitOnClickHandler}
-        />
-        <div style={{ marginTop: "32px" }}>
-          <button
-            className="bg-red-400 rounded-lg"
-            onClick={() => {
-              setOpen(true);
-              resetForm();
-            }}
-          >
-            Add Todo
-          </button>
-        </div>
+        <SideNavigation />
 
-        <SlidingPaneCom setOpen={setOpen} open={open}>
-          <Form
-            title={title}
-            priority={priority}
-            category={category}
-            color={color}
-            setTitle={setTitle}
-            setPriority={setPriority}
-            setCategory={setCategory}
-            setColor={setColor}
-            setTodos={setTodos}
-            updateBtn={updateBtn}
-            deleteBtn={deleteBtn}
-            saveBtn={saveBtn}
-            onDelete={deleteTodo}
-            onUpdate={updateTodo}
-          />
-        </SlidingPaneCom>
-      </div>
+        <div className="col-span-5 px-12 mt-4">
+          <Toaster />
+          <div className="">
+            <TodoList
+              todos={todos}
+              setOpen={setOpen}
+              setTitle={setTitle}
+              setPriority={setPriority}
+              setCategory={setCategory}
+              setColor={setColor}
+              habitOnClickHandler={habitOnClickHandler}
+            />
+            <div style={{ marginTop: "32px" }}>
+              <button
+                className="bg-red-400 rounded-lg"
+                onClick={() => {
+                  setOpen(true);
+                  resetForm();
+                }}
+              >
+                Add Todo
+              </button>
+            </div>
+
+            <SlidingPaneCom setOpen={setOpen} open={open}>
+              <Form
+                title={title}
+                priority={priority}
+                category={category}
+                color={color}
+                setTitle={setTitle}
+                setPriority={setPriority}
+                setCategory={setCategory}
+                setColor={setColor}
+                setTodos={setTodos}
+                updateBtn={updateBtn}
+                deleteBtn={deleteBtn}
+                saveBtn={saveBtn}
+                onDelete={deleteTodo}
+                onUpdate={updateTodo}
+              />
+            </SlidingPaneCom>
+          </div>
         </div>
       </div>
     </Layout>
