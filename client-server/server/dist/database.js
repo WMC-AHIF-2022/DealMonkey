@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DB = exports.dbFileName = void 0;
 const sqlite3_1 = require("sqlite3");
 const sqlite_1 = require("sqlite");
+const avatar_repository_1 = require("./data/repositories/avatar-repository");
 exports.dbFileName = "./database.db";
 class DB {
     static createDBConnection() {
@@ -22,6 +23,39 @@ class DB {
             });
             yield DB.ensureTablesCreated(dbConnection);
             return dbConnection;
+        });
+    }
+    static createAvatars() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const avatars = [
+                ["/data/img/monkey-glasses.jpg", "Monkey with Glasses", 100, 1],
+                ["/data/img/wild-monkey.jpg", "Wild Monkey", 150, 1],
+                ["/data/img/donkey-kong-veryHard.jpg", "Donkey Kong", 275, 1],
+                ["/data/img/evil.jpeg", "Evil Monkey", 325, 2],
+                ["/data/img/donkey-kong.jpg", "Donkey Kong", 390, 2],
+                ["/data/img/praying-monkey.png", "Shocked Monkey", 430, 3],
+                ["/data/img/gangsta-monkey-png", "Gangsta Monkey", 450, 3],
+                ["/data/img/grandpa-monkey.jpg", "Grandpa Monkey", 500, 4],
+                ["/data/img/kim&kanye.jpeg", "Kim & Kanye", 550, 4],
+                ["/data/img/looting-cat.jpeg", "Looting Cat", 600, 5],
+                ["/data/img/material-gworl.jpeg", "Material Gworl", 625, 5],
+                ["/data/img/running-baby.png", "Running Baby", 650, 5],
+                ["/data/img/walking-minion.jpeg", "Walking Minion", 700, 6],
+            ];
+            for (const avatar of avatars) {
+                const link = avatar.at(0).toString();
+                const name = avatar.at(1).toString();
+                const price = Number.parseInt(avatar.at(2).toString());
+                const unlockLevel = Number.parseInt(avatar.at(3).toString());
+                const newAvatar = {
+                    avatarId: -1,
+                    link: link,
+                    name: name,
+                    price: price,
+                    unlockLevel: unlockLevel,
+                };
+                yield (0, avatar_repository_1.insertAvatar)(newAvatar);
+            }
         });
     }
     static ensureTablesCreated(connection) {
@@ -93,7 +127,7 @@ class DB {
           avatarId INTERGER PRIMARY KEY,
           link TEXT NOT NULL,
           name TEXT,
-          preis INTEGER NOT NULL,
+          price INTEGER NOT NULL,
           unlockLevel INTEGER NOT NULL
       )`);
             yield connection.run(`

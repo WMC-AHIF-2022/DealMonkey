@@ -1,5 +1,7 @@
 import { Database as Driver } from "sqlite3";
 import { open, Database } from "sqlite";
+import { Avatar } from "./data/interfaces/model";
+import { insertAvatar } from "./data/repositories/avatar-repository";
 
 export const dbFileName: string = "./database.db";
 
@@ -11,6 +13,41 @@ export class DB {
     });
     await DB.ensureTablesCreated(dbConnection);
     return dbConnection;
+  }
+
+  public static async createAvatars() {
+    const avatars = [
+      ["/data/img/monkey-glasses.jpg", "Monkey with Glasses", 100, 1],
+      ["/data/img/wild-monkey.jpg", "Wild Monkey", 150, 1],
+      ["/data/img/donkey-kong-veryHard.jpg", "Donkey Kong", 275, 1],
+      ["/data/img/evil.jpeg", "Evil Monkey", 325, 2],
+      ["/data/img/donkey-kong.jpg", "Donkey Kong", 390, 2],
+      ["/data/img/praying-monkey.png", "Shocked Monkey", 430, 3],
+      ["/data/img/gangsta-monkey-png", "Gangsta Monkey", 450, 3],
+      ["/data/img/grandpa-monkey.jpg", "Grandpa Monkey", 500, 4],
+      ["/data/img/kim&kanye.jpeg", "Kim & Kanye", 550, 4],
+      ["/data/img/looting-cat.jpeg", "Looting Cat", 600, 5],
+      ["/data/img/material-gworl.jpeg", "Material Gworl", 625, 5],
+      ["/data/img/running-baby.png", "Running Baby", 650, 5],
+      ["/data/img/walking-minion.jpeg", "Walking Minion", 700, 6],
+    ];
+
+    for(const avatar of avatars) {
+      const link = avatar.at(0)!.toString();
+      const name = avatar.at(1)!.toString();
+      const price = Number.parseInt(avatar.at(2)!.toString());
+      const unlockLevel = Number.parseInt(avatar.at(3)!.toString());
+
+      const newAvatar:Avatar = {
+        avatarId: -1,
+        link: link,
+        name: name,
+        price: price,
+        unlockLevel: unlockLevel,
+      }
+
+      await insertAvatar(newAvatar);
+    }
   }
 
   private static async ensureTablesCreated(
@@ -83,7 +120,7 @@ export class DB {
           avatarId INTERGER PRIMARY KEY,
           link TEXT NOT NULL,
           name TEXT,
-          preis INTEGER NOT NULL,
+          price INTEGER NOT NULL,
           unlockLevel INTEGER NOT NULL
       )`);
     await connection.run(`

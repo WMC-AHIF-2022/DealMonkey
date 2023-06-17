@@ -8,6 +8,8 @@ import { habitRouter } from "./routes/habitRouter";
 import { settingsRouter } from "./routes/settingRouter";
 import { statisticsRounter } from "./routes/statisticsRouter";
 import { dealRouter } from "./routes/dealRouter";
+import { DB } from "./database";
+import { avatarRouter } from "./routes/avatarRouter";
 
 dotenv.config();
 const app: Express = express();
@@ -22,8 +24,10 @@ app.use("/api/settings", settingsRouter);
 app.use("/users", userRouter);
 app.use("/api/statistics", statisticsRounter);
 app.use("/api/deals", dealRouter);
+app.use("/api/avatars", avatarRouter);
 
 const port = process.env.PORT || 8000;
-app.listen(port, () => {
+app.listen(port, async() => {
+  await DB.createAvatars(); 
   console.log(`Example app listening on port ${port}`);
 });

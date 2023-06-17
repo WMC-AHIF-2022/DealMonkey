@@ -59,3 +59,10 @@ export interface Deal {
     taskId:number,
     points:number
 }
+export interface Avatar {
+    avatarId:number,
+    link:string,
+    name:string,
+    price:number,
+    unlockLevel:number
+} 
