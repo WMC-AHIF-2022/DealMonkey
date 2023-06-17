@@ -23,7 +23,7 @@ export default function Navbar() {
 
   const navigation = [
     { Item1: "Level statt Navigation bar"},
-    { Item1: "Dashboard", Item2: "Habits", Item3: "Todos" },
+    { Item1: "Dashboard", Item2: "Habits", Item3: "Todos", Item4: "Shop" },
   ];
 
   const logout = () => {
@@ -81,7 +81,16 @@ export default function Navbar() {
                   >
                     {auth() != null ? navigation[0].Item3 : navigation[1].Item3}
                   </a>
+                  <a
+                    href="/shop"
+                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  >
+                    {auth() != null ? navigation[0].Item3 : navigation[1].Item4}
+                  </a>
                 </div>
+              </div>
+              <div className="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    grias di
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/*<button
