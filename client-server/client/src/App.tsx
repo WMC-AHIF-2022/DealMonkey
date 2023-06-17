@@ -17,6 +17,7 @@ import Profile from "./pages/profile/profile";
 import Settings from "./pages/settings/settings";
 import HabitPage from "./pages/habits/habitPage";
 import TodoPage from "./pages/todos/todos";
+import Shop from "./pages/shop/shop";
 
 const App = () => {
   return (
@@ -71,6 +72,15 @@ const App = () => {
               element={
                 <RequireAuth loginPath="/login">
                   <Settings />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/shop"
+              element={
+                <RequireAuth loginPath="/login">
+                  <Shop />
                 </RequireAuth>
               }
             />
