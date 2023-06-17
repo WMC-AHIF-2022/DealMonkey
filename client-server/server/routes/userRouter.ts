@@ -71,8 +71,6 @@ userRouter.post("/login", async (request, response) => {
   const username: string = request.body.username;
   const password: string = request.body.password;
 
-
-
   const result = await isAuthorized(username, password);
 
   if (result !== undefined) {

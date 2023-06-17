@@ -10,6 +10,7 @@ import { logout } from "../../utils/data-utils";
 import { useNavigate } from "react-router-dom";
 import useSignOut from "react-auth-kit/dist/hooks/useSignOut";
 import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
+import ProgressBar from "../../components/progressBar";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -22,7 +23,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const navigation = [
-    { Item1: "Level statt Navigation bar"},
+    { Item1: "Level statt Navigation bar" },
     { Item1: "Dashboard", Item2: "Habits", Item3: "Todos" },
   ];
 
@@ -48,7 +49,7 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start ">
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="block h-8 w-auto "
@@ -62,7 +63,7 @@ export default function Navbar() {
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                  {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+                  {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" 
                   <a
                     href="/dashboard"
                     className="inline-flex items-center border-b-2 border-orange-400 px-1 pt-1 text-sm font-medium text-gray-900"
@@ -81,6 +82,11 @@ export default function Navbar() {
                   >
                     {auth() != null ? navigation[0].Item3 : navigation[1].Item3}
                   </a>
+                  */}
+                </div>
+
+                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start mt-1">
+                  <ProgressBar />
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -96,12 +102,13 @@ export default function Navbar() {
                 {auth() != null ? (
                   <Menu as="div" className="relative">
                     <div>
-                      <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
-                        <span className="inline-flex items-center ml-3 px-1 text-sm font-medium text-gray-900 pr-5 pt-2.5">
+                      {/*focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2*/}
+                      <Menu.Button className="flex rounded-full bg-white text-sm">
+                        <span className="inline-flex ml-3 px-1 text-sm font-medium pr-5 text-gray-900 pt-2">
                           {auth()?.username}
                         </span>
                         <img
-                          className="h-9 w-9 mt-1 rounded-full ml-5"
+                          className="h-9 w-9 rounded-full "
                           src="https://i.pinimg.com/564x/2e/60/80/2e60808c2b288e393128ebed7ee988b6.jpg"
                           alt="Icon"
                         />

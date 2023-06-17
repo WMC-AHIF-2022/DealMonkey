@@ -14,7 +14,7 @@ const database_1 = require("../../database");
 function getProgressByUserId(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare('select * from Progress where userId = ?1');
+        const stmt = yield db.prepare("select * from Progress where userId = ?1");
         yield stmt.bind({ 1: userId });
         const progress = yield stmt.get();
         yield stmt.finalize();
@@ -47,7 +47,7 @@ function addProgress(userId) {
 }
 exports.addProgress = addProgress;
 //f(x) = 50x^2 + 150x + 100
-//x ... level 
+//x ... level
 //f(x) ... experience
 //umkehrfunktion g(y)
 //y ... experience
@@ -60,7 +60,7 @@ function calculateExperience(userId) {
         const progress = yield getProgressByUserId(userId);
         const level = calculateLevel(progress.experience);
         //random experience between 50 and 80 * the current level the user is in
-        return (Math.floor((Math.random()) * 80) + 50) * level;
+        return (Math.floor(Math.random() * 80) + 50) * level;
     });
 }
 function calculatePoints(userId) {
@@ -69,7 +69,7 @@ function calculatePoints(userId) {
         console.log(progress);
         const level = calculateLevel(progress.experience);
         console.log(level);
-        return Math.ceil((Math.log10(level * 10) + 20) * ((progress.experience) / 100)) + 10;
+        return (Math.ceil((Math.log10(level * 10) + 20) * (progress.experience / 100)) + 10);
     });
 }
 exports.calculatePoints = calculatePoints;

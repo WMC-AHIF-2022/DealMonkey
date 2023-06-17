@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
 import { fetchRestEndpoint } from "../../utils/client-server";
 import Layout from "../../layout/loggedIn/layout";
-import Task from '../../components/task';
-import SideNavigation from '../../components/sideNavigation';
+import Task from "../../components/task";
+import SideNavigation from "../../components/sideNavigation";
+import toast, { Toaster } from "react-hot-toast";
 
 interface HabitItem {
   id: number;
@@ -22,12 +23,12 @@ const Dashboard = () => {
   const getTasks = async () => {
     try {
       const response = await fetchRestEndpoint(
-        "http://localhost:8000/api/tasks/" + auth()?.id, "GET"
+        "http://localhost:8000/api/taskQueue/" + auth()?.id,
+        "GET"
       );
 
       const data: HabitItem[] = await response.json();
       setTasks(data);
-
     } catch (error: any) {
       alert(error.message);
     }
@@ -37,36 +38,50 @@ const Dashboard = () => {
     getTasks();
   }, []);
 
+  const onClickHandler = async (taskId: number) => {
+    try {
+      const response = await fetchRestEndpoint(
+        "http://localhost:8000/api/taskQueue/" + taskId,
+        "PUT",
+        JSON.parse(`{"completed": "${1}"}`)
+      );
+
+      getTasks();
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+    toast.success("Habit completed");
+  };
 
   return (
     <Layout>
       <div className="grid grid-cols-6 h-max">
-        <SideNavigation/>
-         
+        <SideNavigation />
+
         <div className="col-span-5 px-12 mt-4">
-            <div className="grid grid-cols-3 gap-1">
-              {tasks.map((task: any) => {
-                return (
-                  <div key={task.id}>
-                    <Task
-                      id={task.id}
-                      userId={task.userId}
-                      title={task.title}
-                      category={task.category}
-                      color={task.color}
-                    />
-                  </div>
-                );
+          <div className="grid grid-cols-3 gap-1">
+            {tasks.map((task: any) => {
+              return (
+                <div key={task.id}>
+                  <Task
+                    id={task.id}
+                    userId={task.userId}
+                    title={task.title}
+                    category={task.category}
+                    color={task.color}
+                    onClickHandler={onClickHandler}
+                  />
+                </div>
+              );
             })}
           </div>
         </div>
       </div>
     </Layout>
-  )
+  );
 };
 
 export default Dashboard;
-
 
 /*import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

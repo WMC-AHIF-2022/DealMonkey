@@ -10,6 +10,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { addHabit, getAllHabits } from "../utils/data-utils";
+import { io, Socket } from "socket.io-client";
 
 import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
 import toast, { Toaster } from "react-hot-toast";
@@ -37,6 +38,12 @@ const Form = ({
 }: any) => {
   const auth = useAuthUser();
 
+  const socket = io("");
+
+  socket.on("do habit", () => {
+    console.log("");
+  });
+
   const handleColorChange = (color: any) => {
     setColor(color.hex);
   };
@@ -62,6 +69,9 @@ const Form = ({
 
       await addHabit(title, frequency, timeString, category, color, auth()?.id);
       toast.success("Habit created");
+
+      socket.emit("new habit", 3);
+
       //Todo: clear form fields
     } catch (error: any) {
       toast.error(error.message);

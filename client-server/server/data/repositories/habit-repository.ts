@@ -41,7 +41,6 @@ export async function addHabit(
   console.log("created parent task for habit");
 
   //adding deal for this habit:
-  await addDeal(id);
 
   //adding habit:
   const db = await DB.createDBConnection();
@@ -68,6 +67,9 @@ export async function addHabit(
     frequency: frequency,
     reminder: reminder,
   });
+
+  await addDeal(id);
+
   return <Habit>JSON.parse(jsonString);
 }
 

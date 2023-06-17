@@ -103,6 +103,15 @@ class DB {
           FOREIGN KEY (avatarId) REFERENCES avatar(avatarId) ON DELETE CASCADE,
           FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
       )`);
+            yield connection.run(`
+      create table if not exists taskQueue(
+        userId INTEGER NOT NULL,
+        taskId INTEGER NOT NULL,
+        completed INTEGER default 0,
+        dateOfCompletion TEXT,
+        FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE,
+        FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+    )`);
         });
     }
 }

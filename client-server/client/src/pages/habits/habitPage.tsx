@@ -52,7 +52,7 @@ const HabitPage = () => {
 
       const data: HabitItem[] = await response.json();
       setHabits(data);
-      console.log(data);
+      console.log(data, auth()?.id);
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -102,10 +102,10 @@ const HabitPage = () => {
   return (
     <Layout>
       <div className="grid grid-cols-6 h-max">
-        <SideNavigation/>
-         
+        <SideNavigation />
+
         <div className="col-span-5 px-12 mt-4">
-        <Toaster />
+          <Toaster />
           <div className="">
             <HabitList
               habits={habits}

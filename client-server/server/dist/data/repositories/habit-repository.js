@@ -45,7 +45,6 @@ function addHabit(task, frequency, reminder) {
         const id = yield (0, task_repository_1.addTask)(task);
         console.log("created parent task for habit");
         //adding deal for this habit:
-        yield (0, deal_repository_1.addDeal)(id);
         //adding habit:
         const db = yield database_1.DB.createDBConnection();
         const stmt = yield db.prepare("INSERT INTO habit VALUES (?1, ?2, ?3)");
@@ -67,6 +66,7 @@ function addHabit(task, frequency, reminder) {
             frequency: frequency,
             reminder: reminder,
         });
+        yield (0, deal_repository_1.addDeal)(id);
         return JSON.parse(jsonString);
     });
 }

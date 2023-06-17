@@ -37,7 +37,9 @@ const settingRouter_1 = require("./routes/settingRouter");
 const statisticsRouter_1 = require("./routes/statisticsRouter");
 const socket_io_1 = require("socket.io");
 const http = __importStar(require("http"));
+const progressRouter_1 = require("./routes/progressRouter");
 const dealRouter_1 = require("./routes/dealRouter");
+const taskQueueRouter_1 = require("./routes/taskQueueRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -49,6 +51,8 @@ app.use("/api/settings", settingRouter_1.settingsRouter);
 app.use("/users", userRouter_1.userRouter);
 app.use("/api/statistics", statisticsRouter_1.statisticsRounter);
 app.use("/api/deals", dealRouter_1.dealRouter);
+app.use("/api/progress", progressRouter_1.progressRouter);
+app.use("/api/taskQueue", taskQueueRouter_1.taskQueueRouter);
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
@@ -59,9 +63,9 @@ const io = new socket_io_1.Server(server);
 server.listen(8080, () => console.log("Webserver is listening on port 8080"));
 // socket
 io.on("connection", function (socket) {
-    socket.on("wake-me", function (seconds) {
+    socket.on("new habit", function (seconds) {
         setTimeout(() => {
-            socket.emit("wake-up", `This is the ${seconds} seconds wakeup call!`);
+            socket.emit("do habit");
         }, seconds * 1000);
     });
     socket.on("wake-all", function (seconds) {

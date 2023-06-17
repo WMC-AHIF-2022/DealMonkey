@@ -38,7 +38,7 @@ exports.getAllDealsByUser = getAllDealsByUser;
 function getDealByTaskId(taskId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare('select * from Deal where taskId = ?1');
+        const stmt = yield db.prepare("select * from Deal where taskId = ?1");
         yield stmt.bind({ 1: taskId });
         const deal = yield stmt.get();
         yield stmt.finalize();
@@ -53,12 +53,14 @@ function addDeal(taskId) {
         if (task === undefined) {
             throw new Error("task doesn't exist - couldn't create deal for it.");
         }
-        const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare('insert into Deal (taskId, points) values (?1, ?2)');
         const points = yield (0, progress_repository_1.calculatePoints)(task.userId);
+        console.log(taskId, points);
+        const db = yield database_1.DB.createDBConnection();
+        const stmt = yield db.prepare("insert into Deal (taskId, points) values (?1, ?2)");
+        console.log(taskId, points);
         //console.log(points);
         yield stmt.bind({ 1: taskId, 2: points });
-        yield stmt.run();
+        const operationResult = yield stmt.run();
         yield stmt.finalize();
         yield db.close();
     });

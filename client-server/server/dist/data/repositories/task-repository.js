@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTask = exports.deleteTask = exports.addTask = exports.getTaskById = exports.getAllTasks = void 0;
+exports.updateTask = exports.deleteTask = exports.addTask = exports.getTaskById = exports.getAllTasksToday = exports.getAllTasks = void 0;
 const database_1 = require("../../database");
+const taskQueue_repository_1 = require("./taskQueue-repository");
 function getAllTasks(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
@@ -26,10 +27,25 @@ function getAllTasks(userId) {
     });
 }
 exports.getAllTasks = getAllTasks;
+function getAllTasksToday(userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield database_1.DB.createDBConnection();
+        const userTasks = [];
+        const tasks = yield db.all("SELECT * FROM task");
+        for (const task of tasks) {
+            if (task.userId === userId) {
+                userTasks.push(task);
+            }
+        }
+        yield db.close();
+        return userTasks;
+    });
+}
+exports.getAllTasksToday = getAllTasksToday;
 function getTaskById(taskId) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield database_1.DB.createDBConnection();
-        const stmt = yield db.prepare('select * from task where id = ?1');
+        const stmt = yield db.prepare("select * from task where id = ?1");
         yield stmt.bind({ 1: taskId });
         const task = yield stmt.get();
         yield stmt.finalize();
@@ -52,12 +68,14 @@ function addTask(task) {
         const operationResult = yield stmt.run();
         yield stmt.finalize();
         yield db.close();
-        if (typeof operationResult.changes !== "number" || operationResult.changes !== 1) {
+        if (typeof operationResult.changes !== "number" ||
+            operationResult.changes !== 1) {
             throw new Error("Could not add task");
         }
         else {
             task.id = operationResult.lastID;
         }
+        yield (0, taskQueue_repository_1.addTaskToQueue)(task.id, task.userId);
         return task.id;
     });
 }

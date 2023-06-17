@@ -1,29 +1,34 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
 import { Task } from "../data/interfaces/model";
-import { getAllTasks, addTask, deleteTask, updateTask } from "../data/repositories/task-repository";
+import {
+  getAllTasks,
+  addTask,
+  deleteTask,
+  updateTask,
+} from "../data/repositories/task-repository";
 import { isAuthenticated } from "../middleware/auth-handler";
 
 export const taskRouter = express.Router();
-taskRouter.use(isAuthenticated);
+//taskRouter.use(isAuthenticated);
 
 taskRouter.get("/:userId", async (request, response) => {
-    const userId = Number.parseInt(request.params.userId);
-    const habits = await getAllTasks(userId);
-    response.status(StatusCodes.OK).json(habits);
+  const userId = Number.parseInt(request.params.userId);
+  const habits = await getAllTasks(userId);
+  response.status(StatusCodes.OK).json(habits);
 });
 
 taskRouter.delete("/:id", async (request, response) => {
-    const id = Number.parseInt(request.params.id);
-  
-    try {
-      await deleteTask(id);
-      response.status(StatusCodes.ACCEPTED).json({ message: "Task deleted" });
-    } catch (error) {
-      response.status(StatusCodes.BAD_REQUEST).json(error);
-    }
+  const id = Number.parseInt(request.params.id);
+
+  try {
+    await deleteTask(id);
+    response.status(StatusCodes.ACCEPTED).json({ message: "Task deleted" });
+  } catch (error) {
+    response.status(StatusCodes.BAD_REQUEST).json(error);
+  }
 });
-  
+
 /*taskRouter.put("/", async (request, response) => {
     const id = Number.parseInt(request.body.id);
     const title: string = request.body.title;
