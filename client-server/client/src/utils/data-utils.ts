@@ -107,7 +107,7 @@ export const getAllTodos = async (id: number) => {
 
 export const getDealById = async (id: number) => {
   const response = await fetchRestEndpoint(
-    "http://localhost:8000/api/deals/task/" + id,
+    "http://localhost:8000/api/deals/" + id,
     "GET"
   );
 

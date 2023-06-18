@@ -12,6 +12,9 @@ import { getDealById } from "../../utils/data-utils";
 
 import { toastHandler } from "../../components/deal";
 import { useNavigate } from "react-router-dom";
+import { TaskQueue } from "../../utils/model";
+
+import { getSocket } from "./../../utils/socket";
 
 interface HabitItem {
   id: number;
@@ -21,12 +24,32 @@ interface HabitItem {
   category: string;
   color: string;
   userId: number;
+  dateOfLastCompletion: string;
 }
 
-const Dashboard = ({ socket }: any) => {
+const Dashboard = () => {
   const auth = useAuthUser();
   const navigate = useNavigate();
   const [tasks, setTasks] = useState<HabitItem[]>([]);
+  const [taskQueue, setTaskQueue] = useState<TaskQueue[]>([]);
+
+  const getCompletedTasks = async () => {
+    let data;
+    try {
+      const response = await fetchRestEndpoint(
+        "http://localhost:8000/api/taskQueue/completed/" + auth()?.id,
+        "GET"
+      );
+
+      data = await response.json();
+
+      setTaskQueue(data);
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+
+    return data;
+  };
 
   const getTasks = async () => {
     try {
@@ -48,22 +71,31 @@ const Dashboard = ({ socket }: any) => {
         }
       }
 
-      console.log(data);
-
       setTasks(data);
     } catch (error: any) {
       alert(error.message);
     }
+
+    reloadUserTasks();
   };
+
+  const reloadUserTasks = () => {};
 
   useEffect(() => {
     getTasks();
-
+    // Subscribe to Socket.io events
+    // Handle received event data
+    /*
     socket.on("do habit", async (title: string, id: number) => {
       const deal = await getDealById(id);
       toastHandler(title, deal.points, id, navigate);
     });
-  }, [socket]);
+    // Clean up event listeners when the component unmounts
+    return () => {
+      socket.off("do habit");
+    };
+    */
+  }, []);
 
   const onClickHandler = async (taskId: number) => {
     try {
@@ -82,6 +114,7 @@ const Dashboard = ({ socket }: any) => {
 
   return (
     <Layout>
+      <Toaster />
       <div className="grid grid-cols-6 h-max">
         <SideNavigation />
 

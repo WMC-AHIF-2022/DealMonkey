@@ -11,15 +11,13 @@ import { Server } from "socket.io";
 import { progressRouter } from "./routes/progressRouter";
 import { dealRouter } from "./routes/dealRouter";
 import { taskQueueRouter } from "./routes/taskQueueRouter";
+import * as http from "http";
 
 dotenv.config();
 const app: Express = express();
 
-const uuidv4 = require("uuidv4");
-
 app.use(express.json());
 app.use(cors());
-const http = require("http").Server(app);
 
 app.use("/api/tasks", taskRouter);
 app.use("/api/todos", todoRouter);
@@ -33,29 +31,27 @@ app.use("/api/taskQueue", taskQueueRouter);
 
 const port = 8000;
 
-/*
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-*/
+const server = http.createServer(app);
 
-http.listen(port, () => console.log("Webserver is listening on port 8000"));
+server.listen(port);
+//const socketIO = require("socket.io")(http, {});
 
-const socketIO = require("socket.io")(http, {
+const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
   },
 });
 
 //Add this before the app.get() block
-socketIO.on("connection", (socket: any) => {
-  //console.log(`⚡: ${socket.id} user just connected!`);
-
-  socket.on("new habit", function (seconds: number, title: string, id: number) {
+io.on("connection", (socket: any) => {
+  console.log("connected");
+  socket.on("new habit", (seconds: number, title: string, id: number) => {
     setTimeout(() => {
       socket.emit("do habit", title, id);
     }, seconds * 1000);
   });
 
-  socket.disconnect(console.log("🔥: A user disconnected"));
+  socket.on("disconnect", function () {
+    console.log("🔥: A user disconnected");
+  });
 });

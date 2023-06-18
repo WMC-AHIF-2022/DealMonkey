@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Layout from "../../layout/loggedIn/layout";
 import { fetchRestEndpoint } from "../../utils/client-server";
 import useAuthUser from "react-auth-kit/dist/hooks/useAuthUser";
@@ -13,10 +13,6 @@ import SideNavigation from "../../components/sideNavigation";
 import { useNavigate } from "react-router-dom";
 import { getAllHabits, getDealById, addHabit } from "../../utils/data-utils";
 
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
-
-import Coin from "../../img/star.png";
 import { toastHandler } from "../../components/deal";
 
 interface HabitItem {
@@ -150,20 +146,26 @@ const HabitPage = ({ socket }: any) => {
   };
 
   const sendDeal = () => {
-    socket.emit("new habit", 5, "Walk Dog", 1);
+    console.log("hello");
+    socket.emit("new habit", 1, "Walk Tiger", 1);
   };
 
   useEffect(() => {
-    getHabits();
+    // Subscribe to Socket.io events
+    // Handle received event data
 
     socket.on("do habit", async (title: string, id: number) => {
       const deal = await getDealById(id);
-
-      toastHandler(title, deal.points, id, navigate);
+      toastHandler(title, 11, id, navigate);
     });
 
-    return () => socket.off("do habit");
-  }, [socket]);
+    getHabits();
+
+    // Clean up event listeners when the component unmounts
+    return () => {
+      socket.off("do habit");
+    };
+  }, []);
 
   return (
     <Layout>
@@ -185,7 +187,7 @@ const HabitPage = ({ socket }: any) => {
             />
             <div style={{ marginTop: "32px" }}>
               <button
-                className="bg-red-400 rounded-lg"
+                className="bg-red-400 rounded-lg hover:bg-red-500"
                 onClick={() => {
                   setOpen(true);
                   resetForm();
@@ -194,7 +196,10 @@ const HabitPage = ({ socket }: any) => {
                 Add Habit
               </button>
 
-              <button className="bg-red-400 rounded-lg" onClick={sendDeal}>
+              <button
+                className="bg-red-400 rounded-lg hover:bg-red-500"
+                onClick={sendDeal}
+              >
                 Send Deal
               </button>
             </div>

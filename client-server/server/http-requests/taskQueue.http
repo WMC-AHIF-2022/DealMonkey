@@ -1,0 +1,26 @@
+###################################################
+
+POST http://localhost:8000/api/taskQueue HTTP/1.1
+Content-Type: application/json
+
+{
+    taskId: 1,
+    userId: 1
+}
+
+
+###################################################
+GET http://localhost:8000/api/taskQueue/2 HTTP/1.1
+
+###################################################
+GET http://localhost:8000/api/taskQueue/completed/2 HTTP/1.1
+
+
+
+###################################################
+PUT http://localhost:8000/api/taskQueue/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "completed": 1
+}
