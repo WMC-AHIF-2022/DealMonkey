@@ -66,3 +66,11 @@ export interface TaskQueue {
   completed: number;
   dateOfCompletion: string;
 }
+
+export interface Avatar {
+  avatarId: number;
+  link: string;
+  name: string;
+  price: number;
+  unlockLevel: number;
+}

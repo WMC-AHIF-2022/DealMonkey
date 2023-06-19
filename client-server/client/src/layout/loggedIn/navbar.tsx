@@ -24,7 +24,7 @@ export default function Navbar() {
 
   const navigation = [
     { Item1: "Level statt Navigation bar" },
-    { Item1: "Dashboard", Item2: "Habits", Item3: "Todos" },
+    { Item1: "Dashboard", Item2: "Habits", Item3: "Todos", Item4: "Shop" },
   ];
 
   const logout = () => {

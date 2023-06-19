@@ -12,6 +12,8 @@ import { progressRouter } from "./routes/progressRouter";
 import { dealRouter } from "./routes/dealRouter";
 import { taskQueueRouter } from "./routes/taskQueueRouter";
 import * as http from "http";
+import { DB } from "./database";
+import { avatarRouter } from "./routes/avatarRouter";
 
 dotenv.config();
 const app: Express = express();
@@ -28,12 +30,14 @@ app.use("/api/statistics", statisticsRounter);
 app.use("/api/deals", dealRouter);
 app.use("/api/progress", progressRouter);
 app.use("/api/taskQueue", taskQueueRouter);
+app.use("/api/avatars", avatarRouter);
 
 const port = 8000;
 
 const server = http.createServer(app);
 
 server.listen(port);
+DB.createAvatars();
 //const socketIO = require("socket.io")(http, {});
 
 const io = new Server(server, {

@@ -21,6 +21,7 @@ import DealPage from "./pages/dealPage/dealPage";
 import { SocketProvider } from "./SocketContext";
 import { io } from "socket.io-client";
 import { Socket } from "socket.io";
+import Shop from "./pages/shop/shopPage";
 
 let socket: any;
 
@@ -100,6 +101,15 @@ const App = () => {
                 element={
                   <RequireAuth loginPath="/login">
                     <Settings />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/shop"
+                element={
+                  <RequireAuth loginPath="/login">
+                    <Shop />
                   </RequireAuth>
                 }
               />

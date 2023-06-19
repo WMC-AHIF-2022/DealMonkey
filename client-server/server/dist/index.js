@@ -40,6 +40,8 @@ const progressRouter_1 = require("./routes/progressRouter");
 const dealRouter_1 = require("./routes/dealRouter");
 const taskQueueRouter_1 = require("./routes/taskQueueRouter");
 const http = __importStar(require("http"));
+const database_1 = require("./database");
+const avatarRouter_1 = require("./routes/avatarRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -53,9 +55,11 @@ app.use("/api/statistics", statisticsRouter_1.statisticsRounter);
 app.use("/api/deals", dealRouter_1.dealRouter);
 app.use("/api/progress", progressRouter_1.progressRouter);
 app.use("/api/taskQueue", taskQueueRouter_1.taskQueueRouter);
+app.use("/api/avatars", avatarRouter_1.avatarRouter);
 const port = 8000;
 const server = http.createServer(app);
 server.listen(port);
+database_1.DB.createAvatars();
 //const socketIO = require("socket.io")(http, {});
 const io = new socket_io_1.Server(server, {
     cors: {
