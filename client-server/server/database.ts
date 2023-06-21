@@ -21,7 +21,6 @@ export class DB {
       return; //avatare sind schon in der tabelle
     }
 
-
     const avatars = [
       ["/data/img/monkey-glasses.jpg", "Monkey with Glasses", 100, 1],
       ["/data/img/wild-monkey.jpg", "Wild Monkey", 150, 1],
