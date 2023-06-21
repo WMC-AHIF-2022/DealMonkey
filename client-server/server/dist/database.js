@@ -27,6 +27,10 @@ class DB {
     }
     static createAvatars() {
         return __awaiter(this, void 0, void 0, function* () {
+            const avatarsOfTable = yield (0, avatar_repository_1.getAllAvatars)();
+            if (avatarsOfTable.length !== 0) {
+                return; //avatare sind schon in der tabelle
+            }
             const avatars = [
                 ["/data/img/monkey-glasses.jpg", "Monkey with Glasses", 100, 1],
                 ["/data/img/wild-monkey.jpg", "Wild Monkey", 150, 1],

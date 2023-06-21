@@ -13,6 +13,7 @@ const Shop = () => {
   }
 
   const [avatars, setAvatars] = useState<Avatar[]>([]);
+  const [open, setOpen] = useState(false);
 
   const getAllAvatars = async () => {
     try {
@@ -32,31 +33,49 @@ const Shop = () => {
     getAllAvatars();
   }, []);
 
+  /*function setOpen(isButtonFree: boolean) {
+    throw new Error("Function not implemented.");
+  }*/
+
   return (
     <Layout>
-      <div className="grid grid-cols-6 h-max"></div>
+      <div className="grid grid-cols-6 h-max">
       <SideNavigation />
-
-      <div className="mx-auto max-w-7xl overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
+      
+      <div className="col-span-5 px-12 mt-4">
+        <div className="grid grid-cols-5 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
           {avatars.map((avatar: Avatar) => (
             <a
               key={avatar.avatarId}
               href={avatar.link}
               className="group text-sm"
             >
-              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+              <div className="overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                 <img
                   src={require("../../img" + avatar.link)}
                   alt={avatar.name}
-                  className="h-full w-full object-cover object-center"
+                  className="h-60 w-full object-cover object-center"
                 />
               </div>
               <h3 className="mt-4 font-medium text-gray-900">{avatar.name}</h3>
-              <p className="mt-2 font-medium text-gray-900">{avatar.price}</p>
+              
+              <div className="flex">
+                <span className="mt-2 font-medium text-gray-900">{avatar.price} </span>
+                <img src={require("../../img/star.png")} alt="Points" className="h-4 mt-3 pl-1"/>
+              </div>
+                
+              <button
+                onClick={() => {
+                  //checken ob level so groß ist, dass man profil bild kaufen kann
+                  setOpen(true);
+                }}
+              >
+                Buy
+              </button>
             </a>
           ))}
         </div>
+      </div>
       </div>
     </Layout>
   );

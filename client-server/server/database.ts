@@ -1,6 +1,6 @@
 import { Database as Driver } from "sqlite3";
 import { open, Database } from "sqlite";
-import { insertAvatar } from "./data/repositories/avatar-repository";
+import { getAllAvatars, insertAvatar } from "./data/repositories/avatar-repository";
 import { Avatar } from "./data/interfaces/model";
 
 export const dbFileName: string = "./database.db";
@@ -16,6 +16,12 @@ export class DB {
   }
 
   public static async createAvatars() {
+    const avatarsOfTable = await getAllAvatars();
+    if(avatarsOfTable.length !== 0) {
+      return; //avatare sind schon in der tabelle
+    }
+
+
     const avatars = [
       ["/data/img/monkey-glasses.jpg", "Monkey with Glasses", 100, 1],
       ["/data/img/wild-monkey.jpg", "Wild Monkey", 150, 1],
